@@ -207,6 +207,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>1. Introducción</strong></a></li>
 
+
 </ul>
 
     </div>
@@ -445,6 +446,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-diario-multiplicativo"><strong>2.21. Modelo Diario Multiplicativo</strong></a></li>
 </ul>
 </li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliografia">Bibliografía</a></li>
 </ul>
 
             </nav>
@@ -488,12 +490,14 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
   from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning: Looks like you&#39;re using an outdated `kagglehub` version (installed: 0.3.13), please consider upgrading to the latest version (1.0.0).
-Path to dataset files: C:\Users\planeacion\.cache\kagglehub\datasets\imetomi\eur-usd-forex-pair-historical-data-2002-2019\versions\2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Path to dataset files: C:\Users\planeacion\.cache\kagglehub\datasets\imetomi\eur-usd-forex-pair-historical-data-2002-2019\versions\2
 </pre></div>
 </div>
 </div>
@@ -1323,10 +1327,6 @@ Dicho esto, ninguno de los dos se ajusta bien a los datos. La línea roja lineal
 </pre></div>
 </div>
 <img alt="_images/66f004ada2fc39d8a2ab7f6490f8bff708c5898b02b832b52f8930ed3cf265b7.png" src="_images/66f004ada2fc39d8a2ab7f6490f8bff708c5898b02b832b52f8930ed3cf265b7.png" />
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 1200x550 with 0 Axes&gt;
-</pre></div>
-</div>
-<img alt="_images/e0b23ff1d9a701ad572fa93151ab00066c4c317d41f99cde3cde9e3bd59b72bc.png" src="_images/e0b23ff1d9a701ad572fa93151ab00066c4c317d41f99cde3cde9e3bd59b72bc.png" />
 </div>
 </div>
 <p>La autocorrelación mide el grado en que una serie se parece a sí misma en el pasado. Dicho de otro modo, cuantifica si conocer el valor del precio hoy ayuda a predecir el valor de mañana o del siguiente período. Si la autocorrelación fuera cercana a cero en todos los rezagos, significaría que cada observación es independiente de las anteriores, lo que sería la firma de un camino aleatorio. El hecho de que ya descartáramos esa hipótesis en el análisis anterior hace que esperemos encontrar autocorrelaciones significativas y persistentes, es decir, que el precio de hoy guarde una relación fuerte con el de ayer, el de la semana pasada y el del mes anterior. Tanto en el gráfico diario como en el de 5 minutos, todas las barras de autocorrelación permanecen pegadas a un valor cercano a uno a lo largo de los 30 rezagos evaluados, muy por encima de las bandas de confianza que delimitan la zona donde una autocorrelación sería estadísticamente indistinguible de cero. Eso significa que el precio de cualquier período está altamente correlacionado con los períodos anteriores sin importar cuántos rezagos se retroceda dentro del rango analizado, lo que indica que la serie tiene memoria fuerte y persistente: el pasado reciente no solo importa sino que domina la formación del precio presente.</p>
@@ -2314,12 +2314,14 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 <img alt="_images/8703abc58fb66a2a56009c20690bd28295c41b2da0e7a69de1ca349866cf5001.png" src="_images/8703abc58fb66a2a56009c20690bd28295c41b2da0e7a69de1ca349866cf5001.png" />
 </div>
 </div>
-<p>Bibliografía</p>
-<p>European Central Bank. (2014, 27 noviembre). Estabilidad y prosperidad en la Unión Monetaria. <a class="reference external" href="https://www.ecb.europa.eu/press/key/date/2014/html/sp141127_1.es.html">https://www.ecb.europa.eu/press/key/date/2014/html/sp141127_1.es.html</a></p>
-<p>Figal, A. G. (2021). Pronóstico de la tasa de cambio euro-dólar. Diagnóstico de técnicas predictivas. ECA Sinergia, 12(3), 7-17.</p>
-<p>Montoya Zapata, C., &amp; Corredor Roa, C. A. (2022). Aplicación de modelos de deep learning y machine learning para el pronóstico de la serie de tiempo del par de divisas Euro-Dólar.</p>
-<p>Welle, D. (2020, 29 abril). FED: contracción económica en EE.UU. no tendrá precedentes. <a class="reference external" href="http://dw.com">dw.com</a>. <a class="reference external" href="https://www.dw.com/es/fed-contracci%C3%B3n-econ%C3%B3mica-en-eeuu-no-tendr%C3%A1-precedentes/a-53286099">https://www.dw.com/es/fed-contracción-económica-en-eeuu-no-tendrá-precedentes/a-53286099</a></p>
 </section>
+</section>
+<section id="bibliografia">
+<h1>Bibliografía<a class="headerlink" href="#bibliografia" title="Link to this heading">#</a></h1>
+<p>[1] European Central Bank. (2014, 27 noviembre). Estabilidad y prosperidad en la Unión Monetaria. <a class="reference external" href="https://www.ecb.europa.eu/press/key/date/2014/html/sp141127_1.es.html">https://www.ecb.europa.eu/press/key/date/2014/html/sp141127_1.es.html</a></p>
+<p>[2] Figal, A. G. (2021). Pronóstico de la tasa de cambio euro-dólar. Diagnóstico de técnicas predictivas. <em>ECA Sinergia</em>, 12(3), 7-17.</p>
+<p>[3] Montoya Zapata, C., &amp; Corredor Roa, C. A. (2022). Aplicación de modelos de deep learning y machine learning para el pronóstico de la serie de tiempo del par de divisas Euro-Dólar.</p>
+<p>[4] Welle, D. (2020, 29 abril). FED: contracción económica en EE.UU. no tendrá precedentes. <em><a class="reference external" href="http://dw.com">dw.com</a></em>. <a class="reference external" href="https://www.dw.com/es/fed-contracci%C3%B3n-econ%C3%B3mica-en-eeuu-no-tendr%C3%A1-precedentes/a-53286099">https://www.dw.com/es/fed-contracción-económica-en-eeuu-no-tendrá-precedentes/a-53286099</a></p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -2420,6 +2422,7 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-diario-multiplicativo"><strong>2.21. Modelo Diario Multiplicativo</strong></a></li>
 </ul>
 </li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliografia">Bibliografía</a></li>
 </ul>
 
   </nav></div>
