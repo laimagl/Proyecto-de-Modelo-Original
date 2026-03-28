@@ -440,10 +440,13 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-multiplicativo"><strong>2.17. Modelo Multiplicativo</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-mensual-aditivo"><strong>2.18. Modelo Mensual Aditivo</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-mensual-multiplicativo"><strong>2.19. Modelo Mensual Multiplicativo</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-diario-aditivo"><strong>2.20. Modelo Diario Aditivo</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-diario-multiplicativo"><strong>2.21. Modelo Diario Multiplicativo</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descomposicion-de-series-temporales-mediante-statsmodels-tsa"><strong>2.18. Descomposición de series temporales mediante statsmodels.tsa</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-mensual-aditivo"><strong>2.18.1. Modelo Mensual Aditivo</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-mensual-multiplicativo"><strong>2.18.2. Modelo Mensual Multiplicativo</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-diario-aditivo"><strong>2.18.3. Modelo Diario Aditivo</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-diario-multiplicativo"><strong>2.18.4. Modelo Diario Multiplicativo</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliografia"><strong>Bibliografía</strong></a></li>
@@ -2366,7 +2369,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/07265408faf50059a1d1bb592e57c0d10eec53a0f3b64e9578bf4c475bc95ea3.png" src="_images/07265408faf50059a1d1bb592e57c0d10eec53a0f3b64e9578bf4c475bc95ea3.png" />
+<img alt="_images/bf96b46572a73c0a5743750ba50ba8ea41dfec912d63a2b0a2d449b81eaf9ea2.png" src="_images/bf96b46572a73c0a5743750ba50ba8ea41dfec912d63a2b0a2d449b81eaf9ea2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -6888,6 +6891,7 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 </div>
 </div>
 </div>
+<p>La serie mensual del precio de cierre EUR/USD fue descompuesta utilizando un enfoque clásico aditivo, donde la tendencia se estimó mediante una media móvil de 12 meses y posteriormente se centró con una media móvil de 2 términos. El componente estacional se obtuvo promediando la serie desprovista de tendencia por meses, capturando así el patrón típico mensual, mientras que el componente irregular se calculó como el residuo tras eliminar tanto la tendencia como la estacionalidad. Los resultados indican que la serie está principalmente impulsada por movimientos de tendencia de mediano y largo plazo, con una estacionalidad mensual relativamente débil, ya que su amplitud es pequeña en comparación con la tendencia y las variaciones irregulares, lo que sugiere que explica solo una fracción menor de la variabilidad total. Asimismo, las fluctuaciones irregulares juegan un papel importante en periodos de alta volatilidad, lo que indica que los shocks macroeconómicos predominan sobre los efectos estacionales en la dinámica del tipo de cambio.</p>
 </section>
 </section>
 <section id="modelo-multiplicativo">
@@ -6948,7 +6952,10 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 <img alt="_images/d9fe68bc56311ac9be898163bd5906557cebc22cbe29b6e1ec897c75b78cadea.png" src="_images/d9fe68bc56311ac9be898163bd5906557cebc22cbe29b6e1ec897c75b78cadea.png" />
 </div>
 </div>
-<p>Descomposición de series temporales mediante statsmodels.tsa</p>
+<p>La serie mensual del precio de cierre EUR/USD fue descompuesta utilizando un enfoque clásico multiplicativo, donde la tendencia se estimó mediante una media móvil de 12 meses centrada con una media móvil de 2 términos. Posteriormente, los residuos multiplicativos se obtuvieron como el cociente entre la serie original y la tendencia, permitiendo aislar conjuntamente la estacionalidad y la componente irregular. La componente estacional se calculó promediando estos residuos por mes del año y replicando el patrón a lo largo de toda la muestra, mientras que la componente irregular se obtuvo como el residuo final tras dividir la serie por la tendencia y la estacionalidad. Los resultados muestran que la dinámica del tipo de cambio está principalmente determinada por la tendencia de mediano y largo plazo, mientras que la estacionalidad mensual es relativamente débil, ya que sus fluctuaciones alrededor de 1 son pequeñas en comparación con los cambios en la tendencia y las variaciones irregulares, indicando que explica solo una fracción menor de la variabilidad total. Asimismo, la componente irregular presenta desviaciones más pronunciadas en periodos de alta volatilidad, lo que sugiere que los shocks macroeconómicos y financieros predominan sobre los efectos estacionales en la evolución del EUR/USD.</p>
+</section>
+<section id="descomposicion-de-series-temporales-mediante-statsmodels-tsa">
+<h2><strong>2.18. Descomposición de series temporales mediante statsmodels.tsa</strong><a class="headerlink" href="#descomposicion-de-series-temporales-mediante-statsmodels-tsa" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -6960,9 +6967,8 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 </div>
 </div>
 </div>
-</section>
 <section id="modelo-mensual-aditivo">
-<h2><strong>2.18. Modelo Mensual Aditivo</strong><a class="headerlink" href="#modelo-mensual-aditivo" title="Link to this heading">#</a></h2>
+<h3><strong>2.18.1. Modelo Mensual Aditivo</strong><a class="headerlink" href="#modelo-mensual-aditivo" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adf_result</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">adfuller</span><span class="p">(</span><span class="n">monthly_mean_bc</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">autolag</span><span class="o">=</span><span class="s1">&#39;AIC&#39;</span><span class="p">)</span>
@@ -7009,6 +7015,7 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 <img alt="_images/17ee8ee2c1ccc53ee9a2bec07e4c408d5b5dc7cb8f3802782b474da7e8f88f92.png" src="_images/17ee8ee2c1ccc53ee9a2bec07e4c408d5b5dc7cb8f3802782b474da7e8f88f92.png" />
 </div>
 </div>
+<p>La serie mensual del precio de cierre EUR/USD fue analizada utilizando una descomposición clásica aditiva implementada con la función seasonal_decompose, previa verificación de estacionariedad mediante la prueba ADF, cuyo p-valor (≈0.56) indica que la serie no es estacionaria en niveles. La descomposición se realizó asumiendo una periodicidad de 12 meses, separando la serie en sus componentes de tendencia, estacionalidad e irregularidad. La tendencia muestra claramente la evolución de largo plazo del tipo de cambio, con una fase alcista hasta aproximadamente 2008, seguida de una caída y posterior estabilización en niveles más bajos a partir de 2015. El componente estacional presenta un patrón mensual repetitivo con baja amplitud, lo que sugiere que la estacionalidad existe pero es relativamente débil en comparación con los otros componentes. Por su parte, la componente irregular recoge fluctuaciones no sistemáticas, destacándose mayores desviaciones en periodos de alta volatilidad, como la crisis financiera global y otros episodios posteriores. En conjunto, los resultados indican que el comportamiento del EUR/USD está dominado principalmente por cambios tendenciales y shocks macroeconómicos, mientras que los efectos estacionales tienen una influencia limitada sobre la dinámica del tipo de cambio.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adf_result</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">adfuller</span><span class="p">(</span><span class="n">decompose_model</span><span class="o">.</span><span class="n">resid</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">decompose_model</span><span class="o">.</span><span class="n">resid</span><span class="p">))[</span><span class="mi">0</span><span class="p">]],</span> 
@@ -7023,9 +7030,10 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 </div>
 </div>
 </div>
+<p>Se aplicó la prueba ADF (Augmented Dickey-Fuller) sobre la componente irregular (residual) obtenida de la descomposición aditiva, tras filtrar los valores no finitos. El resultado arroja un p-valor extremadamente bajo (~1.08e-09), lo que permite rechazar con alta confianza la hipótesis nula de presencia de raíz unitaria. Esto indica que la componente irregular es estacionaria, es decir, no presenta tendencia ni patrones persistentes en el tiempo y fluctúa alrededor de una media constante. Este hallazgo es consistente con una descomposición adecuada, ya que sugiere que los componentes de tendencia y estacionalidad fueron correctamente capturados, dejando en los residuos únicamente variaciones aleatorias o ruido sin estructura sistemática.Aunque la serie original no es estacionaria debido a la presencia de tendencia y posibles cambios estructurales, la componente irregular resultante de la descomposición sí lo es. Esto se debe a que la descomposición elimina los componentes sistemáticos (tendencia y estacionalidad), dejando únicamente fluctuaciones aleatorias alrededor de una media constante. En consecuencia, la prueba ADF rechaza la hipótesis de raíz unitaria en los residuos, lo cual es consistente con una correcta especificación del modelo, donde la no estacionariedad de la serie original se explica por sus componentes determinísticos y no por una dependencia estocástica persistente.</p>
 </section>
 <section id="modelo-mensual-multiplicativo">
-<h2><strong>2.19. Modelo Mensual Multiplicativo</strong><a class="headerlink" href="#modelo-mensual-multiplicativo" title="Link to this heading">#</a></h2>
+<h3><strong>2.18.2. Modelo Mensual Multiplicativo</strong><a class="headerlink" href="#modelo-mensual-multiplicativo" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decompose_model</span> <span class="o">=</span> <span class="n">seasonal_decompose</span><span class="p">(</span><span class="n">monthly_mean_bc</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">period</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;multiplicative&#39;</span><span class="p">)</span>
@@ -7059,6 +7067,7 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 <img alt="_images/23c1948e2b8a69cafa205f119bb0dacfeaa0aae94ec52bd991e45416ec987484.png" src="_images/23c1948e2b8a69cafa205f119bb0dacfeaa0aae94ec52bd991e45416ec987484.png" />
 </div>
 </div>
+<p>La serie mensual del precio de cierre EUR/USD fue analizada mediante una descomposición clásica multiplicativa utilizando la función seasonal_decompose con periodicidad de 12 meses, separando la serie en sus componentes de tendencia, estacionalidad e irregularidad bajo la relación .La tendencia captura la evolución de largo plazo del tipo de cambio, evidenciando un crecimiento sostenido hasta aproximadamente 2008, seguido de una disminución y posterior estabilización en niveles más bajos a partir de 2015. El componente estacional oscila alrededor de 1, lo que indica efectos proporcionales sobre la serie; sin embargo, su amplitud es reducida, lo que sugiere que la estacionalidad mensual es relativamente débil en comparación con la tendencia y las fluctuaciones irregulares. Por su parte, la componente irregular recoge variaciones no sistemáticas, presentando desviaciones más pronunciadas en periodos de alta volatilidad, lo que refleja la influencia de shocks macroeconómicos y financieros. En conjunto, los resultados indican que la dinámica del EUR/USD está dominada principalmente por cambios tendenciales y perturbaciones externas, mientras que los efectos estacionales tienen un impacto limitado sobre el comportamiento del tipo de cambio.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adf_result</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">adfuller</span><span class="p">(</span><span class="n">decompose_model</span><span class="o">.</span><span class="n">resid</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">decompose_model</span><span class="o">.</span><span class="n">resid</span><span class="p">))[</span><span class="mi">0</span><span class="p">]],</span> 
@@ -7073,9 +7082,10 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 </div>
 </div>
 </div>
+<p>Se aplicó la prueba ADF (Augmented Dickey-Fuller) sobre la componente irregular obtenida de la descomposición multiplicativa, luego de filtrar los valores no finitos. El resultado muestra un p-valor extremadamente bajo (~1.82e-09), lo que permite rechazar con alta confianza la hipótesis nula de raíz unitaria. Esto indica que la componente irregular es estacionaria, es decir, no presenta tendencia ni patrones persistentes en el tiempo y fluctúa alrededor de un nivel constante (en este caso, alrededor de 1, como es propio del modelo multiplicativo). Este resultado es consistente con una descomposición adecuada, ya que confirma que los componentes sistemáticos de la serie como la tendencia y la estacionalidad han sido correctamente capturados, dejando en los residuos únicamente variaciones aleatorias o ruido sin estructura sistemática.</p>
 </section>
 <section id="modelo-diario-aditivo">
-<h2><strong>2.20. Modelo Diario Aditivo</strong><a class="headerlink" href="#modelo-diario-aditivo" title="Link to this heading">#</a></h2>
+<h3><strong>2.18.3. Modelo Diario Aditivo</strong><a class="headerlink" href="#modelo-diario-aditivo" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adf_result</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">adfuller</span><span class="p">(</span><span class="n">bc_daily_ma</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">autolag</span><span class="o">=</span><span class="s1">&#39;AIC&#39;</span><span class="p">)</span>
@@ -7120,6 +7130,7 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 <img alt="_images/bcdb215f29a42d75495c5c53e73e29284c46640f81566a8dd5382577ce2e2e62.png" src="_images/bcdb215f29a42d75495c5c53e73e29284c46640f81566a8dd5382577ce2e2e62.png" />
 </div>
 </div>
+<p>La serie del precio de cierre EUR/USD en frecuencia diaria fue analizada mediante una descomposición clásica aditiva, previa aplicación de la prueba ADF, cuyo p-valor (~0.45) indica que la serie no es estacionaria en niveles. La descomposición separa la serie en tendencia e irregularidad (sin incluir explícitamente un componente estacional relevante), donde la tendencia captura la dinámica de mediano plazo, mostrando un comportamiento consistente con el observado en frecuencia mensual: una fase alcista hasta aproximadamente 2008, seguida de fluctuaciones y una caída hacia niveles más bajos después de 2014. No obstante, el rasgo más destacado se encuentra en la componente irregular, la cual presenta una alta densidad de fluctuaciones de corto plazo, propias de datos diarios, reflejando ruido de mercado, shocks transitorios y variabilidad no sistemática. Se observan periodos de mayor volatilidad, especialmente alrededor de 2008–2010, así como picos aislados que capturan movimientos abruptos del tipo de cambio. En comparación con la serie mensual, esta componente irregular es más intensa y dominante, lo que indica que, a mayor frecuencia, la variabilidad del EUR/USD está principalmente explicada por fluctuaciones de corto plazo, mientras que la tendencia actúa como una envolvente suave del comportamiento general de la serie.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adf_result</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">adfuller</span><span class="p">(</span><span class="n">decompose_model</span><span class="o">.</span><span class="n">resid</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">decompose_model</span><span class="o">.</span><span class="n">resid</span><span class="p">))[</span><span class="mi">0</span><span class="p">]],</span> 
@@ -7134,9 +7145,10 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 </div>
 </div>
 </div>
+<p>Se aplicó la prueba ADF a la componente irregular de la serie diaria del EUR/USD, obteniendo un p-valor extremadamente bajo (~2.02e-30), lo que permite rechazar la hipótesis de raíz unitaria. Esto indica que los residuos son estacionarios y no presentan patrones persistentes, confirmando que la tendencia fue correctamente removida y que las fluctuaciones restantes corresponden a ruido de corto plazo.</p>
 </section>
 <section id="modelo-diario-multiplicativo">
-<h2><strong>2.21. Modelo Diario Multiplicativo</strong><a class="headerlink" href="#modelo-diario-multiplicativo" title="Link to this heading">#</a></h2>
+<h3><strong>2.18.4. Modelo Diario Multiplicativo</strong><a class="headerlink" href="#modelo-diario-multiplicativo" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decompose_model</span> <span class="o">=</span> <span class="n">seasonal_decompose</span><span class="p">(</span><span class="n">bc_daily_ma</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">period</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;multiplicative&#39;</span><span class="p">)</span>
@@ -7167,6 +7179,8 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 <img alt="_images/8703abc58fb66a2a56009c20690bd28295c41b2da0e7a69de1ca349866cf5001.png" src="_images/8703abc58fb66a2a56009c20690bd28295c41b2da0e7a69de1ca349866cf5001.png" />
 </div>
 </div>
+<p>La serie diaria del EUR/USD fue descompuesta con un modelo multiplicativo, donde la tendencia recoge el comportamiento de mediano plazo y la componente irregular oscila alrededor de 1, capturando fluctuaciones de corto plazo y ruido de mercado. Los resultados muestran que, a esta frecuencia, la dinámica está dominada por variaciones aleatorias, mientras que la tendencia actúa como una trayectoria suavizada de la serie.</p>
+</section>
 </section>
 </section>
 <section id="bibliografia">
@@ -7269,10 +7283,13 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-multiplicativo"><strong>2.17. Modelo Multiplicativo</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-mensual-aditivo"><strong>2.18. Modelo Mensual Aditivo</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-mensual-multiplicativo"><strong>2.19. Modelo Mensual Multiplicativo</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-diario-aditivo"><strong>2.20. Modelo Diario Aditivo</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-diario-multiplicativo"><strong>2.21. Modelo Diario Multiplicativo</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descomposicion-de-series-temporales-mediante-statsmodels-tsa"><strong>2.18. Descomposición de series temporales mediante statsmodels.tsa</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-mensual-aditivo"><strong>2.18.1. Modelo Mensual Aditivo</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-mensual-multiplicativo"><strong>2.18.2. Modelo Mensual Multiplicativo</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-diario-aditivo"><strong>2.18.3. Modelo Diario Aditivo</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-diario-multiplicativo"><strong>2.18.4. Modelo Diario Multiplicativo</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliografia"><strong>Bibliografía</strong></a></li>
