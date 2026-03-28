@@ -461,7 +461,7 @@ document.write(`
                   
   <h1 style="text-align: center; font-weight: bold;">PROYECTO DE MODELO ORIGINAL</h1>
 <div style="text-align: center;">
- Autores: Laima Guatecique & Juan David Urbina de La Ossa
+ Autores: Laima Guatecique Lidueña & Juan David Urbina de La Ossa
 </div><section id="introduccion">
 <h1><strong>1. Introducción</strong><a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h1>
 <p>El mercado de divisas (FOREX) se caracteriza por su alta liquidez, operación continua y elevada volatilidad, influenciada por factores económicos, políticos y sociales, lo que lo convierte en un sistema complejo de analizar. Este mercado opera las veinticuatro horas del día, iniciando en Sídney y trasladándose progresivamente a centros financieros como Tokio, Londres y Nueva York, permitiendo a los inversores reaccionar en tiempo real ante fluctuaciones en los tipos de cambio (García Figal &amp; de la Oliva de Con, 2021). Las divisas se negocian en pares, como el EUR/USD (euro frente al dólar), donde la primera moneda se denomina base y la segunda su contraparte, siendo el precio expresado en función de la divisa base. En este contexto, el presente estudio se centra en el periodo 2002–2020, analizando el comportamiento del par EUR/USD e incorporando eventos clave como la crisis financiera de 2008 y la pandemia del COVID-19, los cuales incrementaron significativamente la incertidumbre y volatilidad en los mercados. Las variaciones en las tasas de cambio responden no solo a eventos macroeconómicos, sino también a factores políticos y externos como desastres naturales o crisis globales, lo que resalta la importancia de su análisis. Asimismo, las cotizaciones del mercado FOREX resultan fundamentales tanto para inversionistas privados como para los Estados, que participan activamente en estos mercados con el objetivo de fortalecer sus economías y posicionar sus monedas a nivel internacional; en el caso de Colombia, por ejemplo, los fondos privados de pensiones, bajo el Decreto 2955 de 2010 (Corredor &amp; Montoya, 2022), pueden invertir en estos mercados como estrategia de crecimiento. No obstante, la alta volatilidad también implica riesgos significativos para quienes realizan operaciones de trading. En este marco, el artículo busca, a partir del uso de distintas técnicas, analizar el comportamiento del par EUR/USD y generar un pronóstico de su tendencia futura, considerando variables fundamentadas en evidencia empírica tanto nacional como internacional.</p>
@@ -937,7 +937,7 @@ Después del rebote de finales de marzo, los tres paneles se comportan de forma 
 </div>
 </div>
 <p>Se calculan dos tipos de retorno: pct_change() permite obtener el retorno porcentual simple entre cada observación, mientras que np.log(BC / BC.shift(1)) calcula el retorno logarítmico desplazando el precio un período hacia atrás. Posteriormente, se grafican las tres series en un panel de tres subgráficos apilados, mostrando el precio de cierre, el retorno porcentual y el retorno logarítmico a lo largo del periodo 2005–2020.</p>
-<p>A nivel general, el precio de cierre evidencia cambios estructurales importantes, especialmente alrededor de 2014, donde el EUR/USD pasa de un régimen alto a uno más bajo y estable. Por su parte, los retornos (tanto simples como logarítmicos) oscilan alrededor de cero, pero presentan picos pronunciados en periodos de crisis, lo que indica episodios de alta volatilidad. Asimismo, se observa agrupamiento de volatilidad, donde periodos tranquilos son seguidos por fases de mayor incertidumbre, lo que sugiere que la varianza no es constante en el tiempo. En conjunto, estos resultados evidencian que, aunque el precio no es estacionario, los retornos sí presentan propiedades más adecuadas para el análisis temporal y modelación.</p>
+<p>A nivel general, el precio de cierre evidencia cambios estructurales importantes, especialmente alrededor de 2014, donde el EUR/USD pasa de un régimen alto a uno más bajo y estable. Por su parte, los retornos (tanto simples como logarítmicos) oscilan alrededor de cero, pero presentan picos pronunciados en periodos de crisis, lo que indica episodios de alta volatilidad. Asimismo, se observa agrupamiento de volatilidad, donde periodos tranquilos son seguidos por fases de mayor incertidumbre, lo que sugiere que la varianza no es constante en el tiempo.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_plot</span> <span class="o">=</span> <span class="n">df_5m</span><span class="p">[</span><span class="s1">&#39;2020-03-01&#39;</span><span class="p">:</span><span class="s1">&#39;2020-04-29&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1254,7 +1254,7 @@ Captura shocks como la crisis de 2008–2010; posteriormente, se reduce y se man
 <img alt="_images/9b3054f097ad2dff238b794873d8dfdb7e8d5b4d94d0eb65e29f0fe9e5999d9e.png" src="_images/9b3054f097ad2dff238b794873d8dfdb7e8d5b4d94d0eb65e29f0fe9e5999d9e.png" />
 </div>
 </div>
-<p>La suma acumulada de los retornos logarítmicos muestra ciclos con deriva persistente y direccional que no son compatibles con un proceso puramente aleatorio, ya que en un camino aleatorio verdadero esa serie debería oscilar de forma simétrica alrededor de cero sin tendencia sostenida en ninguna dirección. Por su parte, la suma acumulada del precio de cierre crece de forma casi perfectamente lineal a lo largo de toda la serie, lo que es la firma de una tendencia determinista de largo plazo y no el comportamiento irregular y divergente que produciría un camino aleatorio genuino. Ambos gráficos apuntan en la misma dirección: el EUR/USD en este período tiene memoria, sus retornos no son independientes entre sí y su precio responde a fuerzas estructurales de largo plazo, lo que descarta la hipótesis de camino aleatorio.</p>
+<p>La suma acumulada de los retornos logarítmicos muestra ciclos con deriva persistente y direccional que no son compatibles con un proceso de camino aleatorio. Por su parte, la suma acumulada del precio de cierre crece de forma casi perfectamente lineal a lo largo de toda la serie, lo que es la firma de una tendencia determinista de largo plazo y no el comportamiento irregular y divergente que produciría un camino aleatorio genuino. Ambos gráficos apuntan en la misma dirección: el EUR/USD en este período tiene memoria, sus retornos no son independientes entre sí y su precio responde a fuerzas estructurales de largo plazo, lo que descarta la hipótesis de camino aleatorio.</p>
 </section>
 <section id="modelos-de-tendencia">
 <h2><strong>2.10. Modelos de tendencia</strong><a class="headerlink" href="#modelos-de-tendencia" title="Link to this heading">#</a></h2>
@@ -1329,7 +1329,7 @@ Dicho esto, ninguno de los dos se ajusta bien a los datos. La línea roja lineal
 <img alt="_images/66f004ada2fc39d8a2ab7f6490f8bff708c5898b02b832b52f8930ed3cf265b7.png" src="_images/66f004ada2fc39d8a2ab7f6490f8bff708c5898b02b832b52f8930ed3cf265b7.png" />
 </div>
 </div>
-<p>La autocorrelación mide el grado en que una serie se parece a sí misma en el pasado. Dicho de otro modo, cuantifica si conocer el valor del precio hoy ayuda a predecir el valor de mañana o del siguiente período. Si la autocorrelación fuera cercana a cero en todos los rezagos, significaría que cada observación es independiente de las anteriores, lo que sería la firma de un camino aleatorio. El hecho de que ya descartáramos esa hipótesis en el análisis anterior hace que esperemos encontrar autocorrelaciones significativas y persistentes, es decir, que el precio de hoy guarde una relación fuerte con el de ayer, el de la semana pasada y el del mes anterior. Tanto en el gráfico diario como en el de 5 minutos, todas las barras de autocorrelación permanecen pegadas a un valor cercano a uno a lo largo de los 30 rezagos evaluados, muy por encima de las bandas de confianza que delimitan la zona donde una autocorrelación sería estadísticamente indistinguible de cero. Eso significa que el precio de cualquier período está altamente correlacionado con los períodos anteriores sin importar cuántos rezagos se retroceda dentro del rango analizado, lo que indica que la serie tiene memoria fuerte y persistente: el pasado reciente no solo importa sino que domina la formación del precio presente.</p>
+<p>La autocorrelación mide el grado en que una serie se relaciona con sus valores pasados; si es cercana a cero en todos los rezagos, la serie se comporta como ruido blanco, es decir, sin dependencia temporal. En cambio, en un camino aleatorio, los niveles presentan alta autocorrelación, mientras que sus diferencias son las que se comportan como una serie independiente.El hecho de que ya descartáramos esa hipótesis en el análisis anterior hace que esperemos encontrar autocorrelaciones significativas y persistentes, es decir, que el precio de hoy guarde una relación fuerte con el de ayer, el de la semana pasada y el del mes anterior. Tanto en el gráfico diario como en el de 5 minutos, todas las barras de autocorrelación permanecen pegadas a un valor cercano a uno a lo largo de los 30 rezagos evaluados, muy por encima de las bandas de confianza que delimitan la zona donde una autocorrelación sería estadísticamente indistinguible de cero. Eso significa que el precio de cualquier período está altamente correlacionado con los períodos anteriores sin importar cuántos rezagos se retroceda dentro del rango analizado, lo que indica que la serie tiene memoria fuerte y persistente: el pasado reciente no solo importa sino que domina la formación del precio presente.</p>
 </section>
 <section id="autocorrelacion-parcial">
 <h2><strong>2.12. Autocorrelación Parcial</strong><a class="headerlink" href="#autocorrelacion-parcial" title="Link to this heading">#</a></h2>
@@ -1495,6 +1495,7 @@ Date
 <img alt="_images/7f199f0f80de94449c19a50469acb2bfa18ef413074d024c4fd43ae7ed6f1be9.png" src="_images/7f199f0f80de94449c19a50469acb2bfa18ef413074d024c4fd43ae7ed6f1be9.png" />
 </div>
 </div>
+<p>El análisis del EUR/USD mediante la serie original de 5 minutos y sus medias móviles permite entender cómo evoluciona el comportamiento del precio a distintas escalas temporales. Mientras la serie de alta frecuencia muestra fluctuaciones constantes y movimientos irregulares, las medias móviles (diaria, semanal y mensual) suavizan progresivamente ese ruido, facilitando la identificación de la tendencia subyacente. En conjunto, se observa un ciclo claro: una fase de apreciación hasta el máximo alrededor de 2008, seguida de una caída pronunciada y posteriormente un periodo de oscilaciones descendentes hasta aproximadamente 2015, tras lo cual el mercado entra en una etapa más estable y con menor pendiente, especialmente visible en la media mensual. La utilidad de estas medias radica en que permiten filtrar las variaciones de corto plazo y distinguir entre movimientos transitorios y cambios estructurales, haciendo más clara la dinámica del mercado y mejorando la interpretación de la evolución del tipo de cambio en diferentes horizontes de tiempo.</p>
 </section>
 <section id="procesos-estacionarios">
 <h2><strong>2.14. Procesos estacionarios</strong><a class="headerlink" href="#procesos-estacionarios" title="Link to this heading">#</a></h2>
@@ -1554,6 +1555,7 @@ Name: BC, Length: 1153890, dtype: float64
 <img alt="_images/6f4c1d3767bf2270c1a7e2f82e7bb331a74d3864d390aaac12248d3d8bbf8dfb.png" src="_images/6f4c1d3767bf2270c1a7e2f82e7bb331a74d3864d390aaac12248d3d8bbf8dfb.png" />
 </div>
 </div>
+<p>Anteriormente mediante el gráfico de autocorrelación y autocorrelación parcial, además de ver el comportamiento de los residuos y el hecho de que presenta caminata aleatoria, podemos deducir que es una serie no tiene dependencia con sus rezagos temporales, por lo que es necesario diferenciarla. En este caso sacamos la diferencia de primer orden con la función diff, con el nivel 1, dada por la siguiente ecuación: ΔXt​=Xt​−Xt−1​. En el segundo gráfico se observa como la serie tiene una varianza constante no dependiente del transcurso del tiempo y que posee media cero.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pandas.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">autocorrelation_plot</span>
@@ -1576,6 +1578,8 @@ Name: BC, Length: 1153890, dtype: float64
 <img alt="_images/98a29b212e798512c7bd085ae2eb8b6cdbb6f313df864274dec565cfa473465f.png" src="_images/98a29b212e798512c7bd085ae2eb8b6cdbb6f313df864274dec565cfa473465f.png" />
 </div>
 </div>
+<p>Dado al nivel de computo que se requiere generar un plot de más de un millón de datos y su nivel operatorio con matrices, se remuestreo la serie a diaria para observar su comportamiento una vez se realizó la primera diferenciación.
+El primer gráfico (ACF del precio) muestra una autocorrelación alta y persistente que decae lentamente a medida que aumentan los rezagos, lo que indica que la serie tiene memoria de largo plazo y no es estacionaria, consecuente con un comportamiento tipo caminata aleatoria; además, el hecho de que tarde muchos lags en acercarse a cero refuerza que los valores pasados influyen fuertemente en los actuales. En contraste, el segundo gráfico (ACF de las primeras diferencias) presenta valores que oscilan rápidamente alrededor de cero y en su mayoría permanecen dentro de las bandas de confianza, lo que indica que la autocorrelación prácticamente desaparece y la serie diferenciada se comporta como un proceso estacionario.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">acf_BC</span><span class="p">,</span> <span class="n">confint_BC</span><span class="p">,</span> <span class="n">qstat_BC</span><span class="p">,</span> <span class="n">pvalues_BC</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">acf</span><span class="p">(</span><span class="n">df_5m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">],</span>
@@ -1622,6 +1626,7 @@ Null hypothesis is rejected at lag = 19 for p-val = 0.0
 </div>
 </div>
 </div>
+<p>El código calcula la función de autocorrelación (ACF) de la serie df_5m[‘BC’] usando hasta 20 rezagos (nlags=20) y, además, obtiene el estadístico Q de Ljung-Box con qstat y sus p-valores, lo que permite evaluar si la serie presenta autocorrelación conjunta hasta cada lag. El parámetro alpha=0.05 indica que se está trabajando con un intervalo de confianza del 95%, por lo que se rechaza la hipótesis nula cuando el p-valor es menor a 0.05. La hipótesis nula en este contexto es que no hay autocorrelación (la serie es ruido blanco) hasta ese rezago. El resultado muestra que en todos los lags (de 0 a 19) los p-valores son prácticamente 0, por lo que se rechaza la hipótesis nula en todos los casos, indicando que la serie presenta fuerte autocorrelación en todos los rezagos analizados.Esto confirma los planteamientos anteriormente mencionados donde a través de gráficos de autocorrelación parcial y autocorrelación, se definia que la seire de tiempo del precio de cierre posee autocorrelación y no presenta ruido blanco, ahora en conjunto con el test se confirma su comportamiento dependiente en el tiempo hasta el lag 19</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">acf_first_diff</span><span class="p">,</span> <span class="n">confint_first_diff</span><span class="p">,</span>\
@@ -1669,21 +1674,78 @@ Null hypothesis is rejected at lag = 19 for p-val = 2.627003639545754e-37
 </div>
 </div>
 </div>
-<p>Podemos ver su comportamiento estacional y aplicar las pruebas de ACF y ACF parcial</p>
+<p>Luego de realizar el test para la serie de tiempo diferenciada, aún no se llega a ser ruido blanco en términos estadísticos, a pesar de haber mostrado indices de esatbilidad en las gráficas de diferenciación, esot puede ser gracias a la gran volatilidad y la alta frecuencia del precio de cierre del Euro/dolar</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Precio diario EUR/USD&#39;</span><span class="p">)</span>
-<span class="n">df_daily</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Segunda diferencia</span>
+<span class="n">second_order_diff</span> <span class="o">=</span> <span class="n">df_5m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+
+<span class="c1"># ACF + Ljung-Box sobre segunda diferencia</span>
+<span class="n">acf_second_diff</span><span class="p">,</span> <span class="n">confint_second_diff</span><span class="p">,</span> \
+<span class="n">qstat_second_diff</span><span class="p">,</span> <span class="n">pvalues_second_diff</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">acf</span><span class="p">(</span><span class="n">second_order_diff</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                                                      <span class="n">nlags</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                                                      <span class="n">qstat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                      <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">p_val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pvalues_second_diff</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">p_val</span> <span class="o">&gt;</span> <span class="n">alpha</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Null hypothesis is accepted at lag = </span><span class="si">{}</span><span class="s1"> for p-val = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p_val</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Null hypothesis is rejected at lag = </span><span class="si">{}</span><span class="s1"> for p-val = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p_val</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/20dc995b47c08e06aad64ec32675746961413a42aaef43baf50ee5a1ed3c132c.png" src="_images/20dc995b47c08e06aad64ec32675746961413a42aaef43baf50ee5a1ed3c132c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Null hypothesis is rejected at lag = 0 for p-val = 0.0
+Null hypothesis is rejected at lag = 1 for p-val = 0.0
+Null hypothesis is rejected at lag = 2 for p-val = 0.0
+Null hypothesis is rejected at lag = 3 for p-val = 0.0
+Null hypothesis is rejected at lag = 4 for p-val = 0.0
+Null hypothesis is rejected at lag = 5 for p-val = 0.0
+Null hypothesis is rejected at lag = 6 for p-val = 0.0
+Null hypothesis is rejected at lag = 7 for p-val = 0.0
+Null hypothesis is rejected at lag = 8 for p-val = 0.0
+Null hypothesis is rejected at lag = 9 for p-val = 0.0
+Null hypothesis is rejected at lag = 10 for p-val = 0.0
+Null hypothesis is rejected at lag = 11 for p-val = 0.0
+Null hypothesis is rejected at lag = 12 for p-val = 0.0
+Null hypothesis is rejected at lag = 13 for p-val = 0.0
+Null hypothesis is rejected at lag = 14 for p-val = 0.0
+Null hypothesis is rejected at lag = 15 for p-val = 0.0
+Null hypothesis is rejected at lag = 16 for p-val = 0.0
+Null hypothesis is rejected at lag = 17 for p-val = 0.0
+Null hypothesis is rejected at lag = 18 for p-val = 0.0
+Null hypothesis is rejected at lag = 19 for p-val = 0.0
+</pre></div>
 </div>
 </div>
+</div>
+<p>Al realizar una segunda diferenciación tampoco nos duelve resultados donde podemos afirmar que sea estacionaria</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">serie</span> <span class="o">=</span> <span class="n">df_5m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>  <span class="c1"># o usa retornos/diferencias si quieres</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axs</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">serie</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Histogram $\{y_{t+</span><span class="si">%d</span><span class="s1">}\}_{t=1}^</span><span class="si">{T}</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">))</span> 
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bec78c3eb3df312ef34dde18e956959fef58c618a50c0f1b195bb0fe49d985ee.png" src="_images/bec78c3eb3df312ef34dde18e956959fef58c618a50c0f1b195bb0fe49d985ee.png" />
+</div>
+</div>
+<p>Los histogramas muestran que, al desplazar la serie en el tiempo la forma de la distribución se mantiene prácticamente igual, lo que indica que la distribución marginal es estable. Esto significa que, si se observa la serie en un momento específico sin considerar su relación con otros momentos, los valores tienden a distribuirse de manera similar a lo largo del tiempo (mismo rango, forma y asimetría). Sin embargo, esta estabilidad en la distribución no implica que la serie sea estacionaria, ya que no captura la dependencia temporal entre observaciones. De hecho, como se evidenció con la ACF y el test de Ljung-Box, la serie presenta autocorrelación significativa, lo que indica que existe memoria en el proceso.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monthly_resample</span> <span class="o">=</span> <span class="n">df_5m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">)</span>
@@ -1714,6 +1776,7 @@ Freq: ME, Name: BC, dtype: float64
 <img alt="_images/020fc8ea56c8a1c6629a6cc92f4482294f3144e7ebb2dc302bfda1500fa3e3ea.png" src="_images/020fc8ea56c8a1c6629a6cc92f4482294f3144e7ebb2dc302bfda1500fa3e3ea.png" />
 </div>
 </div>
+<p>La serie de la media mensual del EUR/USD muestra con mayor claridad la dinámica de largo plazo al eliminar el ruido intradía, permitiendo identificar tendencias más estructurales del tipo de cambio. Se observa un ciclo bien definido: una fase alcista marcada entre 2005 y 2008 donde el euro se aprecia hasta su máximo cercano a 1.6, seguida de una caída abrupta asociada a la crisis financiera global, y posteriormente un comportamiento más oscilante hasta aproximadamente 2014. A partir de ahí, la serie entra en una tendencia descendente más sostenida, alcanzando niveles cercanos a 1.1, con una leve recuperación hacia 2017–2018 y una estabilización posterior en niveles bajos.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -1728,6 +1791,7 @@ Freq: ME, Name: BC, dtype: float64
 <img alt="_images/746546395b2d97e03e5f4b0fd61e111f4225c9fe7ce7111e89a57984901b68e3.png" src="_images/746546395b2d97e03e5f4b0fd61e111f4225c9fe7ce7111e89a57984901b68e3.png" />
 </div>
 </div>
+<p>La ACF de la media mensual del EUR/USD muestra un decaimiento muy lento desde valores cercanos a 1, lo que evidencia una fuerte persistencia y confirma que la serie no es estacionaria, ya que mantiene memoria a lo largo de muchos rezagos. El cruce a valores negativos alrededor del lag 60 y el mínimo cercano al lag 100 sugieren la presencia de ciclos de largo plazo</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seasonal_diff</span> <span class="o">=</span> <span class="n">monthly_mean_bc</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
@@ -1747,6 +1811,54 @@ Freq: ME, Name: BC, dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Segunda diferencia sobre serie mensual</span>
+<span class="n">second_order_diff_monthly</span> <span class="o">=</span> <span class="n">monthly_mean_bc</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+
+<span class="c1"># ACF + Ljung-Box</span>
+<span class="n">acf_second_diff</span><span class="p">,</span> <span class="n">confint_second_diff</span><span class="p">,</span> \
+<span class="n">qstat_second_diff</span><span class="p">,</span> <span class="n">pvalues_second_diff</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">acf</span><span class="p">(</span><span class="n">second_order_diff_monthly</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+                                                      <span class="n">nlags</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                                                      <span class="n">qstat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                      <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">p_val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pvalues_second_diff</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">p_val</span> <span class="o">&gt;</span> <span class="n">alpha</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Null hypothesis is accepted at lag = </span><span class="si">{}</span><span class="s1"> for p-val = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p_val</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Null hypothesis is rejected at lag = </span><span class="si">{}</span><span class="s1"> for p-val = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p_val</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Null hypothesis is rejected at lag = 0 for p-val = 0.00018949333083204773
+Null hypothesis is rejected at lag = 1 for p-val = 0.0008191052852655749
+Null hypothesis is rejected at lag = 2 for p-val = 0.0015520035465629589
+Null hypothesis is rejected at lag = 3 for p-val = 0.002094202822690049
+Null hypothesis is rejected at lag = 4 for p-val = 0.004702911378492779
+Null hypothesis is rejected at lag = 5 for p-val = 0.009667066939365306
+Null hypothesis is rejected at lag = 6 for p-val = 0.0012498453892234628
+Null hypothesis is rejected at lag = 7 for p-val = 0.0008008235193786973
+Null hypothesis is rejected at lag = 8 for p-val = 0.000573413038815228
+Null hypothesis is rejected at lag = 9 for p-val = 0.0005219800098943669
+Null hypothesis is rejected at lag = 10 for p-val = 0.00017437235332060701
+Null hypothesis is rejected at lag = 11 for p-val = 8.717510893783597e-05
+Null hypothesis is rejected at lag = 12 for p-val = 2.9238080677298196e-05
+Null hypothesis is rejected at lag = 13 for p-val = 3.8476135628463086e-05
+Null hypothesis is rejected at lag = 14 for p-val = 6.882800621930663e-05
+Null hypothesis is rejected at lag = 15 for p-val = 1.765460117237113e-05
+Null hypothesis is rejected at lag = 16 for p-val = 3.0811532277762346e-05
+Null hypothesis is rejected at lag = 17 for p-val = 2.055664395240038e-05
+Null hypothesis is rejected at lag = 18 for p-val = 3.997872816023993e-06
+Null hypothesis is rejected at lag = 19 for p-val = 4.259219501708348e-06
+</pre></div>
+</div>
+</div>
+</div>
+<p>La diferenciación estacional de orden 12 eliminó la tendencia de largo plazo que se veía en la serie original, y ahora la serie oscila alrededor de cero, pero sigue sin ser rudio blanco según el test de  Ljung-Box</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;ACF of Seasonal differences EUR/USD&#39;</span><span class="p">)</span>
@@ -1759,6 +1871,7 @@ Freq: ME, Name: BC, dtype: float64
 <img alt="_images/6b465d50790ee1823fe9dbc0e788df6f04956caaf984232a67a2d3ac8f79fb4a.png" src="_images/6b465d50790ee1823fe9dbc0e788df6f04956caaf984232a67a2d3ac8f79fb4a.png" />
 </div>
 </div>
+<p>La diferenciación estacional mejora notablemente el comportamiento de la serie en comparación con la ACF original, evidenciado en un decaimiento mucho más rápido de la autocorrelación, que pasa de valores cercanos a 0.9 a cruzar el cero en los rezagos inciales. No obstante, persiste un patrón ondulatorio de tipo sinusoidal que se extiende hasta rezagos altos (alrededor de 150), con picos que superan las bandas de confianza en lags como  75 lo que indica la presencia de estructura cíclica remanente. En conjunto, esto sugiere que, aunque la serie ha mejorado significativamente, aún no es completamente estacionaria y conserva dinámicas de largo plazo, posiblemente asociadas a ciclos estructurales del mercado EUR/USD.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa</span><span class="w"> </span><span class="kn">import</span> <span class="n">stattools</span>
@@ -1780,6 +1893,7 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 </div>
 </div>
 </div>
+<p>Los resultados confirman que la serie de tiempo no es ruido blanco, en los 9 rezagos.</p>
 </section>
 <section id="prueba-de-dickey-fuller">
 <h3><strong>2.14.2. Prueba de Dickey-Fuller</strong><a class="headerlink" href="#prueba-de-dickey-fuller" title="Link to this heading">#</a></h3>
@@ -1787,15 +1901,32 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adf_result</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">adfuller</span><span class="p">(</span><span class="n">df_5m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">],</span> <span class="n">autolag</span><span class="o">=</span><span class="s1">&#39;AIC&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p-val of the ADF test in EUR/USD monthly mean:&#39;</span><span class="p">,</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">adf_result</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">adfuller</span><span class="p">(</span><span class="n">bc_daily</span><span class="p">,</span> <span class="n">autolag</span><span class="o">=</span><span class="s1">&#39;AIC&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p-val of the ADF test in EUR/USD daily mean:&#39;</span><span class="p">,</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p-val of the ADF test in EUR/USD monthly mean: 0.4329592567477676
+p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adf_result</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">adfuller</span><span class="p">(</span><span class="n">monthly_mean_bc</span><span class="p">,</span> <span class="n">autolag</span><span class="o">=</span><span class="s1">&#39;AIC&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p-val of the ADF test in EUR/USD mo8nthly mean:&#39;</span><span class="p">,</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p-val of the ADF test in EUR/USD mo8nthly mean: 0.561217675632001
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se realiza la prueba de Dickey-Fuller, y como medida de error se usa el AIC, en este la prueba dickey fuller para el precio de cierre cada 5 minutos, diaria y mensual son  no estacionaria</p>
 </section>
 </section>
 <section id="descomposicion-de-series-temporales">
@@ -1829,6 +1960,7 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 <img alt="_images/376456ba05962cb7c8bf21344501fbee3c993623a05e5f3208848fbac78f2eea.png" src="_images/376456ba05962cb7c8bf21344501fbee3c993623a05e5f3208848fbac78f2eea.png" />
 </div>
 </div>
+<p>Se transforma la serie de 5 minutos a frecuencia diaria calculando el promedio por día y luego se aplica una media móvil de 5 días para suavizar las fluctuaciones. Finalmente, se grafican ambas series para comparar el comportamiento diario con su tendencia <a class="reference external" href="http://suavizada.La">suavizada.La</a> gráfica superior muestra el precio diario original y la inferior la media móvil de 5 días. Al compararlas se puede ver que la media móvil suaviza el ruido diario pero preserva perfectamente la estructura de tendencia, lo que confirma que 5 días es una ventana corta que no distorsiona la señal.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Medias móviles</span>
@@ -1874,10 +2006,10 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 <img alt="_images/ca49a2727e584abdf4a7f11d758f5079afe92a2d7eaf6c423483bb5f431dd2f1.png" src="_images/ca49a2727e584abdf4a7f11d758f5079afe92a2d7eaf6c423483bb5f431dd2f1.png" />
 </div>
 </div>
+<p>Se calculan medias móviles de distintos tamaños (2, 3 y 4 días) sobre la serie diaria y luego se vuelven a suavizar aplicando la media móvil otra vez (doble o triple suavizado). Después se eliminan los valores faltantes generados por estos cálculos y se grafican, junto con la serie original, para comparar cómo cada nivel de suavización reduce el ruido y resalta la tendencia en distintos grados.A medida que aumenta el tamaño de la ventana y el número de suavizaciones aplicadas, la media móvil se aleja más del precio original y responde con mayor lentitud a los cambios. Esto se observa claramente en el mínimo del 08-02-2005, donde la línea más suavizada tarda tanto en ajustarse a la caída como en reflejar la posterior recuperación. En términos prácticos, la media 2x2 es la más reactiva y sigue de cerca al precio, la 2x4 introduce el mayor rezago al priorizar el suavizado, y la 3x3 representa un punto intermedio entre ambas. En consecuencia, existe un trade-off importante: ventanas más grandes permiten reducir el ruido, pero a costa de perder capacidad para capturar cambios abruptos en la serie.</p>
 </section>
 <section id="ajuste-estacional-mediante-media-movil">
 <h3><strong>2.15.2. Ajuste estacional mediante media móvil</strong><a class="headerlink" href="#ajuste-estacional-mediante-media-movil" title="Link to this heading">#</a></h3>
-<p>El EUR/USD muestra una serie temporal no estacionaria con memoria persistente, confirmada por la prueba ADF (p-val = 0.43) y la autocorrelación significativa en todos los rezagos analizados. La serie presenta una tendencia no lineal clara: una fase alcista entre 2005 y 2008 que llevó el par hasta niveles de 1.60, seguida de una caída abrupta durante la crisis financiera de 2008-2009, una recuperación parcial hasta 2011, y una tendencia bajista sostenida desde 2014 que estabilizó el precio alrededor de 1.10. La descomposición mensual revela que la variabilidad del precio es baja y relativamente constante a lo largo del tiempo, con una desviación estándar mensual que no supera 0.05, lo que indica que aunque el nivel del precio cambia estructuralmente, la volatilidad intrínseca de la serie es estable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MA4</span> <span class="o">=</span> <span class="n">bc_daily_ma</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -1899,6 +2031,7 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 <img alt="_images/a54445c60a712c291e6702f9b3daeb2865599b350233ca2143f91c7be7cc2ceb.png" src="_images/a54445c60a712c291e6702f9b3daeb2865599b350233ca2143f91c7be7cc2ceb.png" />
 </div>
 </div>
+<p>El código aplica una media móvil 2x4 con ventana de 90 días sobre el precio diario, lo que implica un doble suavizado que, en la práctica, equivale a filtrar la serie con un horizonte cercano a seis meses. La línea resultante logra capturar con claridad los ciclos de largo plazo del EUR/USD, eliminando el ruido de corto plazo y permitiendo identificar aproximadamente cuatro ciclos completos a lo largo de los 18 años analizados. Este buen ajuste se debe a que la combinación de una ventana relativamente amplia (90 días) con un segundo suavizado reduce las fluctuaciones transitorias sin perder la forma general de la tendencia, logrando un equilibrio adecuado entre filtrado de ruido y conservación de la dinámica estructural de la serie.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Residuos sobre media móvil trimestral</span>
@@ -1919,6 +2052,7 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 <img alt="_images/b3cd85f05a5497a696ec8b682d7f57f639878ed8b44c2f984446bc831293890c.png" src="_images/b3cd85f05a5497a696ec8b682d7f57f639878ed8b44c2f984446bc831293890c.png" />
 </div>
 </div>
+<p>Aquí se calculan los residuos respecto a una media móvil trimestral (2x4 de 90 días), es decir, se toma la serie diaria y se le resta su versión suavizada para aislar lo que la media móvil no logra explicar. En concreto, al hacer residuals = bc_daily_ma - TwoXMA4, se está separando la serie en dos partes: la tendencia de largo plazo (capturada por la media móvil) y las fluctuaciones de corto plazo (los residuos). Estos residuos representan el “ruido” o las desviaciones alrededor de la tendencia, permitiendo analizar si esas variaciones son aleatorias o si aún contienen estructura (como autocorrelación o patrones). En otras palabras, se resta porque se quiere medir qué tan lejos está el precio real de su tendencia suavizada en cada momento, lo cual es clave para evaluar si el modelo de suavizado está capturando bien la dinámica principal de la serie.Los residuos oscilan alrededor de cero durante casi todo el período, lo que confirma que la media móvil trimestral capturó bien la tendencia. El único valor atípico claro es el mínimo de -0.20 en 2009, correspondiente al efecto de la crisis financiera del 2008 y acentuandose en el 2009, con consecuencias en el precio un año después.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
@@ -1934,6 +2068,7 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 <img alt="_images/81f200ec234b0e157dd3d7f2800557f475c72f080878f962dbb86315b0514dbc.png" src="_images/81f200ec234b0e157dd3d7f2800557f475c72f080878f962dbb86315b0514dbc.png" />
 </div>
 </div>
+<p>El código grafica la autocorrelación (ACF) de los residuos de la media móvil usando las primeras 8000 observaciones, con el fin de verificar si, tras eliminar la tendencia, aún existe dependencia temporal o si los residuos se comportan como ruido blanco.Los residuos aún muestran autocorrelación significativa en los primeros lags con un patrón ondulatorio que supera las bandas de confianza, lo que indica que la media móvil trimestral no eliminó toda la estructura de la serie. Sin embargo, a partir del lag ~3500 la ACF converge dentro de las bandas, sugiriendo que a distancias muy largas los residuos se comportan como ruido blanco.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residuals_qtr_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">residuals</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
@@ -1949,6 +2084,7 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 <img alt="_images/aaee34eaa6665385dc08daea3005f3ad05b8d8e682c66f16bf3825d88e6ac617.png" src="_images/aaee34eaa6665385dc08daea3005f3ad05b8d8e682c66f16bf3825d88e6ac617.png" />
 </div>
 </div>
+<p>Aquí se aplican transformaciones a los residuos para eliminar posible estacionalidad y estabilizar la serie antes de analizar su autocorrelación. En residuals.diff(4) se hace una diferencia de orden 4, que en este contexto diario actúa como una aproximación a un patrón trimestral (comparar con valores de varios periodos atrás), y luego se aplica logaritmo para estabilizar la varianza. Después se eliminan los valores nulos generados por la transformación y se grafica la ACF de estos residuos diferenciados, con el objetivo de verificar si, tras quitar tendencia y un posible componente estacional, la serie resultante se acerca más a un comportamiento de ruido blanco.Tras aplicar diferenciación trimestral y logaritmo, la ACF cae abruptamente desde ~0.40 en el lag 1 partir del allí prácticamente toda la autocorrelación es estadísticamente insignificante.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">pval_monthly_mean</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">acf</span><span class="p">(</span><span class="n">residuals_qtr_diff</span><span class="p">,</span>
@@ -1965,6 +2101,7 @@ Null hypothesis is rejected for lags: (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dty
 </div>
 </div>
 </div>
+<p>El test nos indica que a pesar de que  todas las transformaciones que se han hecho (suavizado, residuos, diferenciación “trimestral”, log) han reducido parte de la estructura de autocorrelación y varianza dependiente del tiempo, pero no han logrado eliminarla completamente, por lo que sigue sin ser ruido blanco, ni estacionaria.</p>
 </section>
 </section>
 <section id="media-movil-ponderada">
