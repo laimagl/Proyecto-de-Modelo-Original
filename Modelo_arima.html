@@ -1,0 +1,1996 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Modelo Arima &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8cbcdc84" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=d2032c04" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8cbcdc84" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=b4a3e8ba" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.2/css/all.min.css?v=f4fbef65" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Modelo_arima';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="_static/language_data.js?v=d4673a71"></script>
+    <script src="_static/searchtools.js?v=63a53a7d"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=7583a70d"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=4bc35cb3"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?v=4e4fcec4"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="1. Introducción" href="notebooks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html"><strong>1. Introducción</strong></a></li>
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelo Arima</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FModelo_arima.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Modelo Arima</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intervalo-de-confianza">Intervalo de confianza</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="modelo-arima">
+<h1>Modelo Arima<a class="headerlink" href="#modelo-arima" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">kagglehub</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Download latest version</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">kagglehub</span><span class="o">.</span><span class="n">dataset_download</span><span class="p">(</span><span class="s2">&quot;imetomi/eur-usd-forex-pair-historical-data-2002-2019&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Path to dataset files:&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning: Looks like you&#39;re using an outdated `kagglehub` version (installed: 0.3.13), please consider upgrading to the latest version (1.0.0).
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Path to dataset files: C:\Users\planeacion\.cache\kagglehub\datasets\imetomi\eur-usd-forex-pair-historical-data-2002-2019\versions\2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;eurusd_minute.csv&quot;</span><span class="p">))</span>
+<span class="c1"># Combinar Date y Time para la el horario exacto</span>
+<span class="n">df_time</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="s1">&#39;Date&#39;</span> <span class="ow">in</span> <span class="n">df_time</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="s1">&#39;Time&#39;</span> <span class="ow">in</span> <span class="n">df_time</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">df_time</span><span class="p">[</span><span class="s1">&#39;Datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_time</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">df_time</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">])</span>
+    <span class="n">df_time</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Datetime&#39;</span><span class="p">)</span>
+    <span class="n">df_time</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Time&#39;</span><span class="p">])</span>
+    <span class="n">df_time</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df_time</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_time</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>eurusd_hour.csv
+eurusd_minute.csv
+eurusd_news.csv
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                         BO      BH      BL      BC  BCh      AO      AH  \
+Datetime                                                                   
+2005-01-02 18:29:00  1.3555  1.3555  1.3555  1.3555  0.0  1.3565  1.3565   
+2005-01-02 18:38:00  1.3555  1.3555  1.3555  1.3555  0.0  1.3565  1.3565   
+2005-01-02 18:51:00  1.3562  1.3562  1.3562  1.3562  0.0  1.3572  1.3572   
+2005-01-02 18:52:00  1.3560  1.3560  1.3560  1.3560  0.0  1.3570  1.3570   
+2005-01-02 18:55:00  1.3563  1.3563  1.3563  1.3563  0.0  1.3573  1.3573   
+
+                         AL      AC  ACh  
+Datetime                                  
+2005-01-02 18:29:00  1.3565  1.3565  0.0  
+2005-01-02 18:38:00  1.3565  1.3565  0.0  
+2005-01-02 18:51:00  1.3572  1.3572  0.0  
+2005-01-02 18:52:00  1.3570  1.3570  0.0  
+2005-01-02 18:55:00  1.3573  1.3573  0.0  
+(5618819, 10)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_15m</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;15T&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">df_15m</span><span class="o">=</span><span class="n">df_15m</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\planeacion\AppData\Local\Temp\ipykernel_25852\3325662277.py:1: FutureWarning: &#39;T&#39; is deprecated and will be removed in a future version, please use &#39;min&#39; instead.
+  df_15m = df_time.resample(&#39;15T&#39;).median().dropna()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">acorr_ljungbox</span>
+
+<span class="n">ljung_box</span> <span class="o">=</span> <span class="n">acorr_ljungbox</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">],</span> <span class="n">lags</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ljung_box</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">acorr_ljungbox</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">ljung_box</span> <span class="o">=</span> <span class="n">acorr_ljungbox</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">],</span> <span class="n">lags</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="nb">print</span><span class="p">(</span><span class="n">ljung_box</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\stats\diagnostic.py:462,</span> in <span class="ni">acorr_ljungbox</span><span class="nt">(x, lags, boxpierce, model_df, period, return_df, auto_lag)</span>
+<span class="g g-Whitespace">    </span><span class="mi">458</span> <span class="n">maxlag</span> <span class="o">=</span> <span class="n">lags</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">460</span> <span class="c1"># normalize by nobs not (nobs-nlags)</span>
+<span class="g g-Whitespace">    </span><span class="mi">461</span> <span class="c1"># SS: unbiased=False is default now</span>
+<span class="ne">--&gt; </span><span class="mi">462</span> <span class="n">sacf</span> <span class="o">=</span> <span class="n">acf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">nlags</span><span class="o">=</span><span class="n">maxlag</span><span class="p">,</span> <span class="n">fft</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">463</span> <span class="n">sacf2</span> <span class="o">=</span> <span class="n">sacf</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">maxlag</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">nobs</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxlag</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">464</span> <span class="n">qljungbox</span> <span class="o">=</span> <span class="n">nobs</span> <span class="o">*</span> <span class="p">(</span><span class="n">nobs</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">sacf2</span><span class="p">)[</span><span class="n">lags</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\tsa\stattools.py:701,</span> in <span class="ni">acf</span><span class="nt">(x, adjusted, nlags, qstat, fft, alpha, bartlett_confint, missing)</span>
+<span class="g g-Whitespace">    </span><span class="mi">698</span> <span class="k">if</span> <span class="n">nlags</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">699</span>     <span class="n">nlags</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">nobs</span><span class="p">)),</span> <span class="n">nobs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">701</span> <span class="n">avf</span> <span class="o">=</span> <span class="n">acovf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">adjusted</span><span class="o">=</span><span class="n">adjusted</span><span class="p">,</span> <span class="n">demean</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fft</span><span class="o">=</span><span class="n">fft</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="n">missing</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">702</span> <span class="n">acf</span> <span class="o">=</span> <span class="n">avf</span><span class="p">[:</span> <span class="n">nlags</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">avf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">703</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">qstat</span> <span class="ow">or</span> <span class="n">alpha</span><span class="p">):</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\pandas\util\_decorators.py:213,</span> in <span class="ni">deprecate_kwarg.&lt;locals&gt;._deprecate_kwarg.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">211</span>         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">212</span>     <span class="n">kwargs</span><span class="p">[</span><span class="n">new_arg_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_arg_value</span>
+<span class="ne">--&gt; </span><span class="mi">213</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\tsa\stattools.py:526,</span> in <span class="ni">acovf</span><span class="nt">(x, adjusted, demean, fft, missing, nlag)</span>
+<span class="g g-Whitespace">    </span><span class="mi">524</span>     <span class="n">acov</span> <span class="o">=</span> <span class="n">acov</span><span class="o">.</span><span class="n">real</span>
+<span class="g g-Whitespace">    </span><span class="mi">525</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">526</span>     <span class="n">acov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">xo</span><span class="p">,</span> <span class="n">xo</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">)[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:]</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:]</span>
+<span class="g g-Whitespace">    </span><span class="mi">528</span> <span class="k">if</span> <span class="n">nlag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">529</span>     <span class="c1"># Copy to allow gc of full array rather than view</span>
+<span class="g g-Whitespace">    </span><span class="mi">530</span>     <span class="k">return</span> <span class="n">acov</span><span class="p">[:</span> <span class="n">lag_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\numpy\core\numeric.py:731,</span> in <span class="ni">correlate</span><span class="nt">(a, v, mode)</span>
+<span class="g g-Whitespace">    </span><span class="mi">660</span> <span class="nd">@array_function_dispatch</span><span class="p">(</span><span class="n">_correlate_dispatcher</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">661</span> <span class="k">def</span><span class="w"> </span><span class="nf">correlate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">662</span><span class="w">     </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">663</span><span class="sd">     Cross-correlation of two 1-dimensional sequences.</span>
+<span class="g g-Whitespace">    </span><span class="mi">664</span><span class="sd"> </span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">729</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">730</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">731</span>     <span class="k">return</span> <span class="n">multiarray</span><span class="o">.</span><span class="n">correlate2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.stattools</span><span class="w"> </span><span class="kn">import</span> <span class="n">adfuller</span>
+
+
+<span class="n">adf_result</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">],</span> <span class="n">maxlag</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">autolag</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ADF Statistic:&quot;</span><span class="p">,</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value:&quot;</span><span class="p">,</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: -135.21520666972074
+p-value: 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ADF Statistic: </span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">adf_result</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value: </span><span class="si">{:.2e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: -135.215207
+p-value: 0.00e+00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.graphics.tsaplots</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_acf</span><span class="p">,</span> <span class="n">plot_pacf</span> 
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.tsa.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smtsa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.tsa.arima.model</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">arima_model</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;darkgrid&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plotds</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">nlag</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">fig_size</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">)):</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+         <span class="n">xt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fig_size</span><span class="p">)</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    
+    <span class="n">ax_xt</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">layout</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">colspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax_acf</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">layout</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">ax_pacf</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">layout</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="n">xt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax_xt</span><span class="p">)</span>
+    <span class="n">ax_xt</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Time Series&#39;</span><span class="p">)</span>
+    <span class="n">plot_acf</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_acf</span><span class="p">)</span>
+    <span class="n">plot_pacf</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_pacf</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotds</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" src="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.arima.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">ARIMA</span>
+
+<span class="n">model_0</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_0</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                          ARIMA   Log Likelihood             2367966.526
+Date:                Sat, 04 Apr 2026   AIC                       -4735929.051
+Time:                        13:10:56   BIC                       -4735907.324
+Sample:                             0   HQIC                      -4735922.833
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.812e-06   8.44e-07     -6.887      0.000   -7.47e-06   -4.16e-06
+sigma2      2.752e-07   1.64e-10   1673.543      0.000    2.75e-07    2.75e-07
+===================================================================================
+Ljung-Box (L1) (Q):                7802.89   Jarque-Bera (JB):          11709413.04
+Prob(Q):                              0.00   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                             0.02
+Prob(H) (two-sided):                  0.00   Kurtosis:                        29.98
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_1</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_1</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                 ARIMA(1, 0, 0)   Log Likelihood             2371927.217
+Date:                Sat, 04 Apr 2026   AIC                       -4743848.433
+Time:                        13:13:04   BIC                       -4743815.842
+Sample:                             0   HQIC                      -4743839.107
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.701e-07   9.75e-07     -0.585      0.559   -2.48e-06    1.34e-06
+ar.L1          0.1422      0.001    185.564      0.000       0.141       0.144
+sigma2      2.698e-07   1.62e-10   1670.123      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   2.64   Jarque-Bera (JB):          11831415.89
+Prob(Q):                              0.10   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.12
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_2</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_2</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                 ARIMA(2, 0, 0)   Log Likelihood             2371992.562
+Date:                Sat, 04 Apr 2026   AIC                       -4743977.124
+Time:                        13:17:21   BIC                       -4743933.669
+Sample:                             0   HQIC                      -4743964.689
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.701e-07   9.57e-07     -0.596      0.551   -2.45e-06    1.31e-06
+ar.L1          0.1448      0.001    187.117      0.000       0.143       0.146
+ar.L2         -0.0184      0.001    -20.727      0.000      -0.020      -0.017
+sigma2      2.697e-07   1.62e-10   1668.036      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11885180.56
+Prob(Q):                              0.95   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.18
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_3</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_3</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                 ARIMA(3, 0, 0)   Log Likelihood             2371999.409
+Date:                Sat, 04 Apr 2026   AIC                       -4743988.817
+Time:                        13:28:23   BIC                       -4743934.498
+Sample:                             0   HQIC                      -4743973.273
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.701e-07   9.63e-07     -0.592      0.554   -2.46e-06    1.32e-06
+ar.L1          0.1449      0.001    187.136      0.000       0.143       0.146
+ar.L2         -0.0193      0.001    -21.203      0.000      -0.021      -0.017
+ar.L3          0.0060      0.001      6.638      0.000       0.004       0.008
+sigma2      2.697e-07   1.62e-10   1660.615      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11867009.14
+Prob(Q):                              1.00   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.16
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">acorr_ljungbox</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">model_0</span><span class="p">,</span> <span class="n">model_1</span><span class="p">,</span> <span class="n">model_2</span><span class="p">,</span> <span class="n">model_3</span><span class="p">]):</span>
+    <span class="n">lb</span> <span class="o">=</span> <span class="n">acorr_ljungbox</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">AR(</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Ljung-Box:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AR(0) Ljung-Box:
+        lb_stat  lb_pvalue
+10  7820.309736        0.0
+
+AR(1) Ljung-Box:
+       lb_stat     lb_pvalue
+10  155.223495  3.131941e-28
+
+AR(2) Ljung-Box:
+      lb_stat  lb_pvalue
+10  24.687172   0.005971
+
+AR(3) Ljung-Box:
+      lb_stat  lb_pvalue
+10  11.029254   0.355243
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_3</span><span class="o">.</span><span class="n">plot_diagnostics</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7999e98c1da544caade9563cf1402e32865e7557bf5751fd0d368828f2f61287.png" src="_images/7999e98c1da544caade9563cf1402e32865e7557bf5751fd0d368828f2f61287.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.tsa.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smtsa</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.arima.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">ARIMA</span>
+
+<span class="n">model_ma0</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_ma0</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                          ARIMA   Log Likelihood             2367966.526
+Date:                Sat, 04 Apr 2026   AIC                       -4735929.051
+Time:                        13:43:07   BIC                       -4735907.324
+Sample:                             0   HQIC                      -4735922.833
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.812e-06   8.44e-07     -6.887      0.000   -7.47e-06   -4.16e-06
+sigma2      2.752e-07   1.64e-10   1673.543      0.000    2.75e-07    2.75e-07
+===================================================================================
+Ljung-Box (L1) (Q):                7802.89   Jarque-Bera (JB):          11709413.04
+Prob(Q):                              0.00   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                             0.02
+Prob(H) (two-sided):                  0.00   Kurtosis:                        29.98
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                 ARIMA(0, 0, 1)   Log Likelihood             2371996.883
+Date:                Sat, 04 Apr 2026   AIC                       -4743987.766
+Time:                        13:44:53   BIC                       -4743955.174
+Sample:                             0   HQIC                      -4743978.439
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.701e-07   9.57e-07     -0.596      0.551   -2.45e-06    1.31e-06
+ma.L1          0.1449      0.001    188.171      0.000       0.143       0.146
+sigma2      2.697e-07   1.61e-10   1673.752      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11882281.28
+Prob(Q):                              0.99   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.18
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                 ARIMA(0, 0, 2)   Log Likelihood             2371997.130
+Date:                Sat, 04 Apr 2026   AIC                       -4743986.260
+Time:                        13:46:55   BIC                       -4743942.805
+Sample:                             0   HQIC                      -4743973.825
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.701e-07   9.59e-07     -0.595      0.552   -2.45e-06    1.31e-06
+ma.L1          0.1449      0.001    187.150      0.000       0.143       0.146
+ma.L2          0.0017      0.001      1.927      0.054   -2.97e-05       0.004
+sigma2      2.697e-07   1.61e-10   1670.693      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11879236.58
+Prob(Q):                              1.00   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.18
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                 ARIMA(0, 0, 3)   Log Likelihood             2371999.378
+Date:                Sat, 04 Apr 2026   AIC                       -4743988.756
+Time:                        13:49:26   BIC                       -4743934.437
+Sample:                             0   HQIC                      -4743973.212
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.701e-07   9.62e-07     -0.593      0.553   -2.46e-06    1.32e-06
+ma.L1          0.1449      0.001    187.083      0.000       0.143       0.146
+ma.L2          0.0017      0.001      1.918      0.055   -3.76e-05       0.004
+ma.L3          0.0035      0.001      3.923      0.000       0.002       0.005
+sigma2      2.697e-07   1.62e-10   1661.474      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11867958.88
+Prob(Q):                              1.00   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.16
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ma1</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_ma1</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                 ARIMA(0, 0, 1)   Log Likelihood             2371996.883
+Date:                Sat, 04 Apr 2026   AIC                       -4743987.766
+Time:                        13:51:29   BIC                       -4743955.174
+Sample:                             0   HQIC                      -4743978.439
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.701e-07   9.57e-07     -0.596      0.551   -2.45e-06    1.31e-06
+ma.L1          0.1449      0.001    188.171      0.000       0.143       0.146
+sigma2      2.697e-07   1.61e-10   1673.752      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11882281.28
+Prob(Q):                              0.99   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.18
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ma2</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_ma2</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                 ARIMA(0, 0, 2)   Log Likelihood             2371997.130
+Date:                Sat, 04 Apr 2026   AIC                       -4743986.260
+Time:                        13:56:24   BIC                       -4743942.805
+Sample:                             0   HQIC                      -4743973.825
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.701e-07   9.59e-07     -0.595      0.552   -2.45e-06    1.31e-06
+ma.L1          0.1449      0.001    187.150      0.000       0.143       0.146
+ma.L2          0.0017      0.001      1.927      0.054   -2.97e-05       0.004
+sigma2      2.697e-07   1.61e-10   1670.693      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11879236.58
+Prob(Q):                              1.00   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.18
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ma3</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_ma3</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                 ARIMA(0, 0, 3)   Log Likelihood             2371999.378
+Date:                Sat, 04 Apr 2026   AIC                       -4743988.756
+Time:                        13:58:17   BIC                       -4743934.437
+Sample:                             0   HQIC                      -4743973.212
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.701e-07   9.62e-07     -0.593      0.553   -2.46e-06    1.32e-06
+ma.L1          0.1449      0.001    187.083      0.000       0.143       0.146
+ma.L2          0.0017      0.001      1.918      0.055   -3.76e-05       0.004
+ma.L3          0.0035      0.001      3.923      0.000       0.002       0.005
+sigma2      2.697e-07   1.62e-10   1661.474      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11867958.88
+Prob(Q):                              1.00   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.16
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">comparison_ma</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Modelo&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;MA(0)&quot;</span><span class="p">,</span> <span class="s2">&quot;MA(1)&quot;</span><span class="p">,</span> <span class="s2">&quot;MA(2)&quot;</span><span class="p">,</span> <span class="s2">&quot;MA(3)&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;AIC&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">model_ma0</span><span class="o">.</span><span class="n">aic</span><span class="p">,</span> <span class="n">model_ma1</span><span class="o">.</span><span class="n">aic</span><span class="p">,</span> <span class="n">model_ma2</span><span class="o">.</span><span class="n">aic</span><span class="p">,</span> <span class="n">model_ma3</span><span class="o">.</span><span class="n">aic</span><span class="p">],</span>
+    <span class="s2">&quot;BIC&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">model_ma0</span><span class="o">.</span><span class="n">bic</span><span class="p">,</span> <span class="n">model_ma1</span><span class="o">.</span><span class="n">bic</span><span class="p">,</span> <span class="n">model_ma2</span><span class="o">.</span><span class="n">bic</span><span class="p">,</span> <span class="n">model_ma3</span><span class="o">.</span><span class="n">bic</span><span class="p">],</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">comparison_ma</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;AIC&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Modelo           AIC           BIC
+3  MA(3) -4.743989e+06 -4.743934e+06
+1  MA(1) -4.743988e+06 -4.743955e+06
+2  MA(2) -4.743986e+06 -4.743943e+06
+0  MA(0) -4.735929e+06 -4.735907e+06
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">acorr_ljungbox</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">model_ma0</span><span class="p">,</span> <span class="n">model_ma1</span><span class="p">,</span> <span class="n">model_ma2</span><span class="p">,</span> <span class="n">model_ma3</span><span class="p">]):</span>
+    <span class="n">lb</span> <span class="o">=</span> <span class="n">acorr_ljungbox</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">MA(</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Ljung-Box:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MA(0) Ljung-Box:
+        lb_stat  lb_pvalue
+10  7820.309736        0.0
+
+MA(1) Ljung-Box:
+      lb_stat  lb_pvalue
+10  16.015223   0.099197
+
+MA(2) Ljung-Box:
+     lb_stat  lb_pvalue
+10  15.54318   0.113478
+
+MA(3) Ljung-Box:
+     lb_stat  lb_pvalue
+10  11.08615   0.350846
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ma2</span><span class="o">.</span><span class="n">plot_diagnostics</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e0c4b06819051bdbab65a984a075319d378a49671f462dbb6a7d003b122f2213.png" src="_images/e0c4b06819051bdbab65a984a075319d378a49671f462dbb6a7d003b122f2213.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ma3</span><span class="o">.</span><span class="n">plot_diagnostics</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c399186e5bc9353bf3c4c59971ee2c0831b6c35a99914fe5f6d578d9e748a84b.png" src="_images/c399186e5bc9353bf3c4c59971ee2c0831b6c35a99914fe5f6d578d9e748a84b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.arima.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">ARIMA</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">aicVal</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>   <span class="c1"># AR(1) a AR(3)</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>  <span class="c1"># MA(1) a MA(3)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">q</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+            <span class="n">aicVal</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">aic</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ARMA(</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">) listo&quot;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ARMA(</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">) falló&quot;</span><span class="p">)</span>
+
+<span class="n">dfAIC</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">aicVal</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AR(p)&#39;</span><span class="p">,</span> <span class="s1">&#39;MA(q)&#39;</span><span class="p">,</span> <span class="s1">&#39;AIC&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Ranking por AIC:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dfAIC</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;AIC&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ARMA(1,1) listo
+ARMA(1,2) listo
+ARMA(1,3) listo
+ARMA(2,1) listo
+ARMA(2,2) listo
+ARMA(2,3) listo
+ARMA(3,1) listo
+ARMA(3,2) listo
+ARMA(3,3) listo
+
+Ranking por AIC:
+   AR(p)  MA(q)           AIC
+5      2      3 -4.743988e+06
+8      3      3 -4.743987e+06
+3      2      1 -4.743987e+06
+4      2      2 -4.743987e+06
+2      1      3 -4.743987e+06
+0      1      1 -4.743986e+06
+1      1      2 -4.743986e+06
+6      3      1 -4.735881e+06
+7      3      2 -4.735879e+06
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arma_21</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">resid</span> <span class="o">=</span> <span class="n">arma_21</span><span class="o">.</span><span class="n">resid</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">acorr_ljungbox</span>
+
+<span class="n">lb</span> <span class="o">=</span> <span class="n">acorr_ljungbox</span><span class="p">(</span><span class="n">resid</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      lb_stat  lb_pvalue
+10  12.537679   0.250681
+20  19.663092   0.479174
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phi1</span> <span class="o">=</span> <span class="n">arma_21</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ar.L1&#39;</span><span class="p">]</span>
+<span class="n">phi2</span> <span class="o">=</span> <span class="n">arma_21</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ar.L2&#39;</span><span class="p">]</span>
+<span class="n">theta1</span> <span class="o">=</span> <span class="n">arma_21</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ma.L1&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;phi1 =&quot;</span><span class="p">,</span> <span class="n">phi1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;phi2 =&quot;</span><span class="p">,</span> <span class="n">phi2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;theta1 =&quot;</span><span class="p">,</span> <span class="n">theta1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>phi1 = -0.1788239472551713
+phi2 = 0.027608303027035295
+theta1 = 0.32371461581744315
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa</span><span class="w"> </span><span class="kn">import</span> <span class="n">arima_process</span>
+
+<span class="n">ar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="n">phi1</span><span class="p">,</span> <span class="o">-</span><span class="n">phi2</span><span class="p">])</span>
+<span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">irf</span> <span class="o">=</span> <span class="n">arima_process</span><span class="o">.</span><span class="n">arma_impulse_response</span><span class="p">(</span><span class="n">ar</span><span class="p">,</span> <span class="n">ma</span><span class="p">,</span> <span class="n">leads</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">irf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 1.00000000e+00  1.44890669e-01  1.69838175e-03  3.69647415e-03
+ -6.14128661e-04  2.11874290e-04 -5.48432470e-05  1.56567755e-05
+ -4.31393538e-06  1.20369196e-06 -3.34349382e-07  9.30215685e-08
+ -2.58653031e-08  7.19350325e-09 -2.00046777e-09  5.56331961e-10
+ -1.54714998e-10  4.30261280e-11 -1.19655206e-11  3.32760000e-12]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">irf</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Impulse Response - ARMA(2,1)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Lag&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Impact&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8b3ac2c9057d1a066811b6419407f53312a0c09d973d0cefd1fe339e0763292c.png" src="_images/8b3ac2c9057d1a066811b6419407f53312a0c09d973d0cefd1fe339e0763292c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arma_11</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arma_11</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:                 ARIMA(1, 0, 1)   Log Likelihood             2371997.151
+Date:                Sat, 04 Apr 2026   AIC                       -4743986.302
+Time:                        14:07:15   BIC                       -4743942.847
+Sample:                             0   HQIC                      -4743973.867
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const      -5.701e-07   9.59e-07     -0.595      0.552   -2.45e-06    1.31e-06
+ar.L1          0.0122      0.000     31.699      0.000       0.011       0.013
+ma.L1          0.1327      0.000    342.141      0.000       0.132       0.133
+sigma2      2.697e-07   1.61e-10   1673.136      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11879108.78
+Prob(Q):                              1.00   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.17
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+[2] Covariance matrix is singular or near-singular, with condition number 7.21e+16. Standard errors may be unstable.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">acorr_ljungbox</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">arma_11</span><span class="p">]):</span>
+    <span class="n">lb</span> <span class="o">=</span> <span class="n">acorr_ljungbox</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">ARMA(1,1)(</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) Ljung-Box:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ARMA(1,1)(0) Ljung-Box:
+      lb_stat  lb_pvalue
+10  15.501876   0.114807
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.stattools</span><span class="w"> </span><span class="kn">import</span> <span class="n">adfuller</span>
+
+<span class="n">adf_result</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">autolag</span><span class="o">=</span><span class="s2">&quot;AIC&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ADF statistic:&quot;</span><span class="p">,</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value:&quot;</span><span class="p">,</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;lags used:&quot;</span><span class="p">,</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;nobs:&quot;</span><span class="p">,</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF statistic: -271.44000627769896
+p-value: 0.0
+lags used: 4
+nobs: 386060
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.stattools</span><span class="w"> </span><span class="kn">import</span> <span class="n">adfuller</span>
+
+<span class="n">adf_resid</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">arma_11</span><span class="o">.</span><span class="n">resid</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">autolag</span><span class="o">=</span><span class="s2">&quot;AIC&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ADF statistic residuos:&quot;</span><span class="p">,</span> <span class="n">adf_resid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value residuos:&quot;</span><span class="p">,</span> <span class="n">adf_resid</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF statistic residuos: -278.29717926710725
+p-value residuos: 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phi</span> <span class="o">=</span> <span class="n">arma_11</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ar.L1&#39;</span><span class="p">]</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">arma_11</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ma.L1&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;phi:&quot;</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;theta:&quot;</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>phi: 0.012238779490948197
+theta: 0.13265188915376097
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa</span><span class="w"> </span><span class="kn">import</span> <span class="n">arima_process</span>
+
+<span class="n">ar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="n">phi</span><span class="p">])</span>   
+<span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">irf</span> <span class="o">=</span> <span class="n">arima_process</span><span class="o">.</span><span class="n">arma_impulse_response</span><span class="p">(</span><span class="n">ar</span><span class="p">,</span> <span class="n">ma</span><span class="p">,</span> <span class="n">leads</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">irf</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Impulse Response - ARMA(1,1)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Lag&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Impact&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5b8f6a1e4a80650d2ce6010cb59db81673ddfbb511b6dbbfe7513b7bde75ab72.png" src="_images/5b8f6a1e4a80650d2ce6010cb59db81673ddfbb511b6dbbfe7513b7bde75ab72.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;BC&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Datetime
+2005-01-02 18:30:00    1.35550
+2005-01-02 18:45:00    1.35620
+2005-01-02 19:00:00    1.35640
+2005-01-02 19:15:00    1.35585
+2005-01-02 19:30:00    1.35530
+                        ...   
+2020-04-29 22:45:00    1.08751
+2020-04-29 23:00:00    1.08733
+2020-04-29 23:15:00    1.08749
+2020-04-29 23:30:00    1.08771
+2020-04-29 23:45:00    1.08772
+Name: BC, Length: 386065, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotds</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;BC&quot;</span><span class="p">])</span>
+<span class="n">plotds</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/92a1fdcac560dbac1e771e09ec55ccbd6d17d223a746d68a4bbb970822596203.png" src="_images/92a1fdcac560dbac1e771e09ec55ccbd6d17d223a746d68a4bbb970822596203.png" />
+<img alt="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" src="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aicVal</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">ari</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">maj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="n">arma_obj</span> <span class="o">=</span> <span class="n">smtsa</span><span class="o">.</span><span class="n">ARIMA</span><span class="p">(</span>
+            <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="n">ari</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maj</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+        
+        <span class="n">aicVal</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">ari</span><span class="p">,</span> <span class="n">maj</span><span class="p">,</span> <span class="n">arma_obj</span><span class="o">.</span><span class="n">aic</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAIC</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">aicVal</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AR(p)&#39;</span><span class="p">,</span> <span class="s1">&#39;MA(q)&#39;</span><span class="p">,</span> <span class="s1">&#39;AIC&#39;</span><span class="p">])</span>
+<span class="n">dfAIC</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AR(p)</th>
+      <th>MA(q)</th>
+      <th>AIC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>-4.743848e+06</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>-4.743986e+06</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>2</td>
+      <td>-4.743986e+06</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>0</td>
+      <td>-4.743977e+06</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>1</td>
+      <td>-4.743987e+06</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2</td>
+      <td>2</td>
+      <td>-4.743987e+06</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAIC</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;AIC&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AR(p)</th>
+      <th>MA(q)</th>
+      <th>AIC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>1</td>
+      <td>-4.743987e+06</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arma_obj_fin</span> <span class="o">=</span> <span class="n">smtsa</span><span class="o">.</span><span class="n">ARIMA</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;ARMA&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">arma_obj_fin</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">)</span>
+<span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axarr</span><span class="p">)</span>
+<span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;ARMA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axarr</span><span class="p">)</span>
+<span class="n">axarr</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;ARMA(2,1)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Retorno log&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9c09c997b5b2be18d58d29c1868ee52a06b095590751e9ef83e8f6d3bdbe1906.png" src="_images/9c09c997b5b2be18d58d29c1868ee52a06b095590751e9ef83e8f6d3bdbe1906.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotds</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">],</span> <span class="n">nlag</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" src="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean1</span> <span class="o">=</span> <span class="n">df_15m</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">125</span><span class="p">][</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mean2</span> <span class="o">=</span> <span class="n">df_15m</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">125</span><span class="p">:][</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">var1</span> <span class="o">=</span> <span class="n">df_15m</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">125</span><span class="p">][</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+<span class="n">var2</span> <span class="o">=</span> <span class="n">df_15m</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">125</span><span class="p">:][</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mean1=</span><span class="si">%f</span><span class="s1">, mean2=</span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">mean1</span><span class="p">,</span> <span class="n">mean2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;variance1=</span><span class="si">%f</span><span class="s1">, variance2=</span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean1=-0.000052, mean2=-0.000001
+variance1=0.000001, variance2=0.000000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">het_arch</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">het_arch</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(13278.05864802507, 0.0, 1375.0622165973296, 0.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Datetime&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/8b8adc80f3c4a801e33a686aba96279f3c761f97e6b651e058ff1122281b059a.png" src="_images/8b8adc80f3c4a801e33a686aba96279f3c761f97e6b651e058ff1122281b059a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.stattools</span><span class="w"> </span><span class="kn">import</span> <span class="n">adfuller</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adf_result</span><span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ADF Statistic: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p-value: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: -271.440006
+p-value: 0.000000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">periodogram</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">freqs</span><span class="p">,</span> <span class="n">power</span> <span class="o">=</span> <span class="n">periodogram</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">freqs</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Periodograma&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/193920757dc599760ed78be49037c1b7368405a234d9e4666011134da3073886.png" src="_images/193920757dc599760ed78be49037c1b7368405a234d9e4666011134da3073886.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">tsa</span><span class="o">.</span><span class="n">statespace</span><span class="o">.</span><span class="n">SARIMAX</span><span class="p">(</span>
+    <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">],</span>
+    <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">,</span>
+    <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">seasonal_order</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.graphics.tsaplots</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_acf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">plot_acf</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/70c17489c23ada4badb4631b97c00d746bbe06cdf46a5cea6909092e4331da2f.png" src="_images/70c17489c23ada4badb4631b97c00d746bbe06cdf46a5cea6909092e4331da2f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod1</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">tsa</span><span class="o">.</span><span class="n">statespace</span><span class="o">.</span><span class="n">SARIMAX</span><span class="p">(</span>
+    <span class="n">y</span><span class="p">,</span>
+    <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">,</span>
+    <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">seasonal_order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mod1</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AIC no estacional:&quot;</span><span class="p">,</span> <span class="n">mod1</span><span class="o">.</span><span class="n">aic</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Retorno_log   No. Observations:               386065
+Model:               SARIMAX(2, 0, 1)   Log Likelihood             2371998.480
+Date:                Sat, 04 Apr 2026   AIC                       -4743988.961
+Time:                        16:30:53   BIC                       -4743945.506
+Sample:                             0   HQIC                      -4743976.526
+                             - 386065                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1         -0.1789      0.000   -441.227      0.000      -0.180      -0.178
+ar.L2          0.0276      0.001     30.681      0.000       0.026       0.029
+ma.L1          0.3238      0.000    848.830      0.000       0.323       0.325
+sigma2      2.696e-07   1.61e-10   1671.098      0.000    2.69e-07     2.7e-07
+===================================================================================
+Ljung-Box (L1) (Q):                   0.01   Jarque-Bera (JB):          11868210.07
+Prob(Q):                              0.94   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.68   Skew:                            -0.00
+Prob(H) (two-sided):                  0.00   Kurtosis:                        30.16
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+[2] Covariance matrix is singular or near-singular, with condition number 5.08e+16. Standard errors may be unstable.
+AIC no estacional: -4743988.960995782
+</pre></div>
+</div>
+</div>
+</div>
+<section id="intervalo-de-confianza">
+<h2>Intervalo de confianza<a class="headerlink" href="#intervalo-de-confianza" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tau_h</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="n">forecast</span> <span class="o">=</span> <span class="n">arma_obj_fin</span><span class="o">.</span><span class="n">get_forecast</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="n">tau_h</span><span class="p">)</span>
+
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">forecast</span><span class="o">.</span><span class="n">predicted_mean</span>
+<span class="n">yhat_conf_int</span> <span class="o">=</span> <span class="n">forecast</span><span class="o">.</span><span class="n">conf_int</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">yhat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(40,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">yhat</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">yhat</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Forecast&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+    <span class="n">x_axis</span><span class="p">,</span>
+    <span class="n">yhat_conf_int</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">yhat_conf_int</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightblue&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;95% CI&quot;</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Forecasting Horizon&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Forecasted Value&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;ARMA Forecast&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2a69faab813f9024c2498b75902c8d31f5cbbeae08a0fb1e55dbeb6af9ec9038.png" src="_images/2a69faab813f9024c2498b75902c8d31f5cbbeae08a0fb1e55dbeb6af9ec9038.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="notebooks.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>1. Introducción</strong></p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intervalo-de-confianza">Intervalo de confianza</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
