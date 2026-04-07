@@ -1,15 +1,4 @@
 Traceback (most recent call last):
-  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 778, in _async_poll_for_reply
-    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
-  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\jupyter_core\utils\__init__.py", line 182, in ensure_async
-    result = await obj
-  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\jupyter_client\channels.py", line 315, in get_msg
-    raise Empty
-_queue.Empty
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
   File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
   File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 1305, in execute
@@ -20,18 +9,209 @@ Traceback (most recent call last):
     return future.result()
   File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 1001, in async_execute_cell
-    exec_reply = await self.task_poll_for_reply
-  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 802, in _async_poll_for_reply
-    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
-  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 852, in _async_handle_timeout
-    raise CellTimeoutError.error_from_timeout_and_cell(
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
-The message was: Cell execution timed out.
-Here is a preview of the cell contents:
--------------------
-sse_vec = pd.Series()
-for lambda_ in lambda_vec:
-    sse_vec.loc[len(sse_vec)] = sse_speed(lambda_)
--------------------
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# =============================================================
+# COLAB GPU PERFORMANCE SCRIPT
+# =============================================================
+
+import os, gc, time
+import numpy as np
+import torch
+import tensorflow as tf
+from IPython.display import display, HTML
+
+# ── 1. HARDWARE DIAGNOSTICS ──────────────────────────────────
+print("=" * 55)
+print("  HARDWARE DIAGNOSTICS")
+print("=" * 55)
+
+# GPU info
+if torch.cuda.is_available():
+    gpu = torch.cuda.get_device_properties(0)
+    vram_total = gpu.total_memory / 1e9
+    vram_used  = torch.cuda.memory_allocated(0) / 1e9
+    vram_free  = vram_total - vram_used
+    print(f"  GPU  : {gpu.name}")
+    print(f"  VRAM : {vram_total:.1f} GB total | {vram_free:.1f} GB free")
+    print(f"  CUDA : {torch.version.cuda}")
+else:
+    print("  GPU  : NOT AVAILABLE — check Runtime > Change runtime type")
+
+# RAM
+import psutil
+ram = psutil.virtual_memory()
+print(f"  RAM  : {ram.total/1e9:.1f} GB total | {ram.available/1e9:.1f} GB available")
+
+# CPU
+cpu_cores = os.cpu_count()
+print(f"  CPU  : {cpu_cores} cores")
+print("=" * 55)
+
+
+# ── 2. GPU MEMORY CLEANUP ────────────────────────────────────
+def free_gpu_memory():
+    """Release all unused GPU + CPU memory caches."""
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        torch.cuda.ipc_collect()
+    tf.keras.backend.clear_session()
+    freed_vram = torch.cuda.memory_reserved(0) / 1e9 if torch.cuda.is_available() else 0
+    print(f"  Memory freed | VRAM reserved now: {freed_vram:.2f} GB")
+
+free_gpu_memory()
+
+
+# ── 3. PYTORCH SPEED SETTINGS ────────────────────────────────
+if torch.cuda.is_available():
+    # Fastest convolution algorithm (benchmarks first run, then locks best)
+    torch.backends.cudnn.benchmark    = True
+    torch.backends.cudnn.enabled      = True
+    # Deterministic=False allows CuDNN non-deterministic ops (faster)
+    torch.backends.cudnn.deterministic = False
+    # TF32 on Ampere GPUs (A100, A10G) — same precision feel, ~3× faster matmul
+    torch.backends.cuda.matmul.allow_tf32  = True
+    torch.backends.cudnn.allow_tf32        = True
+    print("  PyTorch: cuDNN benchmark ON | TF32 ON")
+
+
+# ── 4. TENSORFLOW XLA + MIXED PRECISION ──────────────────────
+tf.config.optimizer.set_jit(True)          # XLA JIT compilation
+policy = tf.keras.mixed_precision.Policy("mixed_float16")
+tf.keras.mixed_precision.set_global_policy(policy)
+print(f"  TensorFlow: XLA ON | precision → {policy.name}")
+
+
+# ── 5. PYTORCH MIXED PRECISION HELPERS ───────────────────────
+# Usage:
+#   with autocast():
+#       output = model(input)
+#   scaler.scale(loss).backward()
+#   scaler.step(optimizer)
+#   scaler.update()
+
+from torch.cuda.amp import autocast, GradScaler
+scaler = GradScaler(enabled=torch.cuda.is_available())
+print("  PyTorch AMP: GradScaler ready")
+
+
+# ── 6. OPTIMAL DATALOADER TEMPLATE ──────────────────────────
+def make_dataloader(dataset, batch_size=64, train=True):
+    """
+    Returns a DataLoader tuned for Colab's CPU count and GPU transfer.
+    pin_memory   → faster CPU→GPU transfer via pinned (page-locked) memory
+    persistent_workers → workers stay alive between epochs (saves fork time)
+    prefetch_factor  → each worker pre-fetches this many batches ahead
+    """
+    return torch.utils.data.DataLoader(
+        dataset,
+        batch_size      = batch_size,
+        shuffle         = train,
+        num_workers     = min(4, cpu_cores),   # Colab caps at 4 usable workers
+        pin_memory      = torch.cuda.is_available(),
+        persistent_workers = True,
+        prefetch_factor = 2,
+        drop_last       = train,               # avoid small last batch issues
+    )
+
+
+# ── 7. GRADIENT ACCUMULATION TEMPLATE ────────────────────────
+# Simulates a larger batch without extra VRAM.
+# effective_batch = batch_size × accumulation_steps
+ACCUMULATION_STEPS = 4   # ← tune this
+
+def train_step_with_accumulation(model, optimizer, dataloader, loss_fn):
+    model.train()
+    optimizer.zero_grad()
+    for step, (X, y) in enumerate(dataloader):
+        X, y = X.cuda(), y.cuda()
+        with autocast():
+            pred = model(X)
+            loss = loss_fn(pred, y) / ACCUMULATION_STEPS   # normalize
+        scaler.scale(loss).backward()
+        if (step + 1) % ACCUMULATION_STEPS == 0:
+            scaler.step(optimizer)
+            scaler.update()
+            optimizer.zero_grad()
+
+
+# ── 8. CHECKPOINT HELPERS (save to Drive) ────────────────────
+DRIVE_PATH = "/content/drive/MyDrive/checkpoints"   # mount Drive first
+
+def save_checkpoint(model, optimizer, epoch, loss, filename="ckpt.pt"):
+    os.makedirs(DRIVE_PATH, exist_ok=True)
+    torch.save({
+        "epoch"     : epoch,
+        "model"     : model.state_dict(),
+        "optimizer" : optimizer.state_dict(),
+        "loss"      : loss,
+    }, f"{DRIVE_PATH}/{filename}")
+    print(f"  Checkpoint saved → {DRIVE_PATH}/{filename}")
+
+def load_checkpoint(model, optimizer, filename="ckpt.pt"):
+    path = f"{DRIVE_PATH}/{filename}"
+    if not os.path.exists(path):
+        print("  No checkpoint found, starting fresh.")
+        return 0, None
+    ckpt = torch.load(path, map_location="cuda" if torch.cuda.is_available() else "cpu")
+    model.load_state_dict(ckpt["model"])
+    optimizer.load_state_dict(ckpt["optimizer"])
+    print(f"  Checkpoint loaded (epoch {ckpt['epoch']})")
+    return ckpt["epoch"], ckpt["loss"]
+
+
+# ── 9. LIVE GPU MONITOR ──────────────────────────────────────
+def gpu_stats():
+    """Print a one-liner GPU snapshot. Call inside your training loop."""
+    if not torch.cuda.is_available():
+        print("  No GPU")
+        return
+    alloc    = torch.cuda.memory_allocated(0)  / 1e9
+    reserved = torch.cuda.memory_reserved(0)   / 1e9
+    total    = torch.cuda.get_device_properties(0).total_memory / 1e9
+    util     = (alloc / total) * 100
+    bar      = "█" * int(util // 5) + "░" * (20 - int(util // 5))
+    print(f"  GPU [{bar}] {util:4.1f}%  |  {alloc:.2f}/{total:.1f} GB used")
+
+# Quick test
+gpu_stats()
+
+
+# ── 10. BENCHMARK ────────────────────────────────────────────
+def benchmark_gpu(size=4096, reps=20):
+    """Matmul throughput test — useful to compare T4 vs A100."""
+    if not torch.cuda.is_available():
+        print("  Benchmark skipped — no GPU"); return
+    A = torch.randn(size, size, device="cuda", dtype=torch.float16)
+    B = torch.randn(size, size, device="cuda", dtype=torch.float16)
+    torch.cuda.synchronize()
+    t0 = time.perf_counter()
+    for _ in range(reps):
+        torch.matmul(A, B)
+    torch.cuda.synchronize()
+    elapsed = time.perf_counter() - t0
+    tflops = (2 * size**3 * reps) / elapsed / 1e12
+    print(f"  Benchmark: {tflops:.1f} TFLOPS  ({elapsed*1000/reps:.1f} ms/iter) — {torch.cuda.get_device_name(0)}")
+
+benchmark_gpu()
+
+print("\n  All optimizations active. Ready to train.")
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[1], line 7[0m
+[0;32m      5[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mos[39;00m[38;5;241m,[39m[38;5;250m [39m[38;5;21;01mgc[39;00m[38;5;241m,[39m[38;5;250m [39m[38;5;21;01mtime[39;00m
+[0;32m      6[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+[1;32m----> 7[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m
+[0;32m      8[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mtensorflow[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mtf[39;00m
+[0;32m      9[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mIPython[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdisplay[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m display, HTML
+
+[1;31mModuleNotFoundError[0m: No module named 'torch'
 

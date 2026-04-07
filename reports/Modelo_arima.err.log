@@ -30,11 +30,9 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-y = df_15m["Retorno_log"].dropna()
-import pandas as pd
-from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.stats.diagnostic import acorr_ljungbox
 
-model_0 = ARIMA(y, order=(0, 0, 0)).fit()
-print(model_0.summary())
+ljung_box = acorr_ljungbox(df_15m['Retorno_log'], lags=[10], return_df=True)
+print(ljung_box)
 -------------------
 

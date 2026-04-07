@@ -30,7 +30,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-import tensorflow as tf
-
+['from statsmodels.graphics.tsaplots import plot_acf', '', '# Diario', "bc_daily = df_5m['BC'].resample('D').median().dropna()", 'plt.figure(figsize=(12, 5.5))']
+...
+['# 5 minutos', 'plt.figure(figsize=(12, 5.5))', "plot_acf(df_5m['BC'], lags=30)", "plt.title('Autocorrelation EUR/USD - 5 minutos')", 'plt.show()']
 -------------------
 
