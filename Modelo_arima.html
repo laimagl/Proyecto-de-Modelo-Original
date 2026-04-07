@@ -86,6 +86,7 @@
     <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?v=4e4fcec4"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modelo de suavización exponencial" href="suavizado.html" />
     <link rel="prev" title="1. Introducción" href="notebooks.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -209,6 +210,7 @@
 
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelo Arima</a></li>
+<li class="toctree-l1"><a class="reference internal" href="suavizado.html"><strong>Modelo de suavización exponencial</strong></a></li>
 </ul>
 
     </div>
@@ -420,9 +422,30 @@ document.write(`
 <h1>Modelo Arima<a class="headerlink" href="#modelo-arima" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_ipython</span>
+
+<span class="n">FUENTE</span> <span class="o">=</span> <span class="s2">&quot;Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">agregar_fuente_post_celda</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="c1"># Mostrar SIEMPRE (más estable)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;sub&gt;</span><span class="si">{</span><span class="n">FUENTE</span><span class="si">}</span><span class="s2">&lt;/sub&gt;&quot;</span><span class="p">))</span>
+
+<span class="n">ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
+
+<span class="c1"># limpiar registros anteriores</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">ip</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="s2">&quot;post_run_cell&quot;</span><span class="p">,</span> <span class="n">agregar_fuente_post_celda</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">ip</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;post_run_cell&quot;</span><span class="p">,</span> <span class="n">agregar_fuente_post_celda</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -432,8 +455,6 @@ document.write(`
 
 <span class="c1"># Download latest version</span>
 <span class="n">path</span> <span class="o">=</span> <span class="n">kagglehub</span><span class="o">.</span><span class="n">dataset_download</span><span class="p">(</span><span class="s2">&quot;imetomi/eur-usd-forex-pair-historical-data-2002-2019&quot;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Path to dataset files:&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -445,9 +466,7 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning: Looks like you&#39;re using an outdated `kagglehub` version (installed: 0.3.13), please consider upgrading to the latest version (1.0.0).
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Path to dataset files: C:\Users\planeacion\.cache\kagglehub\datasets\imetomi\eur-usd-forex-pair-historical-data-2002-2019\versions\2
-</pre></div>
-</div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -475,7 +494,9 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>eurusd_hour.csv
-eurusd_minute.csv
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>eurusd_minute.csv
 eurusd_news.csv
 </pre></div>
 </div>
@@ -497,6 +518,7 @@ Datetime
 (5618819, 10)
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -504,16 +526,51 @@ Datetime
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_15m</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;15T&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">df_15m</span><span class="o">=</span><span class="n">df_15m</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_15m</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\planeacion\AppData\Local\Temp\ipykernel_25852\3325662277.py:1: FutureWarning: &#39;T&#39; is deprecated and will be removed in a future version, please use &#39;min&#39; instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\planeacion\AppData\Local\Temp\ipykernel_3616\2857038933.py:1: FutureWarning: &#39;T&#39; is deprecated and will be removed in a future version, please use &#39;min&#39; instead.
   df_15m = df_time.resample(&#39;15T&#39;).median().dropna()
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                           BO        BH        BL       BC      BCh        AO  \
+Datetime                                                                        
+2005-01-02 18:30:00  1.355500  1.355500  1.355500  1.35550  0.00000  1.356500   
+2005-01-02 18:45:00  1.356200  1.356200  1.356200  1.35620  0.00000  1.357200   
+2005-01-02 19:00:00  1.356400  1.356400  1.356400  1.35640  0.00000  1.357400   
+2005-01-02 19:15:00  1.355700  1.356000  1.355650  1.35585  0.00000  1.356700   
+2005-01-02 19:30:00  1.355350  1.355350  1.355300  1.35530  0.00000  1.356350   
+...                       ...       ...       ...      ...      ...       ...   
+2020-04-29 22:45:00  1.087510  1.087510  1.087510  1.08751  0.00000  1.087670   
+2020-04-29 23:00:00  1.087335  1.087360  1.087320  1.08733  0.00001  1.087505   
+2020-04-29 23:15:00  1.087470  1.087500  1.087450  1.08749 -0.00001  1.087630   
+2020-04-29 23:30:00  1.087685  1.087740  1.087680  1.08771 -0.00002  1.087835   
+2020-04-29 23:45:00  1.087730  1.087755  1.087715  1.08772  0.00000  1.087885   
+
+                          AH        AL        AC       ACh  Retorno_log  
+Datetime                                                                 
+2005-01-02 18:30:00  1.35650  1.356500  1.356500  0.000000     0.000000  
+2005-01-02 18:45:00  1.35720  1.357200  1.357200  0.000000     0.000516  
+2005-01-02 19:00:00  1.35740  1.357400  1.357400  0.000000     0.000147  
+2005-01-02 19:15:00  1.35700  1.356650  1.356850  0.000000    -0.000406  
+2005-01-02 19:30:00  1.35635  1.356300  1.356300  0.000000    -0.000406  
+...                      ...       ...       ...       ...          ...  
+2020-04-29 22:45:00  1.08768  1.087660  1.087680  0.000000     0.000078  
+2020-04-29 23:00:00  1.08752  1.087480  1.087490  0.000015    -0.000166  
+2020-04-29 23:15:00  1.08766  1.087610  1.087640 -0.000010     0.000147  
+2020-04-29 23:30:00  1.08789  1.087835  1.087855 -0.000025     0.000202  
+2020-04-29 23:45:00  1.08790  1.087860  1.087865  0.000005     0.000009  
+
+[386065 rows x 11 columns]
+</pre></div>
+</div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Los datos se remuestrean a un intervalo de 15 minutos, ya que esto facilita su manejo a nivel computacional y evita la saturación de memoria. A este nivel de agregación, la serie de precios de cierre mantiene un comportamiento similar en términos de autocorrelación, pruebas de ruido blanco y propiedades de caminata aleatoria.</p>
+<p>Sin embargo, para el modelado se utilizan los retornos logarítmicos, ya que el principal interés es analizar la varianza de la serie. Los precios en niveles suelen ser no estacionarios y presentan varianza no constante, mientras que los retornos logarítmicos tienden a ser más cercanos a estacionarios y permiten estudiar de forma más adecuada la dinámica de la <a class="reference external" href="http://volatilidad.Se">volatilidad.Se</a> utilizan retornos logarítmicos en lugar de retornos simples o precios en niveles porque presentan varias propiedades que los hacen más adecuados para el análisis financiero. En primer lugar, permiten trabajar con cambios relativos (porcentuales) en lugar de cambios absolutos, lo cual es más coherente al analizar activos financieros.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">acorr_ljungbox</span>
@@ -524,57 +581,14 @@ Datetime
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">acorr_ljungbox</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">ljung_box</span> <span class="o">=</span> <span class="n">acorr_ljungbox</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">],</span> <span class="n">lags</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="nb">print</span><span class="p">(</span><span class="n">ljung_box</span><span class="p">)</span>
-
-<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\stats\diagnostic.py:462,</span> in <span class="ni">acorr_ljungbox</span><span class="nt">(x, lags, boxpierce, model_df, period, return_df, auto_lag)</span>
-<span class="g g-Whitespace">    </span><span class="mi">458</span> <span class="n">maxlag</span> <span class="o">=</span> <span class="n">lags</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">460</span> <span class="c1"># normalize by nobs not (nobs-nlags)</span>
-<span class="g g-Whitespace">    </span><span class="mi">461</span> <span class="c1"># SS: unbiased=False is default now</span>
-<span class="ne">--&gt; </span><span class="mi">462</span> <span class="n">sacf</span> <span class="o">=</span> <span class="n">acf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">nlags</span><span class="o">=</span><span class="n">maxlag</span><span class="p">,</span> <span class="n">fft</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">463</span> <span class="n">sacf2</span> <span class="o">=</span> <span class="n">sacf</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">maxlag</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">nobs</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxlag</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">464</span> <span class="n">qljungbox</span> <span class="o">=</span> <span class="n">nobs</span> <span class="o">*</span> <span class="p">(</span><span class="n">nobs</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">sacf2</span><span class="p">)[</span><span class="n">lags</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-
-<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\tsa\stattools.py:701,</span> in <span class="ni">acf</span><span class="nt">(x, adjusted, nlags, qstat, fft, alpha, bartlett_confint, missing)</span>
-<span class="g g-Whitespace">    </span><span class="mi">698</span> <span class="k">if</span> <span class="n">nlags</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">699</span>     <span class="n">nlags</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">nobs</span><span class="p">)),</span> <span class="n">nobs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">701</span> <span class="n">avf</span> <span class="o">=</span> <span class="n">acovf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">adjusted</span><span class="o">=</span><span class="n">adjusted</span><span class="p">,</span> <span class="n">demean</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fft</span><span class="o">=</span><span class="n">fft</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="n">missing</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">702</span> <span class="n">acf</span> <span class="o">=</span> <span class="n">avf</span><span class="p">[:</span> <span class="n">nlags</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">avf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">703</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">qstat</span> <span class="ow">or</span> <span class="n">alpha</span><span class="p">):</span>
-
-<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\pandas\util\_decorators.py:213,</span> in <span class="ni">deprecate_kwarg.&lt;locals&gt;._deprecate_kwarg.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">211</span>         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">212</span>     <span class="n">kwargs</span><span class="p">[</span><span class="n">new_arg_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_arg_value</span>
-<span class="ne">--&gt; </span><span class="mi">213</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\tsa\stattools.py:526,</span> in <span class="ni">acovf</span><span class="nt">(x, adjusted, demean, fft, missing, nlag)</span>
-<span class="g g-Whitespace">    </span><span class="mi">524</span>     <span class="n">acov</span> <span class="o">=</span> <span class="n">acov</span><span class="o">.</span><span class="n">real</span>
-<span class="g g-Whitespace">    </span><span class="mi">525</span> <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">526</span>     <span class="n">acov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">xo</span><span class="p">,</span> <span class="n">xo</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">)[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:]</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:]</span>
-<span class="g g-Whitespace">    </span><span class="mi">528</span> <span class="k">if</span> <span class="n">nlag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">529</span>     <span class="c1"># Copy to allow gc of full array rather than view</span>
-<span class="g g-Whitespace">    </span><span class="mi">530</span>     <span class="k">return</span> <span class="n">acov</span><span class="p">[:</span> <span class="n">lag_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\numpy\core\numeric.py:731,</span> in <span class="ni">correlate</span><span class="nt">(a, v, mode)</span>
-<span class="g g-Whitespace">    </span><span class="mi">660</span> <span class="nd">@array_function_dispatch</span><span class="p">(</span><span class="n">_correlate_dispatcher</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">661</span> <span class="k">def</span><span class="w"> </span><span class="nf">correlate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">662</span><span class="w">     </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">663</span><span class="sd">     Cross-correlation of two 1-dimensional sequences.</span>
-<span class="g g-Whitespace">    </span><span class="mi">664</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">729</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">730</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">731</span>     <span class="k">return</span> <span class="n">multiarray</span><span class="o">.</span><span class="n">correlate2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        lb_stat  lb_pvalue
+10  7820.309736        0.0
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El test de ljung box nos dice que la serie de no es ruido blanco.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.stattools</span><span class="w"> </span><span class="kn">import</span> <span class="n">adfuller</span>
@@ -592,22 +606,10 @@ Datetime
 p-value: 0.0
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ADF Statistic: </span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">adf_result</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value: </span><span class="si">{:.2e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: -135.215207
-p-value: 0.00e+00
-</pre></div>
-</div>
-</div>
-</div>
+<p>El test de estacionariedad indica que la serie es estacionaria. Esto se debe a que se trabaja con retornos logarítmicos, los cuales corresponden a la primera diferencia del logaritmo de los precios, eliminando así la tendencia presente en la serie original y permitiendo obtener una serie más cercana a estacionaria.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -618,16 +620,12 @@ p-value: 0.00e+00
 <span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.tsa.arima.model</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">arima_model</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.arima.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">ARIMA</span>
+
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;darkgrid&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plotds</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">nlag</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">fig_size</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">)):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plotds</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">nlag</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">fig_size</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">)):</span>
     
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
          <span class="n">xt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>
@@ -645,20 +643,16 @@ p-value: 0.00e+00
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
     
     <span class="k">return</span> <span class="kc">None</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotds</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">])</span>
+<span class="n">plotds</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" src="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>La función de autocorrelación (ACF) y la autocorrelación parcial (PACF) muestran que la serie presenta una dependencia temporal muy débil, ya que, aunque se observa una ligera autocorrelación en el primer rezago, el resto de los rezagos se encuentran cercanos a cero. Esto sugiere que la serie se comporta de manera similar a un proceso de ruido blanco en la media, lo cual es consistente con el comportamiento típico de los retornos financieros. No obstante, esta aparente ausencia de autocorrelación en la media no implica independencia total, ya que este tipo de series suele presentar dependencia en la varianza, dando lugar a fenómenos como el clustering de volatilidad.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
@@ -671,33 +665,192 @@ p-value: 0.00e+00
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               SARIMAX Results                                
-==============================================================================
-Dep. Variable:            Retorno_log   No. Observations:               386065
-Model:                          ARIMA   Log Likelihood             2367966.526
-Date:                Sat, 04 Apr 2026   AIC                       -4735929.051
-Time:                        13:10:56   BIC                       -4735907.324
-Sample:                             0   HQIC                      -4735922.833
-                             - 386065                                         
-Covariance Type:                  opg                                         
-==============================================================================
-                 coef    std err          z      P&gt;|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-const      -5.812e-06   8.44e-07     -6.887      0.000   -7.47e-06   -4.16e-06
-sigma2      2.752e-07   1.64e-10   1673.543      0.000    2.75e-07    2.75e-07
-===================================================================================
-Ljung-Box (L1) (Q):                7802.89   Jarque-Bera (JB):          11709413.04
-Prob(Q):                              0.00   Prob(JB):                         0.00
-Heteroskedasticity (H):               0.68   Skew:                             0.02
-Prob(H) (two-sided):                  0.00   Kurtosis:                        29.98
-===================================================================================
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.arima.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">ARIMA</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">model_0</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="nb">print</span><span class="p">(</span><span class="n">model_0</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 
-Warnings:
-[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\tsa\arima\model.py:395,</span> in <span class="ni">ARIMA.fit</span><span class="nt">(self, start_params, transformed, includes_fixed, method, method_kwargs, gls, gls_kwargs, cov_type, cov_kwds, return_params, low_memory)</span>
+<span class="g g-Whitespace">    </span><span class="mi">392</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">393</span>     <span class="n">method_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;disp&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">395</span>     <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">396</span>         <span class="n">return_params</span><span class="o">=</span><span class="n">return_params</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="n">low_memory</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">397</span>         <span class="n">cov_type</span><span class="o">=</span><span class="n">cov_type</span><span class="p">,</span> <span class="n">cov_kwds</span><span class="o">=</span><span class="n">cov_kwds</span><span class="p">,</span> <span class="o">**</span><span class="n">method_kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">398</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_params</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">399</span>         <span class="n">res</span><span class="o">.</span><span class="n">fit_details</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">mlefit</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\tsa\statespace\mlemodel.py:705,</span> in <span class="ni">MLEModel.fit</span><span class="nt">(self, start_params, transformed, includes_fixed, cov_type, cov_kwds, method, maxiter, full_output, disp, callback, return_params, optim_score, optim_complex_step, optim_hessian, flags, low_memory, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">703</span>         <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;hessian_method&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">optim_hessian</span>
+<span class="g g-Whitespace">    </span><span class="mi">704</span>     <span class="n">fargs</span> <span class="o">=</span> <span class="p">(</span><span class="n">flags</span><span class="p">,)</span>
+<span class="ne">--&gt; </span><span class="mi">705</span>     <span class="n">mlefit</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">start_params</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">706</span>                          <span class="n">fargs</span><span class="o">=</span><span class="n">fargs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">707</span>                          <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">708</span>                          <span class="n">full_output</span><span class="o">=</span><span class="n">full_output</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">709</span>                          <span class="n">disp</span><span class="o">=</span><span class="n">disp</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">710</span>                          <span class="n">skip_hessian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">712</span> <span class="c1"># Just return the fitted parameters if requested</span>
+<span class="g g-Whitespace">    </span><span class="mi">713</span> <span class="k">if</span> <span class="n">return_params</span><span class="p">:</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\base\model.py:566,</span> in <span class="ni">LikelihoodModel.fit</span><span class="nt">(self, start_params, method, maxiter, full_output, disp, fargs, callback, retall, skip_hessian, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">563</span>     <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;use_t&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">565</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">Optimizer</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">566</span> <span class="n">xopt</span><span class="p">,</span> <span class="n">retvals</span><span class="p">,</span> <span class="n">optim_settings</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">_fit</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">start_params</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">567</span>                                                <span class="n">fargs</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">568</span>                                                <span class="n">hessian</span><span class="o">=</span><span class="n">hess</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">569</span>                                                <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">570</span>                                                <span class="n">disp</span><span class="o">=</span><span class="n">disp</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">571</span>                                                <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">572</span>                                                <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">573</span>                                                <span class="n">retall</span><span class="o">=</span><span class="n">retall</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">574</span>                                                <span class="n">full_output</span><span class="o">=</span><span class="n">full_output</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">575</span> <span class="c1"># Restore cov_type, cov_kwds and use_t</span>
+<span class="g g-Whitespace">    </span><span class="mi">576</span> <span class="n">optim_settings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\base\optimizer.py:245,</span> in <span class="ni">Optimizer._fit</span><span class="nt">(self, objective, gradient, start_params, fargs, kwargs, hessian, method, maxiter, full_output, disp, callback, retall)</span>
+<span class="g g-Whitespace">    </span><span class="mi">242</span>     <span class="n">fit_funcs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">extra_fit_funcs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">244</span> <span class="n">func</span> <span class="o">=</span> <span class="n">fit_funcs</span><span class="p">[</span><span class="n">method</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">245</span> <span class="n">xopt</span><span class="p">,</span> <span class="n">retvals</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">start_params</span><span class="p">,</span> <span class="n">fargs</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span>                      <span class="n">disp</span><span class="o">=</span><span class="n">disp</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">247</span>                      <span class="n">retall</span><span class="o">=</span><span class="n">retall</span><span class="p">,</span> <span class="n">full_output</span><span class="o">=</span><span class="n">full_output</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span>                      <span class="n">hess</span><span class="o">=</span><span class="n">hessian</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span> <span class="n">optim_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;optimizer&#39;</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span> <span class="s1">&#39;start_params&#39;</span><span class="p">:</span> <span class="n">start_params</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">251</span>                   <span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="n">maxiter</span><span class="p">,</span> <span class="s1">&#39;full_output&#39;</span><span class="p">:</span> <span class="n">full_output</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span>                   <span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="n">disp</span><span class="p">,</span> <span class="s1">&#39;fargs&#39;</span><span class="p">:</span> <span class="n">fargs</span><span class="p">,</span> <span class="s1">&#39;callback&#39;</span><span class="p">:</span> <span class="n">callback</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">253</span>                   <span class="s1">&#39;retall&#39;</span><span class="p">:</span> <span class="n">retall</span><span class="p">,</span> <span class="s2">&quot;extra_fit_funcs&quot;</span><span class="p">:</span> <span class="n">extra_fit_funcs</span><span class="p">}</span>
+<span class="g g-Whitespace">    </span><span class="mi">254</span> <span class="n">optim_settings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\base\optimizer.py:665,</span> in <span class="ni">_fit_lbfgs</span><span class="nt">(f, score, start_params, fargs, kwargs, disp, maxiter, callback, retall, full_output, hess)</span>
+<span class="g g-Whitespace">    </span><span class="mi">663</span> <span class="k">if</span> <span class="n">SP_LT_116</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">664</span>     <span class="n">extended_kwargs</span><span class="p">[</span><span class="s2">&quot;disp&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">disp</span>
+<span class="ne">--&gt; </span><span class="mi">665</span> <span class="n">retvals</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">fmin_l_bfgs_b</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">666</span>     <span class="n">func</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">667</span>     <span class="n">start_params</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">668</span>     <span class="n">maxiter</span><span class="o">=</span><span class="n">maxiter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">669</span>     <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">670</span>     <span class="n">args</span><span class="o">=</span><span class="n">fargs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">671</span>     <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">672</span>     <span class="o">**</span><span class="n">extended_kwargs</span>
+<span class="g g-Whitespace">    </span><span class="mi">673</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">676</span> <span class="k">if</span> <span class="n">full_output</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">677</span>     <span class="n">xopt</span><span class="p">,</span> <span class="n">fopt</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">retvals</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\scipy\optimize\_lbfgsb_py.py:199,</span> in <span class="ni">fmin_l_bfgs_b</span><span class="nt">(func, x0, fprime, args, approx_grad, bounds, m, factr, pgtol, epsilon, iprint, maxfun, maxiter, disp, callback, maxls)</span>
+<span class="g g-Whitespace">    </span><span class="mi">187</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">_wrap_callback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">188</span> <span class="n">opts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="n">disp</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">189</span>         <span class="s1">&#39;iprint&#39;</span><span class="p">:</span> <span class="n">iprint</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">190</span>         <span class="s1">&#39;maxcor&#39;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">196</span>         <span class="s1">&#39;callback&#39;</span><span class="p">:</span> <span class="n">callback</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">197</span>         <span class="s1">&#39;maxls&#39;</span><span class="p">:</span> <span class="n">maxls</span><span class="p">}</span>
+<span class="ne">--&gt; </span><span class="mi">199</span> <span class="n">res</span> <span class="o">=</span> <span class="n">_minimize_lbfgsb</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">200</span>                        <span class="o">**</span><span class="n">opts</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">201</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;grad&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;jac&#39;</span><span class="p">],</span>
+<span class="g g-Whitespace">    </span><span class="mi">202</span>      <span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span>
+<span class="g g-Whitespace">    </span><span class="mi">203</span>      <span class="s1">&#39;funcalls&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;nfev&#39;</span><span class="p">],</span>
+<span class="g g-Whitespace">    </span><span class="mi">204</span>      <span class="s1">&#39;nit&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;nit&#39;</span><span class="p">],</span>
+<span class="g g-Whitespace">    </span><span class="mi">205</span>      <span class="s1">&#39;warnflag&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]}</span>
+<span class="g g-Whitespace">    </span><span class="mi">206</span> <span class="n">f</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;fun&#39;</span><span class="p">]</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\scipy\optimize\_lbfgsb_py.py:365,</span> in <span class="ni">_minimize_lbfgsb</span><span class="nt">(fun, x0, args, jac, bounds, disp, maxcor, ftol, gtol, eps, maxfun, maxiter, iprint, callback, maxls, finite_diff_rel_step, **unknown_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">359</span> <span class="n">task_str</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">360</span> <span class="k">if</span> <span class="n">task_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;FG&#39;</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">361</span>     <span class="c1"># The minimization routine wants f and g at the current x.</span>
+<span class="g g-Whitespace">    </span><span class="mi">362</span>     <span class="c1"># Note that interruptions due to maxfun are postponed</span>
+<span class="g g-Whitespace">    </span><span class="mi">363</span>     <span class="c1"># until the completion of the current minimization iteration.</span>
+<span class="g g-Whitespace">    </span><span class="mi">364</span>     <span class="c1"># Overwrite f and g:</span>
+<span class="ne">--&gt; </span><span class="mi">365</span>     <span class="n">f</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">func_and_grad</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">366</span> <span class="k">elif</span> <span class="n">task_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;NEW_X&#39;</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">367</span>     <span class="c1"># new iteration</span>
+<span class="g g-Whitespace">    </span><span class="mi">368</span>     <span class="n">n_iterations</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\scipy\optimize\_differentiable_functions.py:286,</span> in <span class="ni">ScalarFunction.fun_and_grad</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">284</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_update_x_impl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">285</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_fun</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">286</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_grad</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">287</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\scipy\optimize\_differentiable_functions.py:256,</span> in <span class="ni">ScalarFunction._update_grad</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">254</span> <span class="k">def</span><span class="w"> </span><span class="nf">_update_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span>     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_updated</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">256</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_update_grad_impl</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span>         <span class="bp">self</span><span class="o">.</span><span class="n">g_updated</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\scipy\optimize\_differentiable_functions.py:173,</span> in <span class="ni">ScalarFunction.__init__.&lt;locals&gt;.update_grad</span><span class="nt">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">171</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_fun</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">172</span> <span class="bp">self</span><span class="o">.</span><span class="n">ngev</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="ne">--&gt; </span><span class="mi">173</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">approx_derivative</span><span class="p">(</span><span class="n">fun_wrapped</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">f0</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">174</span>                            <span class="o">**</span><span class="n">finite_diff_options</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\scipy\optimize\_numdiff.py:505,</span> in <span class="ni">approx_derivative</span><span class="nt">(fun, x0, method, rel_step, abs_step, f0, bounds, sparsity, as_linear_operator, args, kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">502</span>     <span class="n">use_one_sided</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="g g-Whitespace">    </span><span class="mi">504</span> <span class="k">if</span> <span class="n">sparsity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">505</span>     <span class="k">return</span> <span class="n">_dense_difference</span><span class="p">(</span><span class="n">fun_wrapped</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">506</span>                              <span class="n">use_one_sided</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">507</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">508</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">issparse</span><span class="p">(</span><span class="n">sparsity</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">sparsity</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\scipy\optimize\_numdiff.py:576,</span> in <span class="ni">_dense_difference</span><span class="nt">(fun, x0, f0, h, use_one_sided, method)</span>
+<span class="g g-Whitespace">    </span><span class="mi">574</span>     <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">h_vecs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">575</span>     <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Recompute dx as exactly representable number.</span>
+<span class="ne">--&gt; </span><span class="mi">576</span>     <span class="n">df</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">f0</span>
+<span class="g g-Whitespace">    </span><span class="mi">577</span> <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;3-point&#39;</span> <span class="ow">and</span> <span class="n">use_one_sided</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+<span class="g g-Whitespace">    </span><span class="mi">578</span>     <span class="n">x1</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">h_vecs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\scipy\optimize\_numdiff.py:456,</span> in <span class="ni">approx_derivative.&lt;locals&gt;.fun_wrapped</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">455</span> <span class="k">def</span><span class="w"> </span><span class="nf">fun_wrapped</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">456</span>     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">457</span>     <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">458</span>         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;`fun` return value has &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">459</span>                            <span class="s2">&quot;more than 1 dimension.&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\scipy\optimize\_differentiable_functions.py:137,</span> in <span class="ni">ScalarFunction.__init__.&lt;locals&gt;.fun_wrapped</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span> <span class="bp">self</span><span class="o">.</span><span class="n">nfev</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="g g-Whitespace">    </span><span class="mi">134</span> <span class="c1"># Send a copy because the user may overwrite it.</span>
+<span class="g g-Whitespace">    </span><span class="mi">135</span> <span class="c1"># Overwriting results in undefined behaviour because</span>
+<span class="g g-Whitespace">    </span><span class="mi">136</span> <span class="c1"># fun(self.x) will change self.x, with the two no longer linked.</span>
+<span class="ne">--&gt; </span><span class="mi">137</span> <span class="n">fx</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span> <span class="c1"># Make sure the function returns a true scalar</span>
+<span class="g g-Whitespace">    </span><span class="mi">139</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">fx</span><span class="p">):</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\base\model.py:534,</span> in <span class="ni">LikelihoodModel.fit.&lt;locals&gt;.f</span><span class="nt">(params, *args)</span>
+<span class="g g-Whitespace">    </span><span class="mi">533</span> <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">534</span>     <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">loglike</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">/</span> <span class="n">nobs</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\tsa\statespace\mlemodel.py:940,</span> in <span class="ni">MLEModel.loglike</span><span class="nt">(self, params, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">937</span> <span class="k">if</span> <span class="n">complex_step</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">938</span>     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;inversion_method&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">INVERT_UNIVARIATE</span> <span class="o">|</span> <span class="n">SOLVE_LU</span>
+<span class="ne">--&gt; </span><span class="mi">940</span> <span class="n">loglike</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssm</span><span class="o">.</span><span class="n">loglike</span><span class="p">(</span><span class="n">complex_step</span><span class="o">=</span><span class="n">complex_step</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">942</span> <span class="c1"># Koopman, Shephard, and Doornik recommend maximizing the average</span>
+<span class="g g-Whitespace">    </span><span class="mi">943</span> <span class="c1"># likelihood to avoid scale issues, but the averaging is done</span>
+<span class="g g-Whitespace">    </span><span class="mi">944</span> <span class="c1"># automatically in the base model `fit` method</span>
+<span class="g g-Whitespace">    </span><span class="mi">945</span> <span class="k">return</span> <span class="n">loglike</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\statsmodels\tsa\statespace\kalman_filter.py:1001,</span> in <span class="ni">KalmanFilter.loglike</span><span class="nt">(self, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">985</span><span class="w"> </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">986</span><span class="sd"> Calculate the loglikelihood associated with the statespace model.</span>
+<span class="g g-Whitespace">    </span><span class="mi">987</span><span class="sd"> </span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">997</span><span class="sd">     The joint loglikelihood.</span>
+<span class="g g-Whitespace">    </span><span class="mi">998</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">999</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;conserve_memory&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1000</span>                   <span class="n">MEMORY_CONSERVE</span> <span class="o">^</span> <span class="n">MEMORY_NO_LIKELIHOOD</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1001</span> <span class="n">kfilter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1002</span> <span class="n">loglikelihood_burn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;loglikelihood_burn&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1003</span>                                 <span class="bp">self</span><span class="o">.</span><span class="n">loglikelihood_burn</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1004</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;conserve_memory&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">MEMORY_NO_LIKELIHOOD</span><span class="p">):</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Se corren modelos ARIMA para probar su significación y evaluar su capacidad para capturar la dinámica de la serie de retornos logarítmicos. Como punto de partida, se estima un modelo ARIMA(0,0,0), el cual corresponde a la especificación más básica dentro de esta familia. Este modelo no incorpora componentes autorregresivos ni de media móvil, ni requiere diferenciación, por lo que asume que la serie puede representarse como una constante más un término de error aleatorio, es decir, como un proceso de ruido blanco.</p>
+<p>Los resultados de la estimación muestran que el término constante es estadísticamente significativo, lo que indica la presencia de una media distinta de cero en la serie. Asimismo, la varianza del error resulta significativa, como es esperado. Sin embargo, al analizar los diagnósticos del modelo, en particular el test de Ljung-Box, se evidencia que los residuos presentan autocorrelación significativa, lo cual contradice el supuesto de ruido blanco. Esto sugiere que, a pesar de su simplicidad, el modelo ARIMA(0,0,0) no logra capturar completamente la estructura temporal de la serie.</p>
+<p>Adicionalmente, el test de normalidad de Jarque-Bera indica una fuerte desviación respecto a la normalidad, reflejada en valores elevados de curtosis, lo cual es característico de series financieras que presentan colas pesadas. En conjunto, estos resultados evidencian que, si bien el modelo ARIMA(0,0,0) sirve como un punto de referencia inicial, resulta insuficiente para modelar adecuadamente la serie, por lo que es necesario considerar especificaciones más complejas.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_1</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -710,8 +863,8 @@ Warnings:
 ==============================================================================
 Dep. Variable:            Retorno_log   No. Observations:               386065
 Model:                 ARIMA(1, 0, 0)   Log Likelihood             2371927.217
-Date:                Sat, 04 Apr 2026   AIC                       -4743848.433
-Time:                        13:13:04   BIC                       -4743815.842
+Date:                Mon, 06 Apr 2026   AIC                       -4743848.433
+Time:                        11:31:58   BIC                       -4743815.842
 Sample:                             0   HQIC                      -4743839.107
                              - 386065                                         
 Covariance Type:                  opg                                         
@@ -732,8 +885,11 @@ Warnings:
 [1] Covariance matrix calculated using the outer product of gradients (complex-step).
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>A continuación, se estima un modelo ARIMA(1,0,0), el cual incorpora un término autorregresivo de primer orden con el objetivo de capturar posibles dependencias temporales en la serie. Este tipo de especificación permite que el valor actual de la variable dependa linealmente de su rezago inmediato, lo que resulta coherente con la evidencia observada en las funciones de autocorrelación y autocorrelación parcial, donde se identificaba una ligera dependencia en el primer rezago.</p>
+<p>Los resultados muestran que el coeficiente autorregresivo es estadísticamente significativo, lo que confirma la existencia de una relación temporal de corto plazo en la serie. En contraste, el término constante no resulta significativo, lo cual es consistente con la naturaleza de los retornos financieros, que suelen oscilar alrededor de una media cercana a cero. Asimismo, se observa una mejora en los criterios de información (AIC y BIC) en comparación con el modelo ARIMA(0,0,0), lo que sugiere un mejor ajuste del modelo al incorporar esta dinámica autorregresiva.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_2</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -746,8 +902,8 @@ Warnings:
 ==============================================================================
 Dep. Variable:            Retorno_log   No. Observations:               386065
 Model:                 ARIMA(2, 0, 0)   Log Likelihood             2371992.562
-Date:                Sat, 04 Apr 2026   AIC                       -4743977.124
-Time:                        13:17:21   BIC                       -4743933.669
+Date:                Mon, 06 Apr 2026   AIC                       -4743977.124
+Time:                        11:33:07   BIC                       -4743933.669
 Sample:                             0   HQIC                      -4743964.689
                              - 386065                                         
 Covariance Type:                  opg                                         
@@ -769,8 +925,12 @@ Warnings:
 [1] Covariance matrix calculated using the outer product of gradients (complex-step).
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>A continuación, se estima un modelo ARIMA(2,0,0), el cual amplía la especificación anterior al incorporar un segundo rezago autorregresivo. Esta extensión permite capturar dinámicas adicionales de corto plazo en la serie, en línea con la ligera estructura observada en las funciones de autocorrelación, donde podrían existir efectos más allá del primer rezago.</p>
+<p>Los resultados muestran que ambos coeficientes autorregresivos son estadísticamente significativos. El primer rezago presenta un efecto positivo, mientras que el segundo rezago tiene un efecto negativo, lo que sugiere la presencia de cierta dinámica de corrección en la serie. El término constante, al igual que en el modelo anterior, no resulta significativo, lo cual es consistente con el comportamiento de los retornos financieros, que suelen fluctuar alrededor de una media cercana a cero. Adicionalmente, se observa una mejora en los criterios de información (AIC, BIC y HQIC) respecto al modelo ARIMA(1,0,0), lo que indica un mejor ajuste al incorporar este segundo rezago.</p>
+<p>En cuanto a los diagnósticos, el test de Ljung-Box presenta un p-valor elevado, lo que sugiere que no se puede rechazar la hipótesis nula de ausencia de autocorrelación en los residuos. Esto indica que el modelo logra capturar adecuadamente la dependencia en la media de la serie.Hasta el momento, ninguno de los modelos estimados presenta residuos normalmente distribuidos, como lo evidencia el test de Jarque-Bera, cuyos p-valores son cercanos a cero en todas las especificaciones. Este resultado es consistente con la naturaleza de los retornos financieros, los cuales suelen exhibir leptocurtosis y colas pesadas.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_3</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -783,8 +943,8 @@ Warnings:
 ==============================================================================
 Dep. Variable:            Retorno_log   No. Observations:               386065
 Model:                 ARIMA(3, 0, 0)   Log Likelihood             2371999.409
-Date:                Sat, 04 Apr 2026   AIC                       -4743988.817
-Time:                        13:28:23   BIC                       -4743934.498
+Date:                Mon, 06 Apr 2026   AIC                       -4743988.817
+Time:                        11:35:19   BIC                       -4743934.498
 Sample:                             0   HQIC                      -4743973.273
                              - 386065                                         
 Covariance Type:                  opg                                         
@@ -807,8 +967,12 @@ Warnings:
 [1] Covariance matrix calculated using the outer product of gradients (complex-step).
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>A continuación, se estima un modelo ARIMA(3,0,0), incorporando un tercer rezago autorregresivo con el objetivo de capturar posibles dinámicas adicionales en la serie. Esta especificación permite evaluar si existe información relevante más allá de los dos primeros rezagos previamente considerados.</p>
+<p>Los resultados indican que los tres coeficientes autorregresivos son estadísticamente significativos. El primer rezago mantiene un efecto positivo y dominante, el segundo rezago presenta un efecto negativo, y el tercer rezago introduce un efecto positivo de menor magnitud. Esta combinación sugiere una dinámica de ajuste más compleja en el corto plazo, donde los shocks pasados afectan la serie con distintos signos y magnitudes. Por su parte, el término constante continúa sin ser significativo, lo cual sigue siendo consistente con el comportamiento típico de los retornos financieros.</p>
+<p>En términos de ajuste, los criterios de información (AIC, BIC y HQIC) no muestran una mejora sustancial respecto al modelo ARIMA(2,0,0), lo que sugiere que la inclusión del tercer rezago no aporta un incremento relevante en la capacidad explicativa del modelo. En cuanto a los diagnósticos, el test de Ljung-Box presenta un p-valor elevado, indicando nuevamente ausencia de autocorrelación en los residuos, lo que confirma que la dinámica en la media ha sido adecuadamente capturada. Sin embargo, el test de Jarque-Bera continúa rechazando la normalidad de los residuos, evidenciando la persistencia de colas pesadas y alta curtosis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">acorr_ljungbox</span>
@@ -838,8 +1002,11 @@ AR(3) Ljung-Box:
 10  11.029254   0.355243
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Con el fin de evaluar la presencia de autocorrelación en los residuos de los modelos estimados, se aplica el test de Ljung-Box para distintos órdenes autorregresivos. Los resultados muestran que, para el modelo ARIMA(0,0,0), se rechaza contundentemente la hipótesis nula de no autocorrelación, lo que indica que la serie presenta una fuerte dependencia temporal no capturada por este modelo. De manera similar, el modelo ARIMA(1,0,0) también presenta evidencia significativa de autocorrelación en los residuos, lo que sugiere que un solo rezago no es suficiente para modelar adecuadamente la dinámica de la serie.</p>
+<p>En el caso del modelo ARIMA(2,0,0), aunque se observa una reducción considerable en el estadístico del test, aún se rechaza la hipótesis nula a niveles convencionales de significancia, lo que indica que persiste cierta autocorrelación residual. Finalmente, el modelo ARIMA(3,0,0) presenta un p-valor elevado, lo que implica que no se puede rechazar la hipótesis nula de ausencia de autocorrelación en los residuos. Este resultado sugiere que esta especificación logra capturar de manera adecuada la estructura de dependencia en la media de la serie.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_3</span><span class="o">.</span><span class="n">plot_diagnostics</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
@@ -848,8 +1015,12 @@ AR(3) Ljung-Box:
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/7999e98c1da544caade9563cf1402e32865e7557bf5751fd0d368828f2f61287.png" src="_images/7999e98c1da544caade9563cf1402e32865e7557bf5751fd0d368828f2f61287.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Sí, en la media sí puede decirse que los residuos del ARIMA(3,0,0) se comportan aproximadamente como ruido blanco, pero con una precisión importante: ruido blanco en autocorrelación, no en distribución.</p>
+<p>El correlograma de los residuos muestra que, salvo el rezago 0, las autocorrelaciones se mantienen cercanas a cero, lo que indica ausencia de dependencia lineal remanente. Esto es consistente con el resultado del test de Ljung-Box que obtuviste antes para el AR(3), donde no se rechazaba la hipótesis nula de no autocorrelación residual. En ese sentido, el modelo sí logra capturar adecuadamente la dinámica de la media.</p>
+<p>Sin embargo, los otros gráficos dejan claro que los residuos no son normales. El histograma y la densidad estimada muestran una distribución mucho más picuda y con colas más pesadas que la normal, mientras que el gráfico Q-Q exhibe desviaciones muy marcadas en ambas colas. Además, en la serie temporal de residuos estandarizados se observan episodios de mayor y menor dispersión, lo que sugiere persistencia en la varianza y posible clustering de volatilidad. Por tanto, la conclusión correcta no es que los residuos sean “ruido blanco puro”, sino que se aproximan a ruido blanco en la media, aunque no cumplen normalidad y todavía podrían presentar heterocedasticidad condicional.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.tsa.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smtsa</span>
@@ -866,8 +1037,8 @@ AR(3) Ljung-Box:
 ==============================================================================
 Dep. Variable:            Retorno_log   No. Observations:               386065
 Model:                          ARIMA   Log Likelihood             2367966.526
-Date:                Sat, 04 Apr 2026   AIC                       -4735929.051
-Time:                        13:43:07   BIC                       -4735907.324
+Date:                Mon, 06 Apr 2026   AIC                       -4735929.051
+Time:                        11:38:31   BIC                       -4735907.324
 Sample:                             0   HQIC                      -4735922.833
                              - 386065                                         
 Covariance Type:                  opg                                         
@@ -885,85 +1056,13 @@ Prob(H) (two-sided):                  0.00   Kurtosis:                        29
 
 Warnings:
 [1] Covariance matrix calculated using the outer product of gradients (complex-step).
-                               SARIMAX Results                                
-==============================================================================
-Dep. Variable:            Retorno_log   No. Observations:               386065
-Model:                 ARIMA(0, 0, 1)   Log Likelihood             2371996.883
-Date:                Sat, 04 Apr 2026   AIC                       -4743987.766
-Time:                        13:44:53   BIC                       -4743955.174
-Sample:                             0   HQIC                      -4743978.439
-                             - 386065                                         
-Covariance Type:                  opg                                         
-==============================================================================
-                 coef    std err          z      P&gt;|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-const      -5.701e-07   9.57e-07     -0.596      0.551   -2.45e-06    1.31e-06
-ma.L1          0.1449      0.001    188.171      0.000       0.143       0.146
-sigma2      2.697e-07   1.61e-10   1673.752      0.000    2.69e-07     2.7e-07
-===================================================================================
-Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11882281.28
-Prob(Q):                              0.99   Prob(JB):                         0.00
-Heteroskedasticity (H):               0.68   Skew:                            -0.00
-Prob(H) (two-sided):                  0.00   Kurtosis:                        30.18
-===================================================================================
-
-Warnings:
-[1] Covariance matrix calculated using the outer product of gradients (complex-step).
-                               SARIMAX Results                                
-==============================================================================
-Dep. Variable:            Retorno_log   No. Observations:               386065
-Model:                 ARIMA(0, 0, 2)   Log Likelihood             2371997.130
-Date:                Sat, 04 Apr 2026   AIC                       -4743986.260
-Time:                        13:46:55   BIC                       -4743942.805
-Sample:                             0   HQIC                      -4743973.825
-                             - 386065                                         
-Covariance Type:                  opg                                         
-==============================================================================
-                 coef    std err          z      P&gt;|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-const      -5.701e-07   9.59e-07     -0.595      0.552   -2.45e-06    1.31e-06
-ma.L1          0.1449      0.001    187.150      0.000       0.143       0.146
-ma.L2          0.0017      0.001      1.927      0.054   -2.97e-05       0.004
-sigma2      2.697e-07   1.61e-10   1670.693      0.000    2.69e-07     2.7e-07
-===================================================================================
-Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11879236.58
-Prob(Q):                              1.00   Prob(JB):                         0.00
-Heteroskedasticity (H):               0.68   Skew:                            -0.00
-Prob(H) (two-sided):                  0.00   Kurtosis:                        30.18
-===================================================================================
-
-Warnings:
-[1] Covariance matrix calculated using the outer product of gradients (complex-step).
-                               SARIMAX Results                                
-==============================================================================
-Dep. Variable:            Retorno_log   No. Observations:               386065
-Model:                 ARIMA(0, 0, 3)   Log Likelihood             2371999.378
-Date:                Sat, 04 Apr 2026   AIC                       -4743988.756
-Time:                        13:49:26   BIC                       -4743934.437
-Sample:                             0   HQIC                      -4743973.212
-                             - 386065                                         
-Covariance Type:                  opg                                         
-==============================================================================
-                 coef    std err          z      P&gt;|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-const      -5.701e-07   9.62e-07     -0.593      0.553   -2.46e-06    1.32e-06
-ma.L1          0.1449      0.001    187.083      0.000       0.143       0.146
-ma.L2          0.0017      0.001      1.918      0.055   -3.76e-05       0.004
-ma.L3          0.0035      0.001      3.923      0.000       0.002       0.005
-sigma2      2.697e-07   1.62e-10   1661.474      0.000    2.69e-07     2.7e-07
-===================================================================================
-Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):          11867958.88
-Prob(Q):                              1.00   Prob(JB):                         0.00
-Heteroskedasticity (H):               0.68   Skew:                            -0.00
-Prob(H) (two-sided):                  0.00   Kurtosis:                        30.16
-===================================================================================
-
-Warnings:
-[1] Covariance matrix calculated using the outer product of gradients (complex-step).
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Se estima un modelo ARIMA(0,0,0), el cual corresponde a una especificación sin componentes autorregresivos ni de medias móviles, es decir, un modelo puramente aleatorio que asume que la serie se comporta como ruido blanco con media constante. Este modelo sirve como punto de referencia inicial para evaluar si existe dependencia temporal en la serie de retornos.</p>
+<p>Los resultados muestran que el término constante es estadísticamente significativo, aunque su magnitud es extremadamente cercana a cero, lo cual es consistente con la naturaleza de los retornos financieros, que suelen oscilar alrededor de una media nula. Sin embargo, el test de Ljung-Box presenta un p-valor igual a cero, lo que implica un rechazo contundente de la hipótesis nula de no autocorrelación. Esto indica que los residuos del modelo presentan una fuerte dependencia temporal, evidenciando que esta especificación es insuficiente para capturar la dinámica de la serie.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ma1</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -976,8 +1075,8 @@ Warnings:
 ==============================================================================
 Dep. Variable:            Retorno_log   No. Observations:               386065
 Model:                 ARIMA(0, 0, 1)   Log Likelihood             2371996.883
-Date:                Sat, 04 Apr 2026   AIC                       -4743987.766
-Time:                        13:51:29   BIC                       -4743955.174
+Date:                Mon, 06 Apr 2026   AIC                       -4743987.766
+Time:                        11:39:19   BIC                       -4743955.174
 Sample:                             0   HQIC                      -4743978.439
                              - 386065                                         
 Covariance Type:                  opg                                         
@@ -998,8 +1097,12 @@ Warnings:
 [1] Covariance matrix calculated using the outer product of gradients (complex-step).
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Se estima un modelo ARIMA(0,0,1), el cual incorpora un componente de media móvil de primer orden con el objetivo de capturar posibles choques transitorios en la serie. A diferencia de los modelos autorregresivos, esta especificación modela la dependencia en función de los errores pasados, lo que resulta útil cuando los shocks tienen efectos de corto plazo sobre la serie.</p>
+<p>Los resultados muestran que el coeficiente de media móvil es estadísticamente significativo, lo que indica que los errores pasados tienen un efecto relevante sobre los valores actuales de la serie. Por su parte, el término constante no resulta significativo, lo cual sigue siendo consistente con el comportamiento típico de los retornos financieros. En términos de ajuste, los criterios de información (AIC, BIC y HQIC) evidencian una mejora respecto al modelo ARIMA(0,0,0), lo que sugiere que la inclusión del componente de media móvil permite capturar parcialmente la dinámica de la serie.</p>
+<p>En cuanto a los diagnósticos, el test de Ljung-Box presenta un p-valor elevado, lo que indica que no se puede rechazar la hipótesis nula de ausencia de autocorrelación en los residuos. Esto sugiere que el modelo logra capturar adecuadamente la dependencia lineal en la media de la serie. Sin embargo, al igual que en los modelos previamente estimados, el test de Jarque-Bera rechaza la hipótesis de normalidad, evidenciando la presencia de colas pesadas y alta curtosis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ma2</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -1012,8 +1115,8 @@ Warnings:
 ==============================================================================
 Dep. Variable:            Retorno_log   No. Observations:               386065
 Model:                 ARIMA(0, 0, 2)   Log Likelihood             2371997.130
-Date:                Sat, 04 Apr 2026   AIC                       -4743986.260
-Time:                        13:56:24   BIC                       -4743942.805
+Date:                Mon, 06 Apr 2026   AIC                       -4743986.260
+Time:                        11:40:18   BIC                       -4743942.805
 Sample:                             0   HQIC                      -4743973.825
                              - 386065                                         
 Covariance Type:                  opg                                         
@@ -1035,8 +1138,12 @@ Warnings:
 [1] Covariance matrix calculated using the outer product of gradients (complex-step).
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Se estima un modelo ARIMA(0,0,2), el cual extiende la especificación de media móvil incorporando un segundo rezago de los errores. Este tipo de modelo permite capturar efectos más prolongados de los choques pasados sobre la serie, evaluando si existe una estructura de dependencia más compleja en la media.</p>
+<p>Los resultados muestran que el primer coeficiente de media móvil es altamente significativo, confirmando la relevancia de los errores pasados inmediatos en la dinámica de la serie. Sin embargo, el segundo coeficiente de media móvil presenta una significancia marginal, situándose en el límite de los niveles convencionales, lo que sugiere que su contribución adicional es limitada. El término constante, nuevamente, no resulta significativo, en línea con la evidencia previa sobre el comportamiento de los retornos financieros.</p>
+<p>En términos de ajuste, los criterios de información (AIC, BIC y HQIC) no evidencian una mejora sustancial respecto al modelo ARIMA(0,0,1), lo que indica que la inclusión del segundo rezago de media móvil no aporta un beneficio claro en la capacidad explicativa del modelo.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ma3</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -1049,8 +1156,8 @@ Warnings:
 ==============================================================================
 Dep. Variable:            Retorno_log   No. Observations:               386065
 Model:                 ARIMA(0, 0, 3)   Log Likelihood             2371999.378
-Date:                Sat, 04 Apr 2026   AIC                       -4743988.756
-Time:                        13:58:17   BIC                       -4743934.437
+Date:                Mon, 06 Apr 2026   AIC                       -4743988.756
+Time:                        11:41:27   BIC                       -4743934.437
 Sample:                             0   HQIC                      -4743973.212
                              - 386065                                         
 Covariance Type:                  opg                                         
@@ -1073,8 +1180,12 @@ Warnings:
 [1] Covariance matrix calculated using the outer product of gradients (complex-step).
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Se estima un modelo ARIMA(0,0,3), el cual incorpora tres rezagos en el componente de media móvil, permitiendo capturar efectos más persistentes de los choques pasados sobre la serie. Esta especificación busca evaluar si una mayor complejidad en la estructura de errores mejora la capacidad explicativa del modelo.</p>
+<p>Los resultados indican que el primer y tercer coeficiente de media móvil son estadísticamente significativos, mientras que el segundo rezago presenta una significancia marginal, situándose en el límite de los niveles convencionales. Esto sugiere que, aunque existe evidencia de efectos dinámicos en los errores pasados, no todos los rezagos contribuyen de manera relevante. El término constante, como en los modelos anteriores, no resulta significativo, lo cual es consistente con la naturaleza de los retornos financieros.</p>
+<p>En términos de ajuste, los criterios de información (AIC, BIC y HQIC) no muestran mejoras sustanciales respecto a modelos más parsimoniosos como el ARIMA(0,0,1) o ARIMA(0,0,2), lo que indica que el incremento en la complejidad no se traduce en una ganancia clara en el desempeño del modelo. En cuanto a los diagnósticos, el test de Ljung-Box presenta un p-valor elevado, lo que sugiere ausencia de autocorrelación en los residuos, indicando que la dependencia en la media ha sido adecuadamente capturada. Sin embargo, el test de Jarque-Bera continúa rechazando la hipótesis de normalidad, evidenciando la persistencia de colas pesadas y alta curtosis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -1097,6 +1208,7 @@ Warnings:
 0  MA(0) -4.735929e+06 -4.735907e+06
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1128,8 +1240,11 @@ MA(3) Ljung-Box:
 10  11.08615   0.350846
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Con el objetivo de comparar los modelos de media móvil, se analizan los criterios AIC y BIC. El modelo MA(3) presenta el mejor ajuste según el AIC, mientras que el MA(1) resulta preferible según el BIC, evidenciando un mejor balance entre ajuste y parsimonia.</p>
+<p>Al complementar este análisis con el test de Ljung-Box, se observa que el modelo MA(0) presenta autocorrelación residual significativa, mientras que los modelos MA(1), MA(2) y MA(3) no rechazan la hipótesis de ausencia de autocorrelación. En conjunto, aunque MA(3) ofrece un mejor ajuste, modelos más simples como MA(1) son suficientes para capturar la dinámica de la serie, siendo preferibles por su mayor parsimonia.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ma2</span><span class="o">.</span><span class="n">plot_diagnostics</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
@@ -1138,8 +1253,10 @@ MA(3) Ljung-Box:
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/e0c4b06819051bdbab65a984a075319d378a49671f462dbb6a7d003b122f2213.png" src="_images/e0c4b06819051bdbab65a984a075319d378a49671f462dbb6a7d003b122f2213.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Los diagnósticos del modelo MA(2) muestran que los residuos no presentan autocorrelación significativa, como se evidencia en el correlograma, donde los coeficientes se mantienen cercanos a cero, lo que indica que la dependencia en la media ha sido adecuadamente capturada. No obstante, el histograma y la densidad estimada evidencian una distribución más concentrada y con colas más pesadas que la normal, lo cual se confirma en el gráfico Q-Q, donde se observan desviaciones importantes en los extremos. Adicionalmente, la serie de residuos estandarizados sugiere la presencia de episodios de alta y baja volatilidad, indicando posible heterocedasticidad. En conjunto, aunque el modelo captura bien la media, persisten problemas en la distribución y en la varianza de los errores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ma3</span><span class="o">.</span><span class="n">plot_diagnostics</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
@@ -1148,8 +1265,10 @@ MA(3) Ljung-Box:
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/c399186e5bc9353bf3c4c59971ee2c0831b6c35a99914fe5f6d578d9e748a84b.png" src="_images/c399186e5bc9353bf3c4c59971ee2c0831b6c35a99914fe5f6d578d9e748a84b.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Los diagnósticos del modelo MA(3) muestran que los residuos no presentan autocorrelación significativa, como se observa en el correlograma, lo que indica que la dinámica en la media ha sido adecuadamente capturada. No obstante, el histograma y la densidad estimada evidencian una distribución con alta concentración en el centro y colas pesadas en comparación con la normal, lo cual se confirma en el gráfico Q-Q mediante desviaciones pronunciadas en los extremos. Adicionalmente, la serie de residuos estandarizados muestra episodios de mayor volatilidad, lo que sugiere la presencia de heterocedasticidad condicional. En conjunto, aunque el modelo logra eliminar la autocorrelación, persisten problemas en la normalidad y en la estabilidad de la varianza de los errores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -1199,14 +1318,20 @@ Ranking por AIC:
 7      3      2 -4.735879e+06
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El análisis del ranking por AIC muestra que el modelo ARMA(2,3) presenta el menor valor, lo que indica el mejor ajuste dentro del conjunto de modelos evaluados. Muy cerca se encuentran especificaciones como ARMA(3,3), ARMA(2,1) y ARMA(2,2), cuyos valores de AIC son prácticamente indistinguibles, lo que sugiere que no existe una ganancia sustancial al incrementar la complejidad del modelo más allá de cierto punto.</p>
+<p>Este resultado es consistente con lo observado previamente en los modelos AR y MA por separado: existe evidencia de dependencia de corto plazo en la serie, pero esta puede capturarse adecuadamente con órdenes relativamente bajos. Aunque el modelo ARMA(2,3) ofrece el mejor ajuste según el AIC, la mejora frente a modelos más parsimoniosos es marginal, lo que pone en evidencia un posible sobreajuste al incluir demasiados parámetros.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arma_21</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">resid</span> <span class="o">=</span> <span class="n">arma_21</span><span class="o">.</span><span class="n">resid</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1224,8 +1349,10 @@ Ranking por AIC:
 20  19.663092   0.479174
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El análisis del test de Ljung-Box aplicado a los residuos del modelo ARMA(2,1) muestra p-valores elevados tanto para 10 como para 20 rezagos, lo que implica que no se puede rechazar la hipótesis nula de ausencia de autocorrelación. Este resultado indica que el modelo logra capturar adecuadamente la dependencia temporal en la media de la serie, dejando residuos que se comportan como ruido blanco en términos de autocorrelación.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phi1</span> <span class="o">=</span> <span class="n">arma_21</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ar.L1&#39;</span><span class="p">]</span>
@@ -1244,6 +1371,7 @@ phi2 = 0.027608303027035295
 theta1 = 0.32371461581744315
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1255,6 +1383,9 @@ theta1 = 0.32371461581744315
 <span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta1</span><span class="p">])</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1272,6 +1403,7 @@ theta1 = 0.32371461581744315
  -1.54714998e-10  4.30261280e-11 -1.19655206e-11  3.32760000e-12]
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1290,8 +1422,12 @@ theta1 = 0.32371461581744315
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/8b3ac2c9057d1a066811b6419407f53312a0c09d973d0cefd1fe339e0763292c.png" src="_images/8b3ac2c9057d1a066811b6419407f53312a0c09d973d0cefd1fe339e0763292c.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El análisis de la función de impulso-respuesta del modelo ARMA(2,1) muestra que un choque unitario tiene un impacto inicial significativo en la serie, el cual se disipa rápidamente en los periodos siguientes. En particular, tras el impacto contemporáneo, la respuesta cae de manera abrupta en el primer rezago y se aproxima a cero en muy pocos periodos, evidenciando una baja persistencia de los shocks.</p>
+<p>Este comportamiento es consistente con lo observado en los coeficientes del modelo, donde la dinámica está dominada por efectos de corto plazo. La rápida convergencia hacia cero indica que los choques no tienen efectos duraderos sobre la serie, lo que es característico de los retornos financieros, donde las perturbaciones suelen ser transitorias.</p>
+<p>En conjunto, la función de impulso-respuesta confirma que el modelo ARMA(2,1) captura adecuadamente la dinámica temporal de la serie, mostrando que los impactos se absorben rápidamente y que el sistema retorna con rapidez a su media, reforzando la evidencia de estacionariedad en la serie de retornos.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arma_11</span> <span class="o">=</span> <span class="n">ARIMA</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -1304,8 +1440,8 @@ theta1 = 0.32371461581744315
 ==============================================================================
 Dep. Variable:            Retorno_log   No. Observations:               386065
 Model:                 ARIMA(1, 0, 1)   Log Likelihood             2371997.151
-Date:                Sat, 04 Apr 2026   AIC                       -4743986.302
-Time:                        14:07:15   BIC                       -4743942.847
+Date:                Mon, 06 Apr 2026   AIC                       -4743986.302
+Time:                        13:38:37   BIC                       -4743942.847
 Sample:                             0   HQIC                      -4743973.867
                              - 386065                                         
 Covariance Type:                  opg                                         
@@ -1328,6 +1464,7 @@ Warnings:
 [2] Covariance matrix is singular or near-singular, with condition number 7.21e+16. Standard errors may be unstable.
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1347,8 +1484,12 @@ Warnings:
 10  15.501876   0.114807
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El modelo ARMA(1,1) presenta coeficientes autorregresivo y de media móvil altamente significativos, lo que indica que tanto la dependencia en los valores pasados como en los errores pasados contribuyen de manera relevante a la dinámica de la serie. El término constante no resulta significativo, en línea con el comportamiento esperado de los retornos financieros. En términos de ajuste, los criterios de información (AIC, BIC y HQIC) son competitivos frente a otras especificaciones, lo que sugiere un buen balance entre capacidad explicativa y parsimonia.</p>
+<p>En cuanto a los diagnósticos, el test de Ljung-Box arroja un p-valor superior a niveles convencionales de significancia, lo que indica que no se puede rechazar la hipótesis nula de ausencia de autocorrelación en los residuos. Esto sugiere que el modelo captura adecuadamente la dinámica en la media. No obstante, el test de Jarque-Bera continúa rechazando la normalidad, evidenciando la presencia de colas pesadas y alta curtosis, características típicas de los retornos financieros.</p>
+<p>Cabe resaltar la advertencia sobre posible singularidad en la matriz de covarianza, lo que puede indicar problemas numéricos o cierta redundancia en la especificación del modelo. En conjunto, el ARMA(1,1) se presenta como una alternativa parsimoniosa y bien ajustada para modelar la media de la serie, aunque, al igual que en modelos previos, persisten limitaciones en la modelación de la varianza y la distribución de los errores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.stattools</span><span class="w"> </span><span class="kn">import</span> <span class="n">adfuller</span>
@@ -1368,6 +1509,7 @@ lags used: 4
 nobs: 386060
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1385,6 +1527,7 @@ nobs: 386060
 p-value residuos: 0.0
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1402,6 +1545,7 @@ p-value residuos: 0.0
 theta: 0.13265188915376097
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1414,6 +1558,9 @@ theta: 0.13265188915376097
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1421,7 +1568,13 @@ theta: 0.13265188915376097
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
+</div>
+<p>El test de Dickey-Fuller aplicado a los residuos del modelo ARMA(1,1) muestra un estadístico altamente negativo y un p-valor igual a cero, lo que permite rechazar contundentemente la hipótesis nula de raíz unitaria. Esto indica que los residuos son estacionarios, confirmando que el modelo ha capturado adecuadamente la estructura de la media de la serie y no deja tendencias o componentes no estacionarios sin modelar.</p>
+<p>Por su parte, los parámetros estimados reflejan una dinámica de corto plazo: el coeficiente autorregresivo (φ ≈ 0.012) es positivo pero de baja magnitud, mientras que el coeficiente de media móvil (θ ≈ 0.133) tiene un mayor peso relativo, lo que sugiere que los choques pasados influyen más que los valores rezagados de la serie en su comportamiento actual. Esta relación es consistente con lo observado previamente en los modelos MA, donde los efectos de los errores eran relevantes.</p>
+<p>En conjunto, estos resultados indican que el modelo ARMA(1,1) es adecuado para capturar la dinámica en la media de la serie, generando residuos estacionarios y sin autocorrelación significativa. No obstante, como se ha evidenciado anteriormente, persisten problemas asociados a la no normalidad y a la posible heterocedasticidad, lo que sugiere que la modelación de la varianza sigue siendo un aspecto pendiente.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -1439,45 +1592,17 @@ theta: 0.13265188915376097
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/5b8f6a1e4a80650d2ce6010cb59db81673ddfbb511b6dbbfe7513b7bde75ab72.png" src="_images/5b8f6a1e4a80650d2ce6010cb59db81673ddfbb511b6dbbfe7513b7bde75ab72.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>La función de impulso-respuesta del modelo ARMA(1,1) evidencia que los choques tienen un impacto inmediato pero altamente transitorio: aunque el efecto inicial es completo en el periodo cero, este se reduce drásticamente en el siguiente periodo y prácticamente desaparece a partir del segundo rezago. Esto indica que los shocks no presentan persistencia en el tiempo, lo cual es consistente con un proceso estacionario y con la idea de que la serie (como suele ocurrir en retornos financieros) absorbe rápidamente la información, sin efectos prolongados en su dinámica.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;BC&quot;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Datetime
-2005-01-02 18:30:00    1.35550
-2005-01-02 18:45:00    1.35620
-2005-01-02 19:00:00    1.35640
-2005-01-02 19:15:00    1.35585
-2005-01-02 19:30:00    1.35530
-                        ...   
-2020-04-29 22:45:00    1.08751
-2020-04-29 23:00:00    1.08733
-2020-04-29 23:15:00    1.08749
-2020-04-29 23:30:00    1.08771
-2020-04-29 23:45:00    1.08772
-Name: BC, Length: 386065, dtype: float64
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotds</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;BC&quot;</span><span class="p">])</span>
+<span class="n">plotds</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;BC&quot;</span><span class="p">])</span>
 <span class="n">plotds</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -1485,8 +1610,10 @@ Name: BC, Length: 386065, dtype: float64
 <div class="cell_output docutils container">
 <img alt="_images/92a1fdcac560dbac1e771e09ec55ccbd6d17d223a746d68a4bbb970822596203.png" src="_images/92a1fdcac560dbac1e771e09ec55ccbd6d17d223a746d68a4bbb970822596203.png" />
 <img alt="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" src="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>Se puede observar como mediante el retorno logarítmico, la serie pierda su autocorrelación</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aicVal</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1499,13 +1626,10 @@ Name: BC, Length: 386065, dtype: float64
         <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
         
         <span class="n">aicVal</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">ari</span><span class="p">,</span> <span class="n">maj</span><span class="p">,</span> <span class="n">arma_obj</span><span class="o">.</span><span class="n">aic</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAIC</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">aicVal</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AR(p)&#39;</span><span class="p">,</span> <span class="s1">&#39;MA(q)&#39;</span><span class="p">,</span> <span class="s1">&#39;AIC&#39;</span><span class="p">])</span>
+
+
+
+<span class="n">dfAIC</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">aicVal</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AR(p)&#39;</span><span class="p">,</span> <span class="s1">&#39;MA(q)&#39;</span><span class="p">,</span> <span class="s1">&#39;AIC&#39;</span><span class="p">])</span>
 <span class="n">dfAIC</span>
 </pre></div>
 </div>
@@ -1573,8 +1697,11 @@ Name: BC, Length: 386065, dtype: float64
     </tr>
   </tbody>
 </table>
-</div></div></div>
+</div></div><p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
+</div>
+<p>El criterio AIC sugiere que los modelos con mejor ajuste son aquellos que combinan términos AR y MA, particularmente ARMA(2,1), ARMA(2,2) y ARMA(1,1), cuyos valores son prácticamente iguales y superiores al resto (más negativos). Aunque ARMA(2,1) presenta el menor AIC, la diferencia frente a ARMA(1,1) es mínima, lo que indica que aumentar la complejidad no aporta mejoras sustanciales en el ajuste. En este contexto, es preferible optar por un modelo más parsimonioso como ARMA(1,1), ya que logra un desempeño casi idéntico con menos parámetros, cumpliendo mejor el principio de parsimonia.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfAIC</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;AIC&quot;</span><span class="p">)</span>
@@ -1614,19 +1741,16 @@ Name: BC, Length: 386065, dtype: float64
     </tr>
   </tbody>
 </table>
-</div></div></div>
+</div></div><p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arma_obj_fin</span> <span class="o">=</span> <span class="n">smtsa</span><span class="o">.</span><span class="n">ARIMA</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;ARMA&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">arma_obj_fin</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">)</span>
 <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axarr</span><span class="p">)</span>
 <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;ARMA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axarr</span><span class="p">)</span>
@@ -1637,9 +1761,11 @@ Name: BC, Length: 386065, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9c09c997b5b2be18d58d29c1868ee52a06b095590751e9ef83e8f6d3bdbe1906.png" src="_images/9c09c997b5b2be18d58d29c1868ee52a06b095590751e9ef83e8f6d3bdbe1906.png" />
+<img alt="_images/d3eca30c8d418acdec5f09bbee5e7d931a89905736f045d877c020c97a1d79b1.png" src="_images/d3eca30c8d418acdec5f09bbee5e7d931a89905736f045d877c020c97a1d79b1.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El criterio AIC selecciona al modelo ARMA(2,1) como el mejor dentro del conjunto evaluado, al presentar el valor más bajo (más negativo). No obstante, la diferencia frente a modelos más simples es muy pequeña, lo que sugiere que la mejora en ajuste es marginal. En la gráfica, se observa que las predicciones del modelo (línea roja) siguen de cerca la media de la serie, pero no logran capturar la alta volatilidad presente en los retornos (línea azul), lo cual es consistente con modelos ARMA aplicados a retornos financieros: ajustan bien la dinámica de la media, pero no la varianza. En conjunto, aunque ARMA(2,1) es el mejor según AIC, su capacidad explicativa es limitada en términos de la variabilidad de la serie, indicando la necesidad de modelos adicionales (como GARCH) para capturar la volatilidad.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotds</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">],</span> <span class="n">nlag</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
@@ -1648,6 +1774,7 @@ Name: BC, Length: 386065, dtype: float64
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" src="_images/6214328c3f31c297ba101def0a23f9fe7517c65947a8c1fabc5a53920ddc3950.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1668,8 +1795,10 @@ Name: BC, Length: 386065, dtype: float64
 variance1=0.000001, variance2=0.000000
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>La serie de retornos log presenta un comportamiento típico de datos financieros: oscila alrededor de una media cercana a cero y no muestra tendencia clara, lo que sugiere estacionariedad en media. Sin embargo, se observan periodos de alta y baja volatilidad (clustering), lo que indica posible heterocedasticidad. Esto se confirma parcialmente con la ACF y PACF, donde solo el primer rezago muestra una autocorrelación leve y el resto cae rápidamente a cero, evidenciando una dependencia temporal muy débil en la media. Adicionalmente, la comparación de medias y varianzas entre submuestras muestra valores de media prácticamente iguales, pero diferencias en la varianza, reforzando la idea de varianza no constante. En conjunto, la serie parece ser ruido blanco en media, pero con volatilidad cambiante.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">het_arch</span>
@@ -1682,6 +1811,7 @@ variance1=0.000001, variance2=0.000000
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(13278.05864802507, 0.0, 1375.0622165973296, 0.0)
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1695,18 +1825,15 @@ variance1=0.000001, variance2=0.000000
 </pre></div>
 </div>
 <img alt="_images/8b8adc80f3c4a801e33a686aba96279f3c761f97e6b651e058ff1122281b059a.png" src="_images/8b8adc80f3c4a801e33a686aba96279f3c761f97e6b651e058ff1122281b059a.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El test ARCH arroja p-valores iguales a 0, lo que permite rechazar contundentemente la hipótesis nula de homocedasticidad y confirma la presencia de efectos ARCH en la serie. Esto implica que la varianza no es constante en el tiempo. Este resultado se ve claramente respaldado por la varianza móvil, donde se observan periodos de alta y baja volatilidad agrupados (volatility clustering), especialmente en ciertos intervalos donde la varianza aumenta significativamente. En conjunto, la evidencia indica que, aunque la media puede modelarse con ARMA, la dinámica de la varianza requiere un modelo condicional como GARCH para capturar adecuadamente estos cambios en la volatilidad.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.stattools</span><span class="w"> </span><span class="kn">import</span> <span class="n">adfuller</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adf_result</span><span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">adf_result</span><span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ADF Statistic: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p-value: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -1717,8 +1844,10 @@ variance1=0.000001, variance2=0.000000
 p-value: 0.000000
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El test de Dickey-Fuller muestra un estadístico altamente negativo (-271.44) y un p-valor igual a cero, lo que permite rechazar de forma contundente la hipótesis nula de raíz unitaria. Esto indica que la serie de retornos log es estacionaria en media, sin necesidad de diferenciación adicional. Este resultado es consistente con la naturaleza de los retornos financieros, que suelen comportarse como procesos estacionarios alrededor de una media cercana a cero, y valida el uso de modelos ARMA para capturar su dinámica en la media.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">periodogram</span>
@@ -1738,13 +1867,18 @@ p-value: 0.000000
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/193920757dc599760ed78be49037c1b7368405a234d9e4666011134da3073886.png" src="_images/193920757dc599760ed78be49037c1b7368405a234d9e4666011134da3073886.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El periodograma no muestra picos dominantes claros en frecuencias específicas, lo que indica la ausencia de ciclos o periodicidades marcadas en la serie de retornos. La densidad espectral se distribuye de manera relativamente uniforme, con ligeras concentraciones en bajas frecuencias, pero sin patrones definidos. Esto es consistente con el comportamiento de ruido blanco en la media y refuerza los resultados previos de la ACF y PACF, donde no se observaba una estructura fuerte de dependencia temporal. En conjunto, la evidencia sugiere que la serie no presenta componentes cíclicos relevantes y que su dinámica está dominada por fluctuaciones aleatorias de corto plazo.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_15m</span><span class="p">[</span><span class="s2">&quot;Retorno_log&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1757,6 +1891,9 @@ p-value: 0.000000
 <span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1773,8 +1910,10 @@ p-value: 0.000000
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/70c17489c23ada4badb4631b97c00d746bbe06cdf46a5cea6909092e4331da2f.png" src="_images/70c17489c23ada4badb4631b97c00d746bbe06cdf46a5cea6909092e4331da2f.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>La transformación propuesta con rezago 42 no revela una estructura estacional clara en la serie, lo cual se confirma con la ACF: únicamente el primer rezago presenta una leve autocorrelación, mientras que el resto de los rezagos (incluyendo aquellos cercanos a 42) se mantienen muy cercanos a cero. Esto sugiere que no existe evidencia fuerte de estacionalidad periódica en los retornos. En consecuencia, aunque se planteó un modelo SARIMAX con componente estacional (s=42), los datos no respaldan la necesidad de incluir dicha estructura, ya que la dinámica de la serie parece estar dominada por fluctuaciones aleatorias de corto plazo sin patrones repetitivos claros.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod1</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">tsa</span><span class="o">.</span><span class="n">statespace</span><span class="o">.</span><span class="n">SARIMAX</span><span class="p">(</span>
@@ -1794,8 +1933,8 @@ p-value: 0.000000
 ==============================================================================
 Dep. Variable:            Retorno_log   No. Observations:               386065
 Model:               SARIMAX(2, 0, 1)   Log Likelihood             2371998.480
-Date:                Sat, 04 Apr 2026   AIC                       -4743988.961
-Time:                        16:30:53   BIC                       -4743945.506
+Date:                Mon, 06 Apr 2026   AIC                       -4743988.961
+Time:                        14:00:01   BIC                       -4743945.506
 Sample:                             0   HQIC                      -4743976.526
                              - 386065                                         
 Covariance Type:                  opg                                         
@@ -1819,8 +1958,10 @@ Warnings:
 AIC no estacional: -4743988.960995782
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El modelo SARIMAX(2,0,1) sin componente estacional arroja un AIC de -4,743,988.96, prácticamente idéntico al obtenido con el ARMA(2,1), lo que confirma que la inclusión de estructura estacional no aporta mejoras en el ajuste. Los coeficientes AR(1), AR(2) y MA(1) son altamente significativos (p-value = 0), indicando que la dinámica de corto plazo está bien capturada. El test de Ljung-Box no rechaza la hipótesis nula (p ≈ 0.94), lo que sugiere ausencia de autocorrelación en los residuos, mientras que el test de Jarque-Bera confirma nuevamente una fuerte no normalidad. Adicionalmente, el test de heterocedasticidad indica varianza no constante, consistente con evidencia previa.</p>
 <section id="intervalo-de-confianza">
 <h2>Intervalo de confianza<a class="headerlink" href="#intervalo-de-confianza" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
@@ -1834,6 +1975,9 @@ AIC no estacional: -4743988.960995782
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1845,6 +1989,7 @@ AIC no estacional: -4743988.960995782
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(40,)
 </pre></div>
 </div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1877,9 +2022,11 @@ AIC no estacional: -4743988.960995782
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2a69faab813f9024c2498b75902c8d31f5cbbeae08a0fb1e55dbeb6af9ec9038.png" src="_images/2a69faab813f9024c2498b75902c8d31f5cbbeae08a0fb1e55dbeb6af9ec9038.png" />
+<img alt="_images/bcbc1d58dedfdd5df1ec8734b96f7873195a54d4fbd2b2ddd218d77338c41036.png" src="_images/bcbc1d58dedfdd5df1ec8734b96f7873195a54d4fbd2b2ddd218d77338c41036.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<p>El pronóstico del modelo ARMA muestra que los valores esperados convergen rápidamente hacia cero y se mantienen prácticamente constantes en todo el horizonte, lo cual es consistente con la naturaleza de los retornos financieros, cuya media es cercana a cero y difícil de predecir. Por su parte, los intervalos de confianza son relativamente amplios en comparación con el valor puntual, lo que refleja un alto nivel de incertidumbre y baja capacidad predictiva en la media. En conjunto, el modelo no ofrece poder predictivo relevante en términos de dirección o magnitud de los retornos, reforzando la idea de que estos se comportan como un proceso cercano al ruido blanco en media.</p>
 </section>
 </section>
 
@@ -1921,6 +2068,15 @@ AIC no estacional: -4743988.960995782
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title"><strong>1. Introducción</strong></p>
       </div>
+    </a>
+    <a class="right-next"
+       href="suavizado.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Modelo de suavización exponencial</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

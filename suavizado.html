@@ -1,0 +1,1735 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Modelo de suavización exponencial &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8cbcdc84" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=d2032c04" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8cbcdc84" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/bootstrap.css?v=b4a3e8ba" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/theme.css?v=a243ae73" />
+    <link rel="stylesheet" type="text/css" href="_static/vendor/fontawesome/6.5.2/css/all.min.css?v=f4fbef65" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'suavizado';</script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/copybutton_funcs.js?v=776a791e"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="_static/language_data.js?v=d4673a71"></script>
+    <script src="_static/searchtools.js?v=63a53a7d"></script>
+    <script src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/bootstrap.js?v=7583a70d"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?v=4bc35cb3"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?v=4e4fcec4"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Modelo Arima" href="Modelo_arima.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html"><strong>1. Introducción</strong></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Modelo_arima.html">Modelo Arima</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Modelo de suavización exponencial</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsuavizado.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Modelo de suavización exponencial</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-ses"><strong>Implementación SES</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-des"><strong>Implementación DES</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forecasting"><strong>Forecasting</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statsmodels-tsa-holtwinters"><strong>Statsmodels.tsa.holtwinters</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-ses-des-tes"><strong>Modelos SES-DES-TES</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="modelo-de-suavizacion-exponencial">
+<h1><strong>Modelo de suavización exponencial</strong><a class="headerlink" href="#modelo-de-suavizacion-exponencial" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_ipython</span>
+
+<span class="n">FUENTE</span> <span class="o">=</span> <span class="s2">&quot;Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">agregar_fuente_post_celda</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="c1"># Mostrar SIEMPRE (más estable)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;sub&gt;</span><span class="si">{</span><span class="n">FUENTE</span><span class="si">}</span><span class="s2">&lt;/sub&gt;&quot;</span><span class="p">))</span>
+
+<span class="n">ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
+
+<span class="c1"># limpiar registros anteriores</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">ip</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="s2">&quot;post_run_cell&quot;</span><span class="p">,</span> <span class="n">agregar_fuente_post_celda</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">ip</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;post_run_cell&quot;</span><span class="p">,</span> <span class="n">agregar_fuente_post_celda</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<section id="implementacion-ses">
+<h2><strong>Implementación SES</strong><a class="headerlink" href="#implementacion-ses" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">kagglehub</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Download latest version</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">kagglehub</span><span class="o">.</span><span class="n">dataset_download</span><span class="p">(</span><span class="s2">&quot;imetomi/eur-usd-forex-pair-historical-data-2002-2019&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Path to dataset files:&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning: Looks like you&#39;re using an outdated `kagglehub` version (installed: 0.3.13), please consider upgrading to the latest version (1.0.0).
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Path to dataset files: C:\Users\planeacion\.cache\kagglehub\datasets\imetomi\eur-usd-forex-pair-historical-data-2002-2019\versions\2
+</pre></div>
+</div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;eurusd_minute.csv&quot;</span><span class="p">))</span>
+<span class="c1"># Combinar Date y Time para la el horario exacto</span>
+<span class="n">df_time</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="s1">&#39;Date&#39;</span> <span class="ow">in</span> <span class="n">df_time</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="s1">&#39;Time&#39;</span> <span class="ow">in</span> <span class="n">df_time</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">df_time</span><span class="p">[</span><span class="s1">&#39;Datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_time</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">df_time</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">])</span>
+    <span class="n">df_time</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Datetime&#39;</span><span class="p">)</span>
+    <span class="n">df_time</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Time&#39;</span><span class="p">])</span>
+    <span class="n">df_time</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df_time</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_time</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>eurusd_hour.csv
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>eurusd_minute.csv
+eurusd_news.csv
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                         BO      BH      BL      BC  BCh      AO      AH  \
+Datetime                                                                   
+2005-01-02 18:29:00  1.3555  1.3555  1.3555  1.3555  0.0  1.3565  1.3565   
+2005-01-02 18:38:00  1.3555  1.3555  1.3555  1.3555  0.0  1.3565  1.3565   
+2005-01-02 18:51:00  1.3562  1.3562  1.3562  1.3562  0.0  1.3572  1.3572   
+2005-01-02 18:52:00  1.3560  1.3560  1.3560  1.3560  0.0  1.3570  1.3570   
+2005-01-02 18:55:00  1.3563  1.3563  1.3563  1.3563  0.0  1.3573  1.3573   
+
+                         AL      AC  ACh  
+Datetime                                  
+2005-01-02 18:29:00  1.3565  1.3565  0.0  
+2005-01-02 18:38:00  1.3565  1.3565  0.0  
+2005-01-02 18:51:00  1.3572  1.3572  0.0  
+2005-01-02 18:52:00  1.3570  1.3570  0.0  
+2005-01-02 18:55:00  1.3573  1.3573  0.0  
+(5618819, 10)
+</pre></div>
+</div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_15m</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;15min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">df_15m</span> <span class="o">=</span> <span class="n">df_15m</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>Usamos retornos simples en lugar de log-retornos cuando buscamos una transformación fácil de interpretar (+2%, −1%) y suficiente para estabilizar la serie antes de aplicar suavizamiento exponencial, especialmente en datos de alta frecuencia donde la diferencia con los log-retornos es mínima. Además, los retornos simples simplifican el flujo de trabajo porque no requieren transformar y revertir valores, mientras que el suavizamiento exponencial no necesita las propiedades teóricas adicionales de los log-retornos (como la aditividad o mejor comportamiento estadístico), que son más relevantes en modelos econométricos formales como GARCH o ARIMA.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">djia_ts</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno&#39;</span><span class="p">]</span>
+<span class="n">djia_ts</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Datetime
+2005-01-02 18:30:00    0.000000
+2005-01-02 18:45:00    0.000516
+2005-01-02 19:00:00    0.000147
+2005-01-02 19:15:00   -0.000405
+2005-01-02 19:30:00   -0.000406
+Name: Retorno, dtype: float64
+</pre></div>
+</div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_15m</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;15min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">df_15m</span> <span class="o">=</span> <span class="n">df_15m</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">djia_ts</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno&#39;</span><span class="p">]</span>
+<span class="n">djia_ts</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Datetime
+2005-01-02 18:30:00    0.000000
+2005-01-02 18:45:00    0.000516
+2005-01-02 19:00:00    0.000147
+2005-01-02 19:15:00   -0.000405
+2005-01-02 19:30:00   -0.000406
+Name: Retorno, dtype: float64
+</pre></div>
+</div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>Remuestreamos la serie a intervalos de 15 minutos (<code class="docutils literal notranslate"><span class="pre">resample('15min')</span></code>) para reducir la granularidad y el tamaño de la base de datos, agregando múltiples observaciones en un solo punto representativo (en este caso, la mediana). Esto tiene varias ventajas: disminuye el ruido de alta frecuencia (fluctuaciones muy pequeñas o erráticas), hace la serie más manejable computacionalmente, y permite trabajar con patrones más claros y estables en el tiempo. En otras palabras, sacrificas detalle muy fino para ganar claridad analítica y eficiencia en el procesamiento.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_plot</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;W&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">df_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;EUR/USD Bid Close Returns (week intervals, 2002–2022)&quot;</span><span class="p">,</span>
+             <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Returns&quot;</span><span class="p">,</span>
+             <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/aa80ee0b711cf3a1242bb3aefa55c0af6aac990f430fef3b41a0a89ad1b62b76.png" src="_images/aa80ee0b711cf3a1242bb3aefa55c0af6aac990f430fef3b41a0a89ad1b62b76.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>La serie muestra retornos semanales del EUR/USD centrados alrededor de cero, lo que indica ausencia de tendencia sistemática en los retornos (comportamiento típico de mercados eficientes). Se observan picos de alta volatilidad en ciertos periodos, especialmente alrededor de 2008–2009 y algunos episodios posteriores, lo que sugiere clusters de volatilidad (periodos tranquilos seguidos de periodos turbulentos). Además, hay outliers (movimientos extremos), reflejando choques o eventos económicos relevantes. En conjunto, es una serie estacionaria en media pero heterocedástica, característica común en datos financieros.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">firstsmooth</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">ytilde</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ytilde</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lambda_</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lambda_</span><span class="p">)</span> <span class="o">*</span> <span class="n">start</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+        <span class="n">ytilde</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lambda_</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lambda_</span><span class="p">)</span> <span class="o">*</span> <span class="n">ytilde</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">ytilde</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dji_smooth1</span> <span class="o">=</span> <span class="n">firstsmooth</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">djia_ts</span><span class="p">,</span> <span class="n">lambda_</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">djia_ts</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;EUR/USD&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dji_smooth1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;SES $\lambda=0.4$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;EUR/USD returns&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/282a6e2e31c0b07c248a2ea4359b944d5ba5283ebc3d789c59b08e53a124842b.png" src="_images/282a6e2e31c0b07c248a2ea4359b944d5ba5283ebc3d789c59b08e53a124842b.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>El gráfico muestra los retornos del EUR/USD (puntos azules) junto con el suavizamiento exponencial simple con λ = 0.4 (línea naranja). Se observa que el modelo logra capturar el nivel promedio de la serie, manteniéndose cerca de cero, pero no sigue los picos extremos ni la alta variabilidad, especialmente en periodos de mayor volatilidad como 2008–2009 y 2015–2017. Esto es esperado, ya que el suavizamiento exponencial tiende a “filtrar” el ruido y producir una serie más estable. En resumen, el modelo es útil para identificar la tendencia central, pero no para predecir shocks o movimientos bruscos en los retornos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">measacc_fs</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">):</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">firstsmooth</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">yh</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]]),</span> <span class="n">out</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">prederr</span> <span class="o">=</span> <span class="n">yh</span> <span class="o">-</span> <span class="n">out</span>
+    <span class="n">SSE</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">prederr</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">RMSE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">prederr</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span><span class="p">)</span> <span class="c1"># Usamos RMSE dado que en este tipo de series, lo valores cercanos a 0 son comunes</span>
+    <span class="n">MAD</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">prederr</span><span class="p">))</span> <span class="o">/</span> <span class="n">T</span>
+    <span class="n">MSD</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">prederr</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span>
+    <span class="n">ret1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s2">&quot;SSE&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">SSE</span><span class="p">],</span>
+        <span class="s2">&quot;RMSE&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">RMSE</span><span class="p">],</span>
+        <span class="s2">&quot;MAD&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">MAD</span><span class="p">],</span>
+        <span class="s2">&quot;MSD&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">MSD</span><span class="p">]</span>
+    <span class="p">})</span>
+    <span class="n">ret1</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measacc_fs</span><span class="p">(</span><span class="n">djia_ts</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SSE</th>
+      <th>RMSE</th>
+      <th>MAD</th>
+      <th>MSD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.125207</td>
+      <td>0.000569</td>
+      <td>0.000364</td>
+      <td>3.243150e-07</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>Las métricas indican que el modelo de suavizamiento exponencial tiene un ajuste razonable pero limitado para esta serie. El RMSE (0.000569) y el MAD (0.000364) son relativamente bajos, lo que sugiere que, en promedio, los errores de predicción son pequeños, algo esperable en retornos que están muy cerca de cero. Sin embargo, el SSE acumulado (0.125) refleja que, a lo largo de toda la serie, los errores sí se suman, principalmente por los picos de volatilidad que el modelo no captura bien. El MSD (3.24e-07) confirma que la varianza del error es baja, pero esto puede ser engañoso en series financieras, donde muchos errores pequeños esconden pocos errores grandes. En conjunto, el modelo funciona bien para aproximar el comportamiento promedio, pero no es adecuado para capturar eventos extremos o cambios bruscos en la volatilidad.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.holtwinters</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExponentialSmoothing</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">measacc_hw</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">lambda_</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">yh</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">fit</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]]),</span> <span class="n">y_pred</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">prederr</span> <span class="o">=</span> <span class="n">yh</span> <span class="o">-</span> <span class="n">out</span>
+    <span class="n">SSE</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">prederr</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">RMSE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">prederr</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span><span class="p">)</span>
+    <span class="n">MAD</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">prederr</span><span class="p">))</span> <span class="o">/</span> <span class="n">T</span>
+    <span class="n">MSD</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">prederr</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span>
+    <span class="n">ret1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s2">&quot;SSE&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">SSE</span><span class="p">],</span>
+        <span class="s2">&quot;RMSE&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">RMSE</span><span class="p">],</span>
+        <span class="s2">&quot;MAD&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">MAD</span><span class="p">],</span>
+        <span class="s2">&quot;MSD&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">MSD</span><span class="p">]</span>
+    <span class="p">})</span>
+    <span class="n">ret1</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measacc_hw</span><span class="p">(</span><span class="n">djia_ts</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SSE</th>
+      <th>RMSE</th>
+      <th>MAD</th>
+      <th>MSD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.137167</td>
+      <td>0.000596</td>
+      <td>0.000382</td>
+      <td>3.552954e-07</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>Comparado con el resultado anterior, este modelo tiene un desempeño ligeramente peor. El SSE aumenta (de 0.125 a 0.137), lo que indica mayor error acumulado, y tanto el RMSE (0.000596) como el MAD (0.000382) también son más altos, señalando que en promedio las predicciones se alejan un poco más de los valores reales. El MSD igualmente sube, lo que refleja una mayor varianza del error.</p>
+<p>En términos prácticos, este cambio sugiere que el valor de λ usado aquí no está ajustando tan bien la serie como el anterior. Aunque la diferencia no es enorme (lo cual es común en retornos financieros), sí indica que el modelo previo tenía un mejor balance entre suavizamiento y capacidad de reacción a los datos.</p>
+</section>
+<section id="implementacion-des">
+<h2><strong>Implementación DES</strong><a class="headerlink" href="#implementacion-des" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cpi_smooth1</span> <span class="o">=</span> <span class="n">firstsmooth</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">djia_ts</span><span class="p">,</span> <span class="n">lambda_</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">cpi_smooth2</span> <span class="o">=</span> <span class="n">firstsmooth</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">cpi_smooth1</span><span class="p">,</span> <span class="n">lambda_</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cpi_hat</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cpi_smooth1</span> <span class="o">-</span> <span class="n">cpi_smooth2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">djia_ts</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;EUR/USD&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cpi_hat</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;DES $\lambda=0.3$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;EUR/USD Returns&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dd2518cdcc6c38e8636d75bd583a624d41543368c9a6084e77db93c1da5ba231.png" src="_images/dd2518cdcc6c38e8636d75bd583a624d41543368c9a6084e77db93c1da5ba231.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>El gráfico muestra los retornos del EUR/USD con un suavizamiento exponencial doble (DES, λ = 0.3). La línea suavizada se mantiene cercana a cero y sigue el comportamiento promedio de la serie, pero no logra capturar los picos extremos ni los periodos de alta volatilidad. Además, en ciertos tramos introduce pequeñas oscilaciones adicionales sin que exista una tendencia clara en los datos. En conjunto, la línea suavizada no aporta una mejora evidente en el ajuste visual frente a un suavizamiento más simple, ya que la serie no presenta una estructura de tendencia marcada.</p>
+</section>
+<section id="forecasting">
+<h2><strong>Forecasting</strong><a class="headerlink" href="#forecasting" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lambda_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>En el contexto de suavización exponencial, defines <code class="docutils literal notranslate"><span class="pre">lambda_vec</span> <span class="pre">=</span> <span class="pre">np.arange(0.1,</span> <span class="pre">1.0,</span> <span class="pre">0.1)</span></code> para probar distintos valores del parámetro λ (que controla cuánto peso le das a los datos más recientes frente a los anteriores).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sse_speed</span><span class="p">(</span><span class="n">sc</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">measacc_fs</span><span class="p">(</span><span class="n">djia_ts</span><span class="p">,</span> <span class="n">sc</span><span class="p">)[</span><span class="s1">&#39;SSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sse_vec</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">lambda_</span> <span class="ow">in</span> <span class="n">lambda_vec</span><span class="p">:</span>
+    <span class="n">sse_vec</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">sse_vec</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sse_speed</span><span class="p">(</span><span class="n">lambda_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">24</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">sse_vec</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">for</span> <span class="n">lambda_</span> <span class="ow">in</span> <span class="n">lambda_vec</span><span class="p">:</span>
+<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="n">sse_vec</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">sse_vec</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sse_speed</span><span class="p">(</span><span class="n">lambda_</span><span class="p">)</span>
+
+<span class="nn">Cell In[23], line 2,</span> in <span class="ni">sse_speed</span><span class="nt">(sc)</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span><span class="w"> </span><span class="nf">sse_speed</span><span class="p">(</span><span class="n">sc</span><span class="p">):</span>
+<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="k">return</span> <span class="n">measacc_fs</span><span class="p">(</span><span class="n">djia_ts</span><span class="p">,</span> <span class="n">sc</span><span class="p">)[</span><span class="s1">&#39;SSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nn">Cell In[12], line 2,</span> in <span class="ni">measacc_fs</span><span class="nt">(y, lambda_)</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span><span class="w"> </span><span class="nf">measacc_fs</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">):</span>
+<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="n">out</span> <span class="o">=</span> <span class="n">firstsmooth</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">yh</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+
+<span class="nn">Cell In[9], line 7,</span> in <span class="ni">firstsmooth</span><span class="nt">(y, lambda_, start)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">ytilde</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lambda_</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lambda_</span><span class="p">)</span> <span class="o">*</span> <span class="n">start</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+<span class="ne">----&gt; </span><span class="mi">7</span>     <span class="n">ytilde</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lambda_</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lambda_</span><span class="p">)</span> <span class="o">*</span> <span class="n">ytilde</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="k">return</span> <span class="n">ytilde</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\pandas\core\series.py:1128,</span> in <span class="ni">Series.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1118</span>     <span class="n">key</span> <span class="o">=</span> <span class="n">unpack_1tuple</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1120</span> <span class="k">if</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">_should_fallback_to_positional</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1121</span>     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1122</span>         <span class="c1"># GH#50617</span>
+<span class="g g-Whitespace">   </span><span class="mi">1123</span>         <span class="s2">&quot;Series.__getitem__ treating keys as positions is deprecated. &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1124</span>         <span class="s2">&quot;In a future version, integer keys will always be treated &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1125</span>         <span class="s2">&quot;as labels (consistent with DataFrame behavior). To access &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1126</span>         <span class="s2">&quot;a value by position, use `ser.iloc[pos]`&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1127</span>         <span class="ne">FutureWarning</span><span class="p">,</span>
+<span class="ne">-&gt; </span><span class="mi">1128</span>         <span class="n">stacklevel</span><span class="o">=</span><span class="n">find_stack_level</span><span class="p">(),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1129</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1130</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1132</span> <span class="k">elif</span> <span class="n">key_is_scalar</span><span class="p">:</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\pandas\util\_exceptions.py:43,</span> in <span class="ni">find_stack_level</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">40</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="g g-Whitespace">     </span><span class="mi">42</span> <span class="n">pkg_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">43</span> <span class="n">test_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg_dir</span><span class="p">,</span> <span class="s2">&quot;tests&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="c1"># https://stackoverflow.com/questions/17407119/python-inspect-stack-is-slow</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span> <span class="n">frame</span><span class="p">:</span> <span class="n">FrameType</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\ntpath.py:109,</span> in <span class="ni">join</span><span class="nt">(path, *paths)</span>
+<span class="g g-Whitespace">    </span><span class="mi">107</span>     <span class="n">result_drive</span> <span class="o">=</span> <span class="n">p_drive</span>
+<span class="g g-Whitespace">    </span><span class="mi">108</span> <span class="c1"># Second path is relative to the first</span>
+<span class="ne">--&gt; </span><span class="mi">109</span> <span class="k">if</span> <span class="n">result_path</span> <span class="ow">and</span> <span class="n">result_path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seps</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">110</span>     <span class="n">result_path</span> <span class="o">=</span> <span class="n">result_path</span> <span class="o">+</span> <span class="n">sep</span>
+<span class="g g-Whitespace">    </span><span class="mi">111</span> <span class="n">result_path</span> <span class="o">=</span> <span class="n">result_path</span> <span class="o">+</span> <span class="n">p_path</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opt_lambda</span> <span class="o">=</span> <span class="n">sse_vec</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>La instrucción <code class="docutils literal notranslate"><span class="pre">opt_lambda</span> <span class="pre">=</span> <span class="pre">sse_vec.min()</span></code> toma el valor mínimo del vector <code class="docutils literal notranslate"><span class="pre">sse_vec</span></code>, que normalmente contiene los errores (por ejemplo, la suma de errores cuadrados) asociados a cada valor de λ probado. Sin embargo, es importante notar que esta línea no devuelve directamente el mejor λ, sino el valor mínimo del error; para obtener el λ óptimo en suavización exponencial, deberías encontrar la posición de ese mínimo (por ejemplo, con <code class="docutils literal notranslate"><span class="pre">argmin</span></code>) y luego usarla para indexar <code class="docutils literal notranslate"><span class="pre">lambda_vec</span></code>, ya que ese será el valor de λ que produce el menor error y, por tanto, el mejor ajuste del modelo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lambda_vec</span><span class="p">,</span> <span class="n">sse_vec</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;$SSE$ vs. $\lambda$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$\lambda$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$SSE$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">lambda_vec</span><span class="p">[</span><span class="n">sse_vec</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cb822a5ccc5c155de1b16794150f6ef3f1b71a2981eef6e075fffd3c2e7690dc.png" src="_images/cb822a5ccc5c155de1b16794150f6ef3f1b71a2981eef6e075fffd3c2e7690dc.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>La gráfica muestra la relación entre el error (SSE) y el valor de λ en la suavización exponencial, y se observa claramente que el error es mínimo cuando λ = 0.1. A medida que λ aumenta, el SSE también crece de forma progresiva, lo que indica que darle más peso a los datos recientes empeora el ajuste en este caso. Por eso, la línea roja en λ = 0.1 marca correctamente el valor óptimo: es el que minimiza el error y produce el mejor equilibrio en la suavización, favoreciendo más la información histórica que las fluctuaciones recientes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measacc_fs</span><span class="p">(</span><span class="n">djia_ts</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SSE</th>
+      <th>RMSE</th>
+      <th>MAD</th>
+      <th>MSD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.110269</td>
+      <td>0.000534</td>
+      <td>0.000336</td>
+      <td>2.856237e-07</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measacc_hw</span><span class="p">(</span><span class="n">djia_ts</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SSE</th>
+      <th>RMSE</th>
+      <th>MAD</th>
+      <th>MSD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.113283</td>
+      <td>0.000542</td>
+      <td>0.000341</td>
+      <td>2.934294e-07</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>En el análisis con <code class="docutils literal notranslate"><span class="pre">measacc_fs</span></code>, las métricas de error muestran un buen ajuste de la serie de tiempo, con SSE = 0.110269, RMSE = 0.000534, MAD = 0.000336 y MSD = 2.856237 × 10⁻⁷, indicando que los errores son bajos y consistentes. Por otro lado, en el análisis con <code class="docutils literal notranslate"><span class="pre">measacc_hw</span></code>, los errores son ligeramente mayores, con SSE = 0.113283, RMSE = 0.000542, MAD = 0.000341 y MSD = 2.934294 × 10⁻⁷, lo que refleja que la inclusión de componentes adicionales como tendencia y estacionalidad no mejora significativamente el ajuste de la serie en este caso.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cpi_dates</span> <span class="o">=</span> <span class="n">djia_ts</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lambda_</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">tau_length</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1">#3 horas según nuestra muestra de 15min</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cpi_smooth1</span> <span class="o">=</span> <span class="n">firstsmooth</span><span class="p">(</span><span class="n">cpi_dates</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="n">tau_length</span><span class="p">],</span> <span class="n">lambda_</span><span class="p">)</span>
+<span class="n">cpi_smooth2</span> <span class="o">=</span> <span class="n">firstsmooth</span><span class="p">(</span><span class="n">cpi_smooth1</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>Se aplica una suavización exponencial doble sobre la serie de retornos del EUR/USD, primero suavizando la serie original y luego suavizando nuevamente el resultado. Este procedimiento atenúa la volatilidad y los picos de los retornos, generando una curva más estable que facilita la identificación de tendencias y patrones subyacentes en el comportamiento del par de divisas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cpi_hat</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cpi_smooth1</span> <span class="o">-</span> <span class="n">cpi_smooth2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">tau_length</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cpi_smooth1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cpi_forecast</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="n">tau</span> <span class="o">*</span> <span class="p">(</span><span class="n">lambda_</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lambda_</span><span class="p">)))</span> <span class="o">*</span> <span class="n">cpi_smooth1</span><span class="p">[</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tau</span> <span class="o">*</span> <span class="p">(</span><span class="n">lambda_</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lambda_</span><span class="p">)))</span> <span class="o">*</span> <span class="n">cpi_smooth2</span><span class="p">[</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>La fórmula se utiliza para proyectar un pronóstico de los retornos del EUR/USD a partir de la suavización doble. Combina el último valor de la primera suavización y el de la segunda, ponderados por coeficientes que dependen de λ y τ, para extrapolar la tendencia de los retornos. Este enfoque genera una estimación más estable del comportamiento futuro del par de divisas, atenuando la volatilidad reciente y destacando las tendencias subyacentes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ctau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">lambda_</span> <span class="o">/</span> <span class="p">((</span><span class="mi">2</span> <span class="o">-</span> <span class="n">lambda_</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">10</span> <span class="o">-</span> <span class="mi">14</span> <span class="o">*</span> <span class="n">lambda_</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">lambda_</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">lambda_</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">lambda_</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">tau</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">lambda_</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>El cálculo de (c_\tau) con ( \tau = 12 ) determina una constante de ajuste para estimar la incertidumbre del pronóstico de los retornos del EUR/USD a corto plazo, en este caso unas tres horas. Esta constante combina el parámetro de suavizado (λ) y el horizonte (τ) para cuantificar cómo puede variar el pronóstico basado en la suavización doble, proporcionando un margen que refleja la volatilidad y la tendencia subyacente de la serie en ese periodo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha_lev</span> <span class="o">=</span> <span class="mf">0.05</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sig_est</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">cpi_dates</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">cpi_hat</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">ctau</span> <span class="o">/</span> <span class="n">ctau</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">sig_est</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">alpha_lev</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">last_n</span> <span class="o">=</span> <span class="mi">48</span> <span class="c1"># solo 12 horas de historia antes del forecast</span>
+
+<span class="n">cpi_dates_plot</span> <span class="o">=</span> <span class="n">cpi_dates</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">last_n</span> <span class="o">+</span> <span class="n">tau_length</span><span class="p">):]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Historia</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cpi_dates_plot</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span><span class="o">-</span><span class="n">tau_length</span><span class="p">],</span>
+        <span class="n">cpi_dates_plot</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="n">tau_length</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Historia&#39;</span><span class="p">)</span>
+
+<span class="c1"># Real en período de forecast</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cpi_dates_plot</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="n">tau_length</span><span class="p">:],</span>
+        <span class="n">cpi_dates_plot</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="n">tau_length</span><span class="p">:]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
+
+<span class="c1"># Forecast y bandas</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cpi_dates_plot</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="n">tau_length</span><span class="p">:],</span> <span class="n">cpi_forecast</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Forecast&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cpi_dates_plot</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="n">tau_length</span><span class="p">:],</span> <span class="n">cpi_forecast</span> <span class="o">+</span> <span class="n">cl</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Upper bound&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cpi_dates_plot</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="n">tau_length</span><span class="p">:],</span> <span class="n">cpi_forecast</span> <span class="o">-</span> <span class="n">cl</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Lower bound&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Returns EUR/USD&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;EUR/USD Bid Close Returns — Suavizado exponencial (λ=0.1)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3b6a8d019142989088f41f69715da5fa077b89f27fca89c6cde97c51247f4a45.png" src="_images/3b6a8d019142989088f41f69715da5fa077b89f27fca89c6cde97c51247f4a45.png" />
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<p>El modelo está prediciendo un retorno casi nulo para los siguientes periodos, lo cual tiene sentido dado que con λ=0.1 el suavizado es muy agresivo y la serie de retornos oscila alrededor de cero sin una tendencia clara. En la práctica esto significa que el modelo no está apostando por ninguna dirección del EUR/USD, simplemente asume que el mercado continuará comportándose como el promedio histórico reciente.</p>
+<p>Lo más interesante de la gráfica es la brecha entre la amplitud de las bandas y la magnitud real de los movimientos. Los retornos reales en naranja se mueven de forma bastante contenida cerca del forecast, pero las bandas son tan anchas que casi no aportan información útil para tomar decisiones.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lambda_</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># óptimo que encontramos antes</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">386065</span> <span class="o">-</span> <span class="mi">96</span>
+<span class="n">tau</span> <span class="o">=</span> <span class="mi">96</span>        <span class="c1"># 96 intervalos × 15min = 24 horas</span>
+<span class="n">alpha_lev</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">cpi_forecast</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">tau</span><span class="p">)</span>
+<span class="n">cl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">tau</span><span class="p">)</span>
+<span class="n">cpi_smooth1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span> <span class="o">+</span> <span class="n">tau</span><span class="p">)</span>
+<span class="n">cpi_smooth2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span> <span class="o">+</span> <span class="n">tau</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">tau</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">cpi_smooth1</span><span class="p">[:</span><span class="n">T</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">firstsmooth</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">cpi_dates</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">T</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">lambda_</span><span class="o">=</span><span class="n">lambda_</span><span class="p">)</span>
+    <span class="n">cpi_smooth2</span><span class="p">[:</span><span class="n">T</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">firstsmooth</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">cpi_smooth1</span><span class="p">[:</span><span class="n">T</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">lambda_</span><span class="o">=</span><span class="n">lambda_</span><span class="p">)</span>
+    <span class="n">cpi_forecast</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">lambda_</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lambda_</span><span class="p">)))</span> <span class="o">*</span> <span class="n">cpi_smooth1</span><span class="p">[</span><span class="n">T</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> \
+                          <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">lambda_</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lambda_</span><span class="p">)))</span> <span class="o">*</span> <span class="n">cpi_smooth2</span><span class="p">[</span><span class="n">T</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span> <span class="c1"># horizon one each time</span>
+    <span class="n">cpi_hat</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cpi_smooth1</span><span class="p">[:</span><span class="n">T</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">cpi_smooth2</span><span class="p">[:</span><span class="n">T</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">sig_est</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">cpi_dates</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">T</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">cpi_hat</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">cl</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha_lev</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">sig_est</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">cpi_dates</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">cpi_dates</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">forecast_index</span> <span class="o">=</span> <span class="n">cpi_dates</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="n">tau</span><span class="p">:]</span>
+
+<span class="n">zoom</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">cpi_dates</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="n">zoom</span><span class="p">:</span><span class="o">-</span><span class="n">tau</span><span class="p">],</span>
+    <span class="n">cpi_dates</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="n">zoom</span><span class="p">:</span><span class="o">-</span><span class="n">tau</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Returns (Historical)&#39;</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">forecast_index</span><span class="p">,</span>
+    <span class="n">cpi_dates</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="n">tau</span><span class="p">:]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Returns (Actual)&#39;</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast_index</span><span class="p">,</span> <span class="n">cpi_forecast</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Forecast&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+    <span class="n">forecast_index</span><span class="p">,</span>
+    <span class="n">cpi_forecast</span> <span class="o">-</span> <span class="n">cl</span><span class="p">,</span>
+    <span class="n">cpi_forecast</span> <span class="o">+</span> <span class="n">cl</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Confidence Interval&#39;</span>
+<span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">zoom</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">tick_positions</span> <span class="o">=</span> <span class="n">cpi_dates</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="n">zoom</span><span class="p">::</span><span class="n">n</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">tick_positions</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">tick_positions</span><span class="p">],</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;EUR/USD Forecast with Confidence Interval&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Returns&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Esta gráfica muestra el forecast de retornos del EUR/USD para el 29 de abril, entrenado con la historia del 27 y 28. El intervalo de confianza en rosado es notablemente amplio, cubriendo cerca de ±0.0012, lo que refleja que el modelo asume alta incertidumbre y en la práctica ofrece poca precisión direccional. Los retornos reales en naranja se mantienen dentro de las bandas pero con picos abruptos que el forecast verde nunca anticipa, ya que este converge suavemente hacia cero conforme avanza el horizonte, comportamiento típico de modelos que no encuentran estructura persistente en la serie. En resumen, el modelo es estadísticamente válido pero limitado para capturar la dinámica real de un mercado de alta frecuencia como el forex.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tlsmooth</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">delta_</span><span class="p">,</span> <span class="n">y_tilde_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lambda_start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">Qt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">Dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">y_tilde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">lambd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="n">lambd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lambda_start</span>
+    <span class="k">if</span> <span class="n">y_tilde_start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y_tilde</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y_tilde</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_tilde_start</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+        <span class="n">err</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_tilde</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">Qt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_</span> <span class="o">*</span> <span class="n">err</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">delta_</span><span class="p">)</span> <span class="o">*</span> <span class="n">Qt</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">Dt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">err</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">delta_</span><span class="p">)</span> <span class="o">*</span> <span class="n">Dt</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">lambd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Qt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">Dt</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">y_tilde</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lambd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">lambd</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">y_tilde</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">y_tilde</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">Dt</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_tl_dji</span> <span class="o">=</span> <span class="n">tlsmooth</span><span class="p">(</span><span class="n">djia_ts</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">last_fc</span> <span class="o">=</span> <span class="mi">98</span> <span class="c1">## Número de intervalos en un día, considerando mediciones cada 15 minutos</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.dates</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mdates</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">djia_ts</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="n">last_fc</span><span class="p">:],</span> <span class="n">djia_ts</span><span class="p">[</span><span class="o">-</span><span class="n">last_fc</span><span class="p">:],</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;EUR/USD&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">djia_ts</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="n">last_fc</span><span class="p">:],</span> <span class="n">out_tl_dji</span><span class="p">[</span><span class="o">-</span><span class="n">last_fc</span><span class="p">:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;TL Smoother&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">djia_ts</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="n">last_fc</span><span class="p">:],</span> <span class="n">dji_smooth1</span><span class="p">[</span><span class="o">-</span><span class="n">last_fc</span><span class="p">:],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Exponential Smoother&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">AutoDateLocator</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Returns&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>La gráfica compara dos suavizadores aplicados a los retornos intradiarios del EUR/USD durante el 29 de abril. El suavizador exponencial en rojo reacciona con más agilidad a los movimientos bruscos de la serie, siguiendo los picos y valles con mayor fidelidad, mientras que el TL Smoother en azul produce una curva más estable y menos reactiva, sacrificando sensibilidad a cambio de una señal más limpia.</p>
+<p>Ambos convergen hacia cero al final del día, confirmando que la serie no tiene tendencia sostenida. La diferencia práctica entre los dos es que el rojo sería más útil si el objetivo es seguir el mercado de cerca, mientras que el azul es preferible si se busca filtrar el ruido y capturar solo el movimiento estructural de fondo.</p>
+</section>
+<section id="statsmodels-tsa-holtwinters">
+<h2><strong>Statsmodels.tsa.holtwinters</strong><a class="headerlink" href="#statsmodels-tsa-holtwinters" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tools.sm_exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConvergenceWarning</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">ConvergenceWarning</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.holtwinters</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExponentialSmoothing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.holtwinters</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleExpSmoothing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.seasonal</span><span class="w"> </span><span class="kn">import</span> <span class="n">seasonal_decompose</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.tsa.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">djia_ts</span>
+<span class="n">y</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tau_test</span> <span class="o">=</span> <span class="mi">96</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="o">-</span><span class="n">tau_test</span><span class="p">]</span>
+<span class="n">test</span>  <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">tau_test</span><span class="p">:]</span>
+<span class="nb">print</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_model</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+
+    <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="o">-</span><span class="mi">112</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">, MAE: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">mae</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+    <span class="n">y_pred</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prediction&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="modelos-ses-des-tes">
+<h2><strong>Modelos SES-DES-TES</strong><a class="headerlink" href="#modelos-ses-des-tes" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">ses_optimizer</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+
+    <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">:</span>
+        <span class="n">ses_model</span> <span class="o">=</span> <span class="n">SimpleExpSmoothing</span><span class="p">(</span><span class="n">train</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">optimized</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">ses_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+        <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mae</span> <span class="o">&lt;</span> <span class="n">best_mae</span><span class="p">:</span>
+            <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">mae</span>
+
+    <span class="k">return</span> <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_mae</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">ses_model_tuning</span><span class="p">(</span><span class="n">train</span> <span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Model Tuning - Single Exponential Smoothing&quot;</span><span class="p">):</span>
+
+    <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+    <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">ses_optimizer</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+    <span class="n">final_model</span> <span class="o">=</span> <span class="n">SimpleExpSmoothing</span><span class="p">(</span><span class="n">train</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">best_alpha</span><span class="p">,</span> <span class="n">optimized</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">final_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+    <span class="c1"># Align the index of y_pred with the test set for proper plotting</span>
+    <span class="n">y_pred</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+    <span class="n">plot_model</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ses_model_tuning</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">tau_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">des_optimizer</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">trend</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+
+    <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">beta</span> <span class="ow">in</span> <span class="n">betas</span><span class="p">:</span>
+            <span class="n">des_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">smoothing_slope</span><span class="o">=</span><span class="n">beta</span><span class="p">)</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">des_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+            <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mae</span> <span class="o">&lt;</span> <span class="n">best_mae</span><span class="p">:</span>
+                <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">mae</span>
+
+    <span class="k">return</span> <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_mae</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">des_model_tuning</span><span class="p">(</span><span class="n">train</span> <span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">trend</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Model Tuning - Double Exponential Smoothing&quot;</span><span class="p">):</span>
+
+    <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">)</span>
+    <span class="n">betas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">)</span>
+    <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">des_optimizer</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+    <span class="n">final_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">best_alpha</span><span class="p">,</span> <span class="n">smoothing_slope</span><span class="o">=</span><span class="n">best_beta</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">final_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+    <span class="c1"># Align the index of y_pred with the test set for proper plotting</span>
+    <span class="n">y_pred</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+    <span class="n">plot_model</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">des_model_tuning</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">tau_test</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;add&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tes_optimizer</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">abg</span><span class="p">,</span> <span class="n">trend</span><span class="p">,</span> <span class="n">seasonal</span><span class="p">,</span>  <span class="n">seasonal_periods</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    
+    <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">comb</span> <span class="ow">in</span> <span class="n">abg</span><span class="p">:</span>
+        <span class="n">tes_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="n">seasonal</span><span class="p">,</span> <span class="n">seasonal_periods</span><span class="o">=</span><span class="n">seasonal_periods</span><span class="p">)</span><span class="o">.</span>\
+            <span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">comb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">smoothing_slope</span><span class="o">=</span><span class="n">comb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">smoothing_seasonal</span><span class="o">=</span><span class="n">comb</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">tes_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+        <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mae</span> <span class="o">&lt;</span> <span class="n">best_mae</span><span class="p">:</span>
+            <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">comb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">comb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">comb</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">mae</span>
+
+    <span class="k">return</span> <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tes_model_tuning</span><span class="p">(</span><span class="n">train</span> <span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">trend</span><span class="p">,</span> <span class="n">seasonal</span><span class="p">,</span> <span class="n">seasonal_periods</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Model Tuning - Triple Exponential Smoothing&quot;</span><span class="p">):</span>
+    
+    <span class="n">alphas</span> <span class="o">=</span> <span class="n">betas</span> <span class="o">=</span> <span class="n">gammas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">)</span>
+    <span class="n">abg</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">gammas</span><span class="p">))</span>
+    <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">tes_optimizer</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">abg</span><span class="o">=</span><span class="n">abg</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="n">seasonal</span><span class="p">,</span> <span class="n">seasonal_periods</span><span class="o">=</span><span class="n">seasonal_periods</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+    <span class="n">final_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="n">seasonal</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">best_alpha</span><span class="p">,</span> <span class="n">smoothing_slope</span><span class="o">=</span><span class="n">best_beta</span><span class="p">,</span> <span class="n">smoothing_seasonal</span><span class="o">=</span><span class="n">best_gamma</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">final_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+    <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">plot_model</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">tes_model_tuning</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">tau_test</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="n">seasonal_periods</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tes_final_model</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="s1">&#39;add&#39;</span><span class="p">):</span>
+  <span class="n">final_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="n">seasonal</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">smoothing_level</span><span class="o">=</span><span class="n">best_alpha</span><span class="p">,</span> <span class="n">smoothing_slope</span><span class="o">=</span><span class="n">best_beta</span><span class="p">,</span> <span class="n">smoothing_seasonal</span><span class="o">=</span><span class="n">best_gamma</span><span class="p">)</span>
+  <span class="n">feature_predict</span> <span class="o">=</span> <span class="n">final_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">feature_predict</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">tes_final_model</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Train&#39;</span><span class="p">);</span>
+<span class="n">test</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Test&#39;</span><span class="p">);</span>
+<span class="n">y_pred</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Forecast&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;CO2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Modelo_arima.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Modelo Arima</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-ses"><strong>Implementación SES</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-des"><strong>Implementación DES</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forecasting"><strong>Forecasting</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statsmodels-tsa-holtwinters"><strong>Statsmodels.tsa.holtwinters</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-ses-des-tes"><strong>Modelos SES-DES-TES</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
