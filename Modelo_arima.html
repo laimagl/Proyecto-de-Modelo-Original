@@ -210,9 +210,13 @@
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelo Arima</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deep_learning%20%283%29.html">Modelo de Deep Learning</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="ES_hrs.html">Suavización exponencial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Arima.html">Modelo Arima con partición de datos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Comparacion_de_elemento.html">Comparación de Modelos</a></li>
+
 </ul>
 
     </div>
@@ -502,6 +506,25 @@ document.write(`
 eurusd_news.csv
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                         BO      BH      BL      BC  BCh      AO      AH  \
+Datetime                                                                   
+2005-01-02 18:29:00  1.3555  1.3555  1.3555  1.3555  0.0  1.3565  1.3565   
+2005-01-02 18:38:00  1.3555  1.3555  1.3555  1.3555  0.0  1.3565  1.3565   
+2005-01-02 18:51:00  1.3562  1.3562  1.3562  1.3562  0.0  1.3572  1.3572   
+2005-01-02 18:52:00  1.3560  1.3560  1.3560  1.3560  0.0  1.3570  1.3570   
+2005-01-02 18:55:00  1.3563  1.3563  1.3563  1.3563  0.0  1.3573  1.3573   
+
+                         AL      AC  ACh  
+Datetime                                  
+2005-01-02 18:29:00  1.3565  1.3565  0.0  
+2005-01-02 18:38:00  1.3565  1.3565  0.0  
+2005-01-02 18:51:00  1.3572  1.3572  0.0  
+2005-01-02 18:52:00  1.3570  1.3570  0.0  
+2005-01-02 18:55:00  1.3573  1.3573  0.0  
+(5618819, 10)
+</pre></div>
+</div>
+<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <div class="cell docutils container">
@@ -513,39 +536,8 @@ eurusd_news.csv
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\planeacion\AppData\Local\Temp\ipykernel_16624\2857038933.py:1: FutureWarning: &#39;T&#39; is deprecated and will be removed in a future version, please use &#39;min&#39; instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\planeacion\AppData\Local\Temp\ipykernel_12696\3325662277.py:1: FutureWarning: &#39;T&#39; is deprecated and will be removed in a future version, please use &#39;min&#39; instead.
   df_15m = df_time.resample(&#39;15T&#39;).median().dropna()
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                           BO        BH        BL       BC      BCh        AO  \
-Datetime                                                                        
-2005-01-02 18:30:00  1.355500  1.355500  1.355500  1.35550  0.00000  1.356500   
-2005-01-02 18:45:00  1.356200  1.356200  1.356200  1.35620  0.00000  1.357200   
-2005-01-02 19:00:00  1.356400  1.356400  1.356400  1.35640  0.00000  1.357400   
-2005-01-02 19:15:00  1.355700  1.356000  1.355650  1.35585  0.00000  1.356700   
-2005-01-02 19:30:00  1.355350  1.355350  1.355300  1.35530  0.00000  1.356350   
-...                       ...       ...       ...      ...      ...       ...   
-2020-04-29 22:45:00  1.087510  1.087510  1.087510  1.08751  0.00000  1.087670   
-2020-04-29 23:00:00  1.087335  1.087360  1.087320  1.08733  0.00001  1.087505   
-2020-04-29 23:15:00  1.087470  1.087500  1.087450  1.08749 -0.00001  1.087630   
-2020-04-29 23:30:00  1.087685  1.087740  1.087680  1.08771 -0.00002  1.087835   
-2020-04-29 23:45:00  1.087730  1.087755  1.087715  1.08772  0.00000  1.087885   
-
-                          AH        AL        AC       ACh  Retorno_log  
-Datetime                                                                 
-2005-01-02 18:30:00  1.35650  1.356500  1.356500  0.000000     0.000000  
-2005-01-02 18:45:00  1.35720  1.357200  1.357200  0.000000     0.000516  
-2005-01-02 19:00:00  1.35740  1.357400  1.357400  0.000000     0.000147  
-2005-01-02 19:15:00  1.35700  1.356650  1.356850  0.000000    -0.000406  
-2005-01-02 19:30:00  1.35635  1.356300  1.356300  0.000000    -0.000406  
-...                      ...       ...       ...       ...          ...  
-2020-04-29 22:45:00  1.08768  1.087660  1.087680  0.000000     0.000078  
-2020-04-29 23:00:00  1.08752  1.087480  1.087490  0.000015    -0.000166  
-2020-04-29 23:15:00  1.08766  1.087610  1.087640 -0.000010     0.000147  
-2020-04-29 23:30:00  1.08789  1.087835  1.087855 -0.000025     0.000202  
-2020-04-29 23:45:00  1.08790  1.087860  1.087865  0.000005     0.000009  
-
-[386065 rows x 11 columns]
 </pre></div>
 </div>
 <p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
@@ -561,13 +553,6 @@ Datetime
 <span class="nb">print</span><span class="p">(</span><span class="n">ljung_box</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        lb_stat  lb_pvalue
-10  7820.309736        0.0
-</pre></div>
-</div>
-<p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
 <p>El test de ljung box nos dice que la serie de no es ruido blanco.</p>

@@ -1,0 +1,62 @@
+Traceback (most recent call last):
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\jupyter_core\utils\__init__.py", line 166, in wrapped
+    return loop.run_until_complete(inner)
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+tabla_modelos = pd.DataFrame({
+    "Modelo": ["SES", "DES", "TES", "MLP", "RNN", "LSTM", "ARIMA(4,0,4)"],
+    
+    "MAE": [0.000096, 0.000101, 0.000315, 0.0007888, 0.00067027, 0.00067330, 0.000092],
+    
+    "MAPE": [np.nan, np.nan, np.nan, 174.6276, 28.4420, 29.7711, 53609022.28],
+    
+    "MSE": [2e-08, 2e-08, 1.5e-07, 1.280873e-06, 1.09e-06, 1.10e-06, 2e-08],
+    
+    "RMSE": [0.000140, 0.000144, 0.000384, 0.0011318, 0.00104428, 0.00104755, 0.000135],
+    
+    "Ljung_Box_pvalue": [np.nan, np.nan, np.nan, 2.85e-21, 0.0000, 0.0000, 3.386758e-10],
+    
+    "BDS_pvalue": [np.nan, np.nan, np.nan, 2.34e-60, 2.55e-58, 1.49e-66, np.nan],
+    
+    "Directional_Accuracy": [46.79, 48.16, 47.70, 39.61, 53.30, 51.91, 45.83]
+})
+tabla_modelos
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[1], line 1[0m
+[1;32m----> 1[0m tabla_modelos [38;5;241m=[39m [43mpd[49m[38;5;241m.[39mDataFrame({
+[0;32m      2[0m     [38;5;124m"[39m[38;5;124mModelo[39m[38;5;124m"[39m: [[38;5;124m"[39m[38;5;124mSES[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mDES[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mTES[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mMLP[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mRNN[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mLSTM[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mARIMA(4,0,4)[39m[38;5;124m"[39m],
+[0;32m      3[0m     
+[0;32m      4[0m     [38;5;124m"[39m[38;5;124mMAE[39m[38;5;124m"[39m: [[38;5;241m0.000096[39m, [38;5;241m0.000101[39m, [38;5;241m0.000315[39m, [38;5;241m0.0007888[39m, [38;5;241m0.00067027[39m, [38;5;241m0.00067330[39m, [38;5;241m0.000092[39m],
+[0;32m      5[0m     
+[0;32m      6[0m     [38;5;124m"[39m[38;5;124mMAPE[39m[38;5;124m"[39m: [np[38;5;241m.[39mnan, np[38;5;241m.[39mnan, np[38;5;241m.[39mnan, [38;5;241m174.6276[39m, [38;5;241m28.4420[39m, [38;5;241m29.7711[39m, [38;5;241m53609022.28[39m],
+[0;32m      7[0m     
+[0;32m      8[0m     [38;5;124m"[39m[38;5;124mMSE[39m[38;5;124m"[39m: [[38;5;241m2e-08[39m, [38;5;241m2e-08[39m, [38;5;241m1.5e-07[39m, [38;5;241m1.280873e-06[39m, [38;5;241m1.09e-06[39m, [38;5;241m1.10e-06[39m, [38;5;241m2e-08[39m],
+[0;32m      9[0m     
+[0;32m     10[0m     [38;5;124m"[39m[38;5;124mRMSE[39m[38;5;124m"[39m: [[38;5;241m0.000140[39m, [38;5;241m0.000144[39m, [38;5;241m0.000384[39m, [38;5;241m0.0011318[39m, [38;5;241m0.00104428[39m, [38;5;241m0.00104755[39m, [38;5;241m0.000135[39m],
+[0;32m     11[0m     
+[0;32m     12[0m     [38;5;124m"[39m[38;5;124mLjung_Box_pvalue[39m[38;5;124m"[39m: [np[38;5;241m.[39mnan, np[38;5;241m.[39mnan, np[38;5;241m.[39mnan, [38;5;241m2.85e-21[39m, [38;5;241m0.0000[39m, [38;5;241m0.0000[39m, [38;5;241m3.386758e-10[39m],
+[0;32m     13[0m     
+[0;32m     14[0m     [38;5;124m"[39m[38;5;124mBDS_pvalue[39m[38;5;124m"[39m: [np[38;5;241m.[39mnan, np[38;5;241m.[39mnan, np[38;5;241m.[39mnan, [38;5;241m2.34e-60[39m, [38;5;241m2.55e-58[39m, [38;5;241m1.49e-66[39m, np[38;5;241m.[39mnan],
+[0;32m     15[0m     
+[0;32m     16[0m     [38;5;124m"[39m[38;5;124mDirectional_Accuracy[39m[38;5;124m"[39m: [[38;5;241m46.79[39m, [38;5;241m48.16[39m, [38;5;241m47.70[39m, [38;5;241m39.61[39m, [38;5;241m53.30[39m, [38;5;241m51.91[39m, [38;5;241m45.83[39m]
+[0;32m     17[0m })
+[0;32m     18[0m tabla_modelos
+
+[1;31mNameError[0m: name 'pd' is not defined
+
