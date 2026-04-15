@@ -1,0 +1,68 @@
+Traceback (most recent call last):
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\jupyter_core\utils\__init__.py", line 166, in wrapped
+    return loop.run_until_complete(inner)
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import torch
+import time
+
+# 2. Comprobar si PyTorch detecta la GPU y definir 'device'
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+    print(f"¡GPU activada y lista! Dispositivo: {torch.cuda.get_device_name(0)}")
+else:
+    print("La GPU no está disponible. Asegúrate de haberla activado en 'Entorno de ejecución' > 'Cambiar tipo de entorno de ejecución'.")
+    device = torch.device("cpu")
+
+print("\nIntentando maximizar la carga de la GPU con un tamaño mayor...")
+# Aumentamos el tamaño aún más para intentar maximizar el uso de GPU
+# ¡ADVERTENCIA! Esto podría causar un error de 'CUDA out of memory' si tu GPU no tiene suficiente VRAM.
+# Si ocurre, reduce el tamaño (por ejemplo, a 70000 o 80000) o quédate con el tamaño anterior.
+size = 60000
+
+try:
+    # Crear tensores aleatorios grandes directamente en la GPU
+    tensor_a = torch.randn(size, size, device=device)
+    tensor_b = torch.randn(size, size, device=device)
+
+    # Medir el tiempo de la operación
+    start_time = time.time()
+    # Multiplicación de matrices
+    result = torch.matmul(tensor_a, tensor_b)
+    # Esperar a que terminen las operaciones en la GPU para medir el tiempo exacto
+    if device.type == 'cuda':
+        torch.cuda.synchronize()
+    end_time = time.time()
+
+    print(f"Multiplicación de dos matrices de {size}x{size} completada en {end_time - start_time:.4f} segundos.")
+    print("¡La GPU está trabajando al máximo!")
+except RuntimeError as e:
+    if "out of memory" in str(e):
+        print(f"Error: CUDA out of memory con matrices de {size}x{size}. Reduce el tamaño o usa el tamaño anterior.")
+    else:
+        print(f"Ocurrió un error inesperado: {e}")
+
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[2], line 1[0m
+[1;32m----> 1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m
+[0;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mtime[39;00m
+[0;32m      4[0m [38;5;66;03m# 2. Comprobar si PyTorch detecta la GPU y definir 'device'[39;00m
+
+[1;31mModuleNotFoundError[0m: No module named 'torch'
+

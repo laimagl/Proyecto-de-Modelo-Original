@@ -86,6 +86,7 @@
     <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?v=4e4fcec4"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modelo de Deep Learning" href="deep_learning%20%283%29.html" />
     <link rel="prev" title="Modelo Arima" href="Modelo_arima.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -212,6 +213,9 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="deep_learning%20%283%29.html">Modelo de Deep Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EXPONENTIAL_SMOOTHING%20%281%29.html">Modelos de suavización exponencial usando statsmodels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modelo_arimatraintes.html">Modelo Arima con partición de datos</a></li>
 </ul>
 
     </div>
@@ -2659,6 +2663,497 @@ Datetime
 <p><sub>Fuente: OANDA Brokerage (Kaggle; Imetomi, 2021); elaboración propia.</sub></p>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">kagglehub</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Download latest version</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">kagglehub</span><span class="o">.</span><span class="n">dataset_download</span><span class="p">(</span><span class="s2">&quot;imetomi/eur-usd-forex-pair-historical-data-2002-2019&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Path to dataset files:&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning: Looks like you&#39;re using an outdated `kagglehub` version (installed: 0.3.13), please consider upgrading to the latest version (1.0.0).
+Path to dataset files: C:\Users\planeacion\.cache\kagglehub\datasets\imetomi\eur-usd-forex-pair-historical-data-2002-2019\versions\2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;eurusd_minute.csv&quot;</span><span class="p">))</span>
+<span class="c1"># Combinar Date y Time para la el horario exacto</span>
+<span class="n">df_time</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="s1">&#39;Date&#39;</span> <span class="ow">in</span> <span class="n">df_time</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="s1">&#39;Time&#39;</span> <span class="ow">in</span> <span class="n">df_time</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">df_time</span><span class="p">[</span><span class="s1">&#39;Datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_time</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">df_time</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">])</span>
+    <span class="n">df_time</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Datetime&#39;</span><span class="p">)</span>
+    <span class="n">df_time</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Time&#39;</span><span class="p">])</span>
+    <span class="n">df_time</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df_time</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_time</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>eurusd_hour.csv
+eurusd_minute.csv
+eurusd_news.csv
+                         BO      BH      BL      BC  BCh      AO      AH  \
+Datetime                                                                   
+2005-01-02 18:29:00  1.3555  1.3555  1.3555  1.3555  0.0  1.3565  1.3565   
+2005-01-02 18:38:00  1.3555  1.3555  1.3555  1.3555  0.0  1.3565  1.3565   
+2005-01-02 18:51:00  1.3562  1.3562  1.3562  1.3562  0.0  1.3572  1.3572   
+2005-01-02 18:52:00  1.3560  1.3560  1.3560  1.3560  0.0  1.3570  1.3570   
+2005-01-02 18:55:00  1.3563  1.3563  1.3563  1.3563  0.0  1.3573  1.3573   
+
+                         AL      AC  ACh  
+Datetime                                  
+2005-01-02 18:29:00  1.3565  1.3565  0.0  
+2005-01-02 18:38:00  1.3565  1.3565  0.0  
+2005-01-02 18:51:00  1.3572  1.3572  0.0  
+2005-01-02 18:52:00  1.3570  1.3570  0.0  
+2005-01-02 18:55:00  1.3573  1.3573  0.0  
+(5618819, 10)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tools.sm_exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConvergenceWarning</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">ConvergenceWarning</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.holtwinters</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExponentialSmoothing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.holtwinters</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleExpSmoothing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.seasonal</span><span class="w"> </span><span class="kn">import</span> <span class="n">seasonal_decompose</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.tsa.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_15m</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;15min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">df_15m</span> <span class="o">=</span> <span class="n">df_15m</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">djia_ts</span> <span class="o">=</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno&#39;</span><span class="p">]</span>
+<span class="n">djia_ts</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Datetime
+2005-01-02 18:30:00    0.000000
+2005-01-02 18:45:00    0.000516
+2005-01-02 19:00:00    0.000147
+2005-01-02 19:15:00   -0.000405
+2005-01-02 19:30:00   -0.000406
+Name: Retorno, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">=</span><span class="n">djia_ts</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tau_test</span> <span class="o">=</span> <span class="mi">96</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="o">-</span><span class="n">tau_test</span><span class="p">]</span>
+<span class="n">test</span>  <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">tau_test</span><span class="p">:]</span>
+<span class="nb">print</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(385969, 96)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tes_optimizer</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">abg</span><span class="p">,</span> <span class="n">trend</span><span class="p">,</span> <span class="n">seasonal</span><span class="p">,</span> <span class="n">seasonal_periods</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+
+    <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+
+    <span class="n">train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">comb</span> <span class="ow">in</span> <span class="n">abg</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tes_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span>
+                <span class="n">train</span><span class="p">,</span>
+                <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">,</span>
+                <span class="n">seasonal</span><span class="o">=</span><span class="n">seasonal</span><span class="p">,</span>
+                <span class="n">seasonal_periods</span><span class="o">=</span><span class="n">seasonal_periods</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+                <span class="n">smoothing_level</span><span class="o">=</span><span class="n">comb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">smoothing_trend</span><span class="o">=</span><span class="n">comb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>   <span class="c1"># 🔥 CORREGIDO</span>
+                <span class="n">smoothing_seasonal</span><span class="o">=</span><span class="n">comb</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                <span class="n">optimized</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">tes_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+
+            <span class="c1"># 🔥 evitar NaN</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">test</span><span class="p">[:</span><span class="n">step</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="k">continue</span>
+
+            <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test</span><span class="p">[:</span><span class="n">step</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">mae</span> <span class="o">&lt;</span> <span class="n">best_mae</span><span class="p">:</span>
+                <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">comb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">comb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">comb</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">mae</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+    <span class="k">return</span> <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tes_model_tuning</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">trend</span><span class="p">,</span> <span class="n">seasonal</span><span class="p">,</span> <span class="n">seasonal_periods</span><span class="p">,</span>
+                     <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Model Tuning - Triple Exponential Smoothing&quot;</span><span class="p">):</span>
+
+    <span class="n">train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c1"># 🔥 chequeo clave</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">train</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Hay NaN en train o test. Limpia los datos primero.&quot;</span><span class="p">)</span>
+
+    <span class="n">alphas</span> <span class="o">=</span> <span class="n">betas</span> <span class="o">=</span> <span class="n">gammas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">)</span>
+    <span class="n">abg</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">gammas</span><span class="p">))</span>
+
+    <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span> <span class="o">=</span> <span class="n">tes_optimizer</span><span class="p">(</span>
+        <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">abg</span><span class="p">,</span>
+        <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">,</span>
+        <span class="n">seasonal</span><span class="o">=</span><span class="n">seasonal</span><span class="p">,</span>
+        <span class="n">seasonal_periods</span><span class="o">=</span><span class="n">seasonal_periods</span><span class="p">,</span>
+        <span class="n">step</span><span class="o">=</span><span class="n">step</span>
+    <span class="p">)</span>
+
+    <span class="n">final_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span>
+        <span class="n">train</span><span class="p">,</span>
+        <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">,</span>
+        <span class="n">seasonal</span><span class="o">=</span><span class="n">seasonal</span><span class="p">,</span>
+        <span class="n">seasonal_periods</span><span class="o">=</span><span class="n">seasonal_periods</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+        <span class="n">smoothing_level</span><span class="o">=</span><span class="n">best_alpha</span><span class="p">,</span>
+        <span class="n">smoothing_trend</span><span class="o">=</span><span class="n">best_beta</span><span class="p">,</span>   <span class="c1"># 🔥 CORREGIDO</span>
+        <span class="n">smoothing_seasonal</span><span class="o">=</span><span class="n">best_gamma</span><span class="p">,</span>
+        <span class="n">optimized</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">final_model</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+
+    <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test</span><span class="p">[:</span><span class="n">step</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">)</span>
+
+    <span class="n">plot_model</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_beta</span><span class="p">,</span> <span class="n">best_gamma</span><span class="p">,</span> <span class="n">best_mae</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">train</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+0
+0
+0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_model</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    
+    <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="o">-</span><span class="mi">112</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">, MAE: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">mae</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+    <span class="n">y_pred</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prediction&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Re-muestreo a 15 minutos</span>
+<span class="n">df_15m</span> <span class="o">=</span> <span class="n">df_time</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;2H&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Retornos logarítmicos sobre BC</span>
+<span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;Retorno_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_15m</span><span class="p">[</span><span class="s1">&#39;BC&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">df_15m</span> <span class="o">=</span> <span class="n">df_15m</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_15m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>BO</th>
+      <th>BH</th>
+      <th>BL</th>
+      <th>BC</th>
+      <th>BCh</th>
+      <th>AO</th>
+      <th>AH</th>
+      <th>AL</th>
+      <th>AC</th>
+      <th>ACh</th>
+      <th>Retorno_log</th>
+    </tr>
+    <tr>
+      <th>Datetime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2005-01-02 20:00:00</th>
+      <td>1.354825</td>
+      <td>1.354950</td>
+      <td>1.354675</td>
+      <td>1.354750</td>
+      <td>0.00000</td>
+      <td>1.355825</td>
+      <td>1.355950</td>
+      <td>1.355675</td>
+      <td>1.355750</td>
+      <td>0.00000</td>
+      <td>-0.000664</td>
+    </tr>
+    <tr>
+      <th>2005-01-02 22:00:00</th>
+      <td>1.356450</td>
+      <td>1.356450</td>
+      <td>1.356350</td>
+      <td>1.356450</td>
+      <td>0.00000</td>
+      <td>1.357150</td>
+      <td>1.357150</td>
+      <td>1.357050</td>
+      <td>1.357150</td>
+      <td>0.00000</td>
+      <td>0.001254</td>
+    </tr>
+    <tr>
+      <th>2005-01-03 00:00:00</th>
+      <td>1.354500</td>
+      <td>1.354650</td>
+      <td>1.354400</td>
+      <td>1.354500</td>
+      <td>0.00000</td>
+      <td>1.354950</td>
+      <td>1.355000</td>
+      <td>1.354800</td>
+      <td>1.354950</td>
+      <td>0.00000</td>
+      <td>-0.001439</td>
+    </tr>
+    <tr>
+      <th>2005-01-03 02:00:00</th>
+      <td>1.350100</td>
+      <td>1.350250</td>
+      <td>1.349600</td>
+      <td>1.349950</td>
+      <td>0.00000</td>
+      <td>1.350400</td>
+      <td>1.350550</td>
+      <td>1.349900</td>
+      <td>1.350250</td>
+      <td>0.00000</td>
+      <td>-0.003365</td>
+    </tr>
+    <tr>
+      <th>2005-01-03 04:00:00</th>
+      <td>1.343800</td>
+      <td>1.344000</td>
+      <td>1.343750</td>
+      <td>1.343850</td>
+      <td>0.00000</td>
+      <td>1.344100</td>
+      <td>1.344300</td>
+      <td>1.344050</td>
+      <td>1.344150</td>
+      <td>0.00000</td>
+      <td>-0.004529</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2020-04-29 14:00:00</th>
+      <td>1.085165</td>
+      <td>1.085285</td>
+      <td>1.085070</td>
+      <td>1.085165</td>
+      <td>0.00000</td>
+      <td>1.085295</td>
+      <td>1.085410</td>
+      <td>1.085200</td>
+      <td>1.085295</td>
+      <td>0.00000</td>
+      <td>-0.000304</td>
+    </tr>
+    <tr>
+      <th>2020-04-29 16:00:00</th>
+      <td>1.085400</td>
+      <td>1.085480</td>
+      <td>1.085320</td>
+      <td>1.085415</td>
+      <td>0.00000</td>
+      <td>1.085540</td>
+      <td>1.085600</td>
+      <td>1.085445</td>
+      <td>1.085550</td>
+      <td>0.00001</td>
+      <td>0.000230</td>
+    </tr>
+    <tr>
+      <th>2020-04-29 18:00:00</th>
+      <td>1.087440</td>
+      <td>1.087540</td>
+      <td>1.087300</td>
+      <td>1.087445</td>
+      <td>0.00001</td>
+      <td>1.087580</td>
+      <td>1.087690</td>
+      <td>1.087435</td>
+      <td>1.087585</td>
+      <td>0.00001</td>
+      <td>0.001869</td>
+    </tr>
+    <tr>
+      <th>2020-04-29 20:00:00</th>
+      <td>1.087315</td>
+      <td>1.087375</td>
+      <td>1.087270</td>
+      <td>1.087295</td>
+      <td>0.00000</td>
+      <td>1.087675</td>
+      <td>1.087725</td>
+      <td>1.087660</td>
+      <td>1.087675</td>
+      <td>0.00000</td>
+      <td>-0.000138</td>
+    </tr>
+    <tr>
+      <th>2020-04-29 22:00:00</th>
+      <td>1.087460</td>
+      <td>1.087480</td>
+      <td>1.087450</td>
+      <td>1.087460</td>
+      <td>0.00000</td>
+      <td>1.087620</td>
+      <td>1.087650</td>
+      <td>1.087610</td>
+      <td>1.087620</td>
+      <td>0.00000</td>
+      <td>0.000152</td>
+    </tr>
+  </tbody>
+</table>
+<p>49356 rows × 11 columns</p>
+</div></div></div>
+</div>
 </section>
 </section>
 
@@ -2700,6 +3195,15 @@ Datetime
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Modelo Arima</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="deep_learning%20%283%29.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Modelo de Deep Learning</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
