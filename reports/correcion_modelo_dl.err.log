@@ -30,8 +30,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['for file in os.listdir(path):', '    print(file)', '    import pandas as pd', 'import numpy as np', 'import seaborn as sns']
+['import os', 'import gc', 'import itertools', 'import numpy as np', 'import pandas as pd']
 ...
-["    df_time = df_time.drop(columns=['Date', 'Time'])", '    df_time = df_time.sort_index()', '', 'print(df_time.head())', 'print(df_time.shape)']
+['plt.xlabel("Tiempo")', 'plt.ylabel("Error")', 'plt.legend()', 'plt.grid(True)', 'plt.show()']
 -------------------
 

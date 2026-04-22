@@ -213,9 +213,14 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="ES_hrs.html">Suavización exponencial</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="Arima.html">Modelo Arima con partición de datos</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="Comparacion_de_elemento.html">Comparación de Modelos</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="correcion_modelo_dl.html">Correción de Modelos de Deep Learning</a></li>
 
 </ul>
 
@@ -483,6 +488,163 @@ document.write(`
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
 <span class="n">z</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;data/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/lihkir/Data/raw/main/datasets.zip&quot;</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">z</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;data/&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\requests\api.py:73,</span> in <span class="ni">get</span><span class="nt">(url, params, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span> <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">63</span><span class="w">     </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sends a GET request.</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span><span class="sd">     :param url: URL for the new :class:`Request` object.</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">     </span><span class="mi">70</span><span class="sd">     :rtype: requests.Response</span>
+<span class="g g-Whitespace">     </span><span class="mi">71</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">73</span>     <span class="k">return</span> <span class="n">request</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\requests\api.py:59,</span> in <span class="ni">request</span><span class="nt">(method, url, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="c1"># By using the &#39;with&#39; statement we are sure the session is closed, thus we</span>
+<span class="g g-Whitespace">     </span><span class="mi">56</span> <span class="c1"># avoid leaving sockets open which can trigger a ResourceWarning in some</span>
+<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="c1"># cases, and look like a memory leak in others.</span>
+<span class="g g-Whitespace">     </span><span class="mi">58</span> <span class="k">with</span> <span class="n">sessions</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">59</span>     <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\requests\sessions.py:589,</span> in <span class="ni">Session.request</span><span class="nt">(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)</span>
+<span class="g g-Whitespace">    </span><span class="mi">584</span> <span class="n">send_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+<span class="g g-Whitespace">    </span><span class="mi">585</span>     <span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">586</span>     <span class="s2">&quot;allow_redirects&quot;</span><span class="p">:</span> <span class="n">allow_redirects</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">587</span> <span class="p">}</span>
+<span class="g g-Whitespace">    </span><span class="mi">588</span> <span class="n">send_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">589</span> <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">prep</span><span class="p">,</span> <span class="o">**</span><span class="n">send_kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">591</span> <span class="k">return</span> <span class="n">resp</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\requests\sessions.py:724,</span> in <span class="ni">Session.send</span><span class="nt">(self, request, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">721</span> <span class="k">if</span> <span class="n">allow_redirects</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">722</span>     <span class="c1"># Redirect resolving generator.</span>
+<span class="g g-Whitespace">    </span><span class="mi">723</span>     <span class="n">gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_redirects</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">724</span>     <span class="n">history</span> <span class="o">=</span> <span class="p">[</span><span class="n">resp</span> <span class="k">for</span> <span class="n">resp</span> <span class="ow">in</span> <span class="n">gen</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">725</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">726</span>     <span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\requests\sessions.py:724,</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">    </span><span class="mi">721</span> <span class="k">if</span> <span class="n">allow_redirects</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">722</span>     <span class="c1"># Redirect resolving generator.</span>
+<span class="g g-Whitespace">    </span><span class="mi">723</span>     <span class="n">gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_redirects</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">724</span>     <span class="n">history</span> <span class="o">=</span> <span class="p">[</span><span class="n">resp</span> <span class="k">for</span> <span class="n">resp</span> <span class="ow">in</span> <span class="n">gen</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">725</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">726</span>     <span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\requests\sessions.py:265,</span> in <span class="ni">SessionRedirectMixin.resolve_redirects</span><span class="nt">(self, resp, req, stream, timeout, verify, cert, proxies, yield_requests, **adapter_kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">263</span>     <span class="k">yield</span> <span class="n">req</span>
+<span class="g g-Whitespace">    </span><span class="mi">264</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">265</span>     <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">266</span>         <span class="n">req</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">267</span>         <span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">268</span>         <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">269</span>         <span class="n">verify</span><span class="o">=</span><span class="n">verify</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">270</span>         <span class="n">cert</span><span class="o">=</span><span class="n">cert</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">271</span>         <span class="n">proxies</span><span class="o">=</span><span class="n">proxies</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">272</span>         <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">273</span>         <span class="o">**</span><span class="n">adapter_kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">274</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">276</span>     <span class="n">extract_cookies_to_jar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookies</span><span class="p">,</span> <span class="n">prepared_request</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">raw</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">278</span>     <span class="c1"># extract redirect url, if any, for the next loop</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\requests\sessions.py:746,</span> in <span class="ni">Session.send</span><span class="nt">(self, request, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">743</span>         <span class="k">pass</span>
+<span class="g g-Whitespace">    </span><span class="mi">745</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">stream</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">746</span>     <span class="n">r</span><span class="o">.</span><span class="n">content</span>
+<span class="g g-Whitespace">    </span><span class="mi">748</span> <span class="k">return</span> <span class="n">r</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\requests\models.py:902,</span> in <span class="ni">Response.content</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">900</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">901</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">902</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">CONTENT_CHUNK_SIZE</span><span class="p">))</span> <span class="ow">or</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">904</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content_consumed</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="g g-Whitespace">    </span><span class="mi">905</span> <span class="c1"># don&#39;t need to release the connection; that&#39;s been handled by urllib3</span>
+<span class="g g-Whitespace">    </span><span class="mi">906</span> <span class="c1"># since we exhausted the data.</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\requests\models.py:820,</span> in <span class="ni">Response.iter_content.&lt;locals&gt;.generate</span><span class="nt">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">818</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="s2">&quot;stream&quot;</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">819</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">820</span>         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">decode_content</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">821</span>     <span class="k">except</span> <span class="n">ProtocolError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">822</span>         <span class="k">raise</span> <span class="n">ChunkedEncodingError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\urllib3\response.py:628,</span> in <span class="ni">HTTPResponse.stream</span><span class="nt">(self, amt, decode_content)</span>
+<span class="g g-Whitespace">    </span><span class="mi">626</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">627</span>     <span class="k">while</span> <span class="ow">not</span> <span class="n">is_fp_closed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">628</span>         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">amt</span><span class="o">=</span><span class="n">amt</span><span class="p">,</span> <span class="n">decode_content</span><span class="o">=</span><span class="n">decode_content</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">630</span>         <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">631</span>             <span class="k">yield</span> <span class="n">data</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\urllib3\response.py:567,</span> in <span class="ni">HTTPResponse.read</span><span class="nt">(self, amt, decode_content, cache_content)</span>
+<span class="g g-Whitespace">    </span><span class="mi">564</span> <span class="n">fp_closed</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">,</span> <span class="s2">&quot;closed&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">566</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_catcher</span><span class="p">():</span>
+<span class="ne">--&gt; </span><span class="mi">567</span>     <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp_read</span><span class="p">(</span><span class="n">amt</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">fp_closed</span> <span class="k">else</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">568</span>     <span class="k">if</span> <span class="n">amt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">569</span>         <span class="n">flush_decoder</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\site-packages\urllib3\response.py:533,</span> in <span class="ni">HTTPResponse._fp_read</span><span class="nt">(self, amt)</span>
+<span class="g g-Whitespace">    </span><span class="mi">530</span>     <span class="k">return</span> <span class="n">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">531</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">532</span>     <span class="c1"># StringIO doesn&#39;t like amt=None</span>
+<span class="ne">--&gt; </span><span class="mi">533</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">amt</span><span class="p">)</span> <span class="k">if</span> <span class="n">amt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\http\client.py:463,</span> in <span class="ni">HTTPResponse.read</span><span class="nt">(self, amt)</span>
+<span class="g g-Whitespace">    </span><span class="mi">460</span> <span class="k">if</span> <span class="n">amt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">461</span>     <span class="c1"># Amount is given, implement using readinto</span>
+<span class="g g-Whitespace">    </span><span class="mi">462</span>     <span class="n">b</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">amt</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">463</span>     <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readinto</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">464</span>     <span class="k">return</span> <span class="nb">memoryview</span><span class="p">(</span><span class="n">b</span><span class="p">)[:</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">465</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">466</span>     <span class="c1"># Amount is not given (unbounded read) so we must check self.length</span>
+<span class="g g-Whitespace">    </span><span class="mi">467</span>     <span class="c1"># and self.chunked</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\http\client.py:507,</span> in <span class="ni">HTTPResponse.readinto</span><span class="nt">(self, b)</span>
+<span class="g g-Whitespace">    </span><span class="mi">502</span>         <span class="n">b</span> <span class="o">=</span> <span class="nb">memoryview</span><span class="p">(</span><span class="n">b</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">504</span> <span class="c1"># we do not use _safe_read() here because this may be a .will_close</span>
+<span class="g g-Whitespace">    </span><span class="mi">505</span> <span class="c1"># connection, and the user is reading more bytes than will be provided</span>
+<span class="g g-Whitespace">    </span><span class="mi">506</span> <span class="c1"># (for example, reading in 1k chunks)</span>
+<span class="ne">--&gt; </span><span class="mi">507</span> <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">readinto</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">508</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">b</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">509</span>     <span class="c1"># Ideally, we would raise IncompleteRead if the content-length</span>
+<span class="g g-Whitespace">    </span><span class="mi">510</span>     <span class="c1"># wasn&#39;t satisfied, but it might break compatibility.</span>
+<span class="g g-Whitespace">    </span><span class="mi">511</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_close_conn</span><span class="p">()</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\socket.py:716,</span> in <span class="ni">SocketIO.readinto</span><span class="nt">(self, b)</span>
+<span class="g g-Whitespace">    </span><span class="mi">714</span> <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">715</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">716</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sock</span><span class="o">.</span><span class="n">recv_into</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">717</span>     <span class="k">except</span> <span class="n">timeout</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">718</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_timeout_occurred</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\ssl.py:1277,</span> in <span class="ni">SSLSocket.recv_into</span><span class="nt">(self, buffer, nbytes, flags)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1273</span>     <span class="k">if</span> <span class="n">flags</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1274</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1275</span>           <span class="s2">&quot;non-zero flags not allowed in calls to recv_into() on </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+<span class="g g-Whitespace">   </span><span class="mi">1276</span>           <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1277</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nbytes</span><span class="p">,</span> <span class="n">buffer</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1278</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1279</span>     <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">recv_into</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\ml_venv\lib\ssl.py:1135,</span> in <span class="ni">SSLSocket.read</span><span class="nt">(self, len, buffer)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1133</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1134</span>     <span class="k">if</span> <span class="n">buffer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1135</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sslobj</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">buffer</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1136</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1137</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sslobj</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -1179,7 +1341,7 @@ Name: 2010, Length: 192, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f94af1f4242d4d24b17a54a2da08a4634c13223b9824823b893207851f1725e6.png" src="_images/f94af1f4242d4d24b17a54a2da08a4634c13223b9824823b893207851f1725e6.png" />
+<img alt="_images/50c1e780a847b7f3d6352e65ab629eb98b75579872233d5071c7bd9895884d22.png" src="_images/50c1e780a847b7f3d6352e65ab629eb98b75579872233d5071c7bd9895884d22.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1190,7 +1352,7 @@ Name: 2010, Length: 192, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e1b6fcdc38a16c17602a67b8b25bdb31c0fcf615b8b80466348f7c27b67044f0.png" src="_images/e1b6fcdc38a16c17602a67b8b25bdb31c0fcf615b8b80466348f7c27b67044f0.png" />
+<img alt="_images/9b4b0634b59c86679f8a29434519fcaaf82d1c3e945966dce7b563d96abcd8c9.png" src="_images/9b4b0634b59c86679f8a29434519fcaaf82d1c3e945966dce7b563d96abcd8c9.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1822,7 +1984,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/945e737aebac9b6a6b6387776507cbd3b3c72f9e53aed45cba5f245a78de82e4.png" src="_images/945e737aebac9b6a6b6387776507cbd3b3c72f9e53aed45cba5f245a78de82e4.png" />
+<img alt="_images/aff994045bf4501d5caa27d8de84e2f4a585c8d20a365cb2c43802d981e17140.png" src="_images/aff994045bf4501d5caa27d8de84e2f4a585c8d20a365cb2c43802d981e17140.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2095,7 +2257,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/503357ce28a0b2bca9873c24643eff538d6654fe160b7beb4f3fd4eea70b22fa.png" src="_images/503357ce28a0b2bca9873c24643eff538d6654fe160b7beb4f3fd4eea70b22fa.png" />
+<img alt="_images/27b9cbd3acacbcf1ee2137b4885136714307f6996a4d0e50a2b7a4b8cc19ea03.png" src="_images/27b9cbd3acacbcf1ee2137b4885136714307f6996a4d0e50a2b7a4b8cc19ea03.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2269,7 +2431,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3620ee985d4bf82b80a416831d2160f7a1e50a075092f669251edf255573a629.png" src="_images/3620ee985d4bf82b80a416831d2160f7a1e50a075092f669251edf255573a629.png" />
+<img alt="_images/e801165842a7314fc456044bc568ddbc96d69159aea76fbecefb6e7cc0dcf155.png" src="_images/e801165842a7314fc456044bc568ddbc96d69159aea76fbecefb6e7cc0dcf155.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2298,7 +2460,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d54d61187b7f8eebf7a4934a0952d5e111e5e1ec7fcb050454fefb2d264920e6.png" src="_images/d54d61187b7f8eebf7a4934a0952d5e111e5e1ec7fcb050454fefb2d264920e6.png" />
+<img alt="_images/46a310b89a866b3380c4ff022a85f6fce6ddb95470f2eefcc265f25ec586b697.png" src="_images/46a310b89a866b3380c4ff022a85f6fce6ddb95470f2eefcc265f25ec586b697.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2317,7 +2479,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-1 {color: black;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">LinearRegression</label><div class="sk-toggleable__content"><pre>LinearRegression()</pre></div></div></div></div></div></div></div>
+<div class="output text_html"><style>#sk-container-id-2 {color: black;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">LinearRegression</label><div class="sk-toggleable__content"><pre>LinearRegression()</pre></div></div></div></div></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2350,7 +2512,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7e463cd93387db1780ac51ca3362ec00344d3795985ec6020fbff372068f80ab.png" src="_images/7e463cd93387db1780ac51ca3362ec00344d3795985ec6020fbff372068f80ab.png" />
+<img alt="_images/e03d1139cd49c47c8f985fac138db5ae972582e4098e7d992382cf7454e6c90c.png" src="_images/e03d1139cd49c47c8f985fac138db5ae972582e4098e7d992382cf7454e6c90c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2377,7 +2539,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1198103b09b4c3b67c33834c9021cb000cbb7f2376ca2807f48de01564acb70b.png" src="_images/1198103b09b4c3b67c33834c9021cb000cbb7f2376ca2807f48de01564acb70b.png" />
+<img alt="_images/1c0b64ca6f63235a6e7b18882192e0d0d78df847720b06d39b1e82d29afef4c9.png" src="_images/1c0b64ca6f63235a6e7b18882192e0d0d78df847720b06d39b1e82d29afef4c9.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2550,7 +2712,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5a091899c9d0b96c82a41c8d9147226a8bc14a0d6bdec793272f3ffcbe126ca4.png" src="_images/5a091899c9d0b96c82a41c8d9147226a8bc14a0d6bdec793272f3ffcbe126ca4.png" />
+<img alt="_images/f0aa865998417c46233fdb526752225e697fefe718c11d6d977be3a6b6652227.png" src="_images/f0aa865998417c46233fdb526752225e697fefe718c11d6d977be3a6b6652227.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2565,7 +2727,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5dd6f0770351f034a2acaaf734216fa6fb872a679a0a34df81292c60e0b92a5a.png" src="_images/5dd6f0770351f034a2acaaf734216fa6fb872a679a0a34df81292c60e0b92a5a.png" />
+<img alt="_images/0decf3876f200b70f92cd02e59cf4f04b338e26590625f5a3797ccd610646a91.png" src="_images/0decf3876f200b70f92cd02e59cf4f04b338e26590625f5a3797ccd610646a91.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2579,7 +2741,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/30e0c8814230de296598268b956a32e0d96cb44f93ec377591acddd1e5249ef4.png" src="_images/30e0c8814230de296598268b956a32e0d96cb44f93ec377591acddd1e5249ef4.png" />
+<img alt="_images/6969a1c0b2cd7fe7b1c66b15ed99f145c031de8110bebb41fdba451ded826cdf.png" src="_images/6969a1c0b2cd7fe7b1c66b15ed99f145c031de8110bebb41fdba451ded826cdf.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2667,7 +2829,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6b4720abe11321084db792e6730bc8fc9572c46afb1bf5c9513d738666235c63.png" src="_images/6b4720abe11321084db792e6730bc8fc9572c46afb1bf5c9513d738666235c63.png" />
+<img alt="_images/af1dc34a01f9e13b609550ef9d45fa66b1892435707170146abe5f47315f22a8.png" src="_images/af1dc34a01f9e13b609550ef9d45fa66b1892435707170146abe5f47315f22a8.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2711,7 +2873,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4701f7d123d49d10d89eb99e57fd2dc80c146d5afa6d0222497fd114075286cc.png" src="_images/4701f7d123d49d10d89eb99e57fd2dc80c146d5afa6d0222497fd114075286cc.png" />
+<img alt="_images/b7f73d299e22020b317835997d2fba6bf0a0e4109ecb10f05cf4ada19ff9605f.png" src="_images/b7f73d299e22020b317835997d2fba6bf0a0e4109ecb10f05cf4ada19ff9605f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2741,7 +2903,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9c4d8e93a92fc6d1a564fe73dfe895caec51342c2ef42c5c30593460bbbdc5c7.png" src="_images/9c4d8e93a92fc6d1a564fe73dfe895caec51342c2ef42c5c30593460bbbdc5c7.png" />
+<img alt="_images/79cc1e1ad1406333c6eead14d417f3b200241de3e983358c45ee79b64a74e190.png" src="_images/79cc1e1ad1406333c6eead14d417f3b200241de3e983358c45ee79b64a74e190.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2761,7 +2923,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/32eb6f9bbaee28c64d33f3ef3be7b4275754b262b8987a073a4bdb0ba56eb3b8.png" src="_images/32eb6f9bbaee28c64d33f3ef3be7b4275754b262b8987a073a4bdb0ba56eb3b8.png" />
+<img alt="_images/51355e5d6eb4cb3fa938c0b743c4f528c80e16e45761930af60a1c7d6c544181.png" src="_images/51355e5d6eb4cb3fa938c0b743c4f528c80e16e45761930af60a1c7d6c544181.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2813,7 +2975,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/479e5eda57251b605b5232d2bb93357960302fc84828cc1a4582a1a28b7cae10.png" src="_images/479e5eda57251b605b5232d2bb93357960302fc84828cc1a4582a1a28b7cae10.png" />
+<img alt="_images/561641c736ef62a4998e24ee4c019fe59094a1bbfa806919eb116c10915b4333.png" src="_images/561641c736ef62a4998e24ee4c019fe59094a1bbfa806919eb116c10915b4333.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2943,7 +3105,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/62dc1121cdae315673e7856ac69b336da1946533b9979d16f6c7bbdfc543bfbb.png" src="_images/62dc1121cdae315673e7856ac69b336da1946533b9979d16f6c7bbdfc543bfbb.png" />
+<img alt="_images/11156850dc6a1ce912b64effcae597169c0299176701b2b8cf63678a02e12381.png" src="_images/11156850dc6a1ce912b64effcae597169c0299176701b2b8cf63678a02e12381.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2967,7 +3129,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/70db149f44bd663f58d739f4674076bea1b32e1c826bdc0a8a58092b16323474.png" src="_images/70db149f44bd663f58d739f4674076bea1b32e1c826bdc0a8a58092b16323474.png" />
+<img alt="_images/eb5dde3acf044de79744570a133a6d3d8d58b0a720dc0dae4fc4a09def246ec5.png" src="_images/eb5dde3acf044de79744570a133a6d3d8d58b0a720dc0dae4fc4a09def246ec5.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2981,7 +3143,7 @@ dtype: object
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 550x550 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/b39300c97799e8c4f1cc4b936fc5b78fae1ea81880153a9d1a0a741b95812b03.png" src="_images/b39300c97799e8c4f1cc4b936fc5b78fae1ea81880153a9d1a0a741b95812b03.png" />
+<img alt="_images/fe73fadb879a413e7a8ffd52f34a6acb5c1187725a425affe9ebfd2ba0304d67.png" src="_images/fe73fadb879a413e7a8ffd52f34a6acb5c1187725a425affe9ebfd2ba0304d67.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2995,7 +3157,7 @@ dtype: object
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 550x550 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/7e98095b5e6c41c9ee9383565fac5e98dfe8e866cbc05c4622043ee2f9aa313d.png" src="_images/7e98095b5e6c41c9ee9383565fac5e98dfe8e866cbc05c4622043ee2f9aa313d.png" />
+<img alt="_images/d3112b6c86f8ace463ba3e91f0fbca03fc7556517684ff26255a21950aeea12c.png" src="_images/d3112b6c86f8ace463ba3e91f0fbca03fc7556517684ff26255a21950aeea12c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3158,7 +3320,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9e7713c513efddfcf518b5a6dee3f3f4e6552fb80ff6fd42fe674bdac3d718cc.png" src="_images/9e7713c513efddfcf518b5a6dee3f3f4e6552fb80ff6fd42fe674bdac3d718cc.png" />
+<img alt="_images/3d710af1ef9649b65d7cdd9037f3cb37fe5b800f057613a6740fa9c6672f6218.png" src="_images/3d710af1ef9649b65d7cdd9037f3cb37fe5b800f057613a6740fa9c6672f6218.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3247,7 +3409,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2d1a9f297f21c4df0baf0dd034adb6c7a491ede4091ce9f372e105be4ad6e159.png" src="_images/2d1a9f297f21c4df0baf0dd034adb6c7a491ede4091ce9f372e105be4ad6e159.png" />
+<img alt="_images/c23b7a162f43df60d10f39de9542dd0c75960ff87ebbb12b2a311b324d6d9954.png" src="_images/c23b7a162f43df60d10f39de9542dd0c75960ff87ebbb12b2a311b324d6d9954.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3499,7 +3661,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e6310cf613341ea955b2decb4d82319ec3f912df23abe156ad9494fe0fdf93a9.png" src="_images/e6310cf613341ea955b2decb4d82319ec3f912df23abe156ad9494fe0fdf93a9.png" />
+<img alt="_images/4db66a1be795bce20eb71faaac0ecbd2b8af2fce37826620007905b6de1e993d.png" src="_images/4db66a1be795bce20eb71faaac0ecbd2b8af2fce37826620007905b6de1e993d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3535,7 +3697,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5d2082e56e6feaeb7d8c78cc5568d0c2f21bf5e3c9a24801c331a990d84fa9a8.png" src="_images/5d2082e56e6feaeb7d8c78cc5568d0c2f21bf5e3c9a24801c331a990d84fa9a8.png" />
+<img alt="_images/16ae24a5489325f58f22cc87ad419ddf62aeb27d1180da7b4631e8eed9f5b264.png" src="_images/16ae24a5489325f58f22cc87ad419ddf62aeb27d1180da7b4631e8eed9f5b264.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3573,7 +3735,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1ffa9799faecfb782bff0683163c4688ddac2abf19c2d4085acfaee9bd3c582e.png" src="_images/1ffa9799faecfb782bff0683163c4688ddac2abf19c2d4085acfaee9bd3c582e.png" />
+<img alt="_images/ae7c4623367c700716cbc2494e24449144dae5885b64f5b10be08b2055173fbb.png" src="_images/ae7c4623367c700716cbc2494e24449144dae5885b64f5b10be08b2055173fbb.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3592,7 +3754,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a8e6e8fa78b489a927b4888c4865d17c6ed1ec52d80146bca38b05f0aac88eee.png" src="_images/a8e6e8fa78b489a927b4888c4865d17c6ed1ec52d80146bca38b05f0aac88eee.png" />
+<img alt="_images/16628d68008bda082f386876b4576e33383d70b89426ed929104589965ff73a1.png" src="_images/16628d68008bda082f386876b4576e33383d70b89426ed929104589965ff73a1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3805,7 +3967,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ca54acb4527f88130bc5ce59ae3275bec08bee166977264a9298e8e4647b9985.png" src="_images/ca54acb4527f88130bc5ce59ae3275bec08bee166977264a9298e8e4647b9985.png" />
+<img alt="_images/d527d3a2274b79adc8302a0ae77c33767bcbb2d9c0e95c48df0fde2f5063187f.png" src="_images/d527d3a2274b79adc8302a0ae77c33767bcbb2d9c0e95c48df0fde2f5063187f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3821,7 +3983,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c9113ad8abb26a4e2e081f2882f48a4e9f344a06dc39e01bb34224d3b244ef14.png" src="_images/c9113ad8abb26a4e2e081f2882f48a4e9f344a06dc39e01bb34224d3b244ef14.png" />
+<img alt="_images/f937a0a0ddb841eb2eb863f773a457b17d3e174b7aa9cae175f37dbefa314d90.png" src="_images/f937a0a0ddb841eb2eb863f773a457b17d3e174b7aa9cae175f37dbefa314d90.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4046,7 +4208,7 @@ Null hypothesis is accepted at lag = 19 for p-val = 0.7023038219602964
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/badc116a77980999980de0aad96d8c695e11ec94274b84068728218019e29501.png" src="_images/badc116a77980999980de0aad96d8c695e11ec94274b84068728218019e29501.png" />
+<img alt="_images/73cd7a770f2f55253fad0328aab8e77cc9724bd465a07c64da348885692b5e33.png" src="_images/73cd7a770f2f55253fad0328aab8e77cc9724bd465a07c64da348885692b5e33.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4083,7 +4245,7 @@ Freq: ME, Name: Mean_Temperature, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0383a7f0b0e513b898dee47d6a8b0939ab15d8539f2dae8a3390d829b34ddaec.png" src="_images/0383a7f0b0e513b898dee47d6a8b0939ab15d8539f2dae8a3390d829b34ddaec.png" />
+<img alt="_images/b8a25606d29064982a85d4529036694780053f4c578c8b6ea952a459bfd58090.png" src="_images/b8a25606d29064982a85d4529036694780053f4c578c8b6ea952a459bfd58090.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4096,7 +4258,7 @@ Freq: ME, Name: Mean_Temperature, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/009c86f10af6dab377020b195a1859f9a5aeb9945fd68c78b0f35dbd21b9d2e3.png" src="_images/009c86f10af6dab377020b195a1859f9a5aeb9945fd68c78b0f35dbd21b9d2e3.png" />
+<img alt="_images/a0fd96b735c6a83fb6a310e0f5bd5bcd0ac70df2e9a25c23da23e3b661731e2e.png" src="_images/a0fd96b735c6a83fb6a310e0f5bd5bcd0ac70df2e9a25c23da23e3b661731e2e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4117,7 +4279,7 @@ Freq: ME, Name: Mean_Temperature, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/39a2db21fac260571166c9376a256ab2c285e68f5841f9e00ea84b70abe33209.png" src="_images/39a2db21fac260571166c9376a256ab2c285e68f5841f9e00ea84b70abe33209.png" />
+<img alt="_images/1ccdd8ff746c68cdf9d1d9d48081b9601d454e9d3418aa589f992e13888dfd61.png" src="_images/1ccdd8ff746c68cdf9d1d9d48081b9601d454e9d3418aa589f992e13888dfd61.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4130,7 +4292,7 @@ Freq: ME, Name: Mean_Temperature, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/66a3aed27ca5450216ea195075f3ddf6ff97a9eb4c46a91beb452aa121f53347.png" src="_images/66a3aed27ca5450216ea195075f3ddf6ff97a9eb4c46a91beb452aa121f53347.png" />
+<img alt="_images/dc21a71211b5635ee6ef9ea1aea6f334c624036a82f5d5453381420dd54fde52.png" src="_images/dc21a71211b5635ee6ef9ea1aea6f334c624036a82f5d5453381420dd54fde52.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4273,7 +4435,7 @@ Freq: ME, Name: Mean_Temperature, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1b0f301db2d69e699cd40a49923537f13a57a251e7a93b2f3de25f2bf103576e.png" src="_images/1b0f301db2d69e699cd40a49923537f13a57a251e7a93b2f3de25f2bf103576e.png" />
+<img alt="_images/f37301316534599c69dc8a3ff0284e7c84506dab856163e549ad0b097c00fdcf.png" src="_images/f37301316534599c69dc8a3ff0284e7c84506dab856163e549ad0b097c00fdcf.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4284,10 +4446,7 @@ Freq: ME, Name: Mean_Temperature, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p-val of the ADF test in air miles flown:
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 0.9945022811234028
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p-val of the ADF test in air miles flown: 0.9945022811234028
 </pre></div>
 </div>
 </div>
@@ -4470,7 +4629,7 @@ Freq: ME, Name: Mean_Temperature, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/23f27934a7351081e25a08d213c0a5f33d04909788b82e7426433c191c20d374.png" src="_images/23f27934a7351081e25a08d213c0a5f33d04909788b82e7426433c191c20d374.png" />
+<img alt="_images/62019dfb55540d7fba8007f410a1c9f00e84d263fbde730c4c9936a787e20d29.png" src="_images/62019dfb55540d7fba8007f410a1c9f00e84d263fbde730c4c9936a787e20d29.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4519,7 +4678,7 @@ Freq: ME, Name: Mean_Temperature, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/df837050ecd9746f83ee2ace47889ace0a90d108ba5067af25efede26f13942a.png" src="_images/df837050ecd9746f83ee2ace47889ace0a90d108ba5067af25efede26f13942a.png" />
+<img alt="_images/23419913cbbc5f69c08c435f23b6a5606e9673a3c263afe3225672683710a473.png" src="_images/23419913cbbc5f69c08c435f23b6a5606e9673a3c263afe3225672683710a473.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4645,7 +4804,7 @@ Shape after removing missing values: (154, 2)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7328b75f1c2527f10d822dfb8a6d8f809f4299b97795fc2982729a0eab4793dd.png" src="_images/7328b75f1c2527f10d822dfb8a6d8f809f4299b97795fc2982729a0eab4793dd.png" />
+<img alt="_images/86021b9deac263957f1cf15750c3009cae80ceaf131bc079464f73fc264920ac.png" src="_images/86021b9deac263957f1cf15750c3009cae80ceaf131bc079464f73fc264920ac.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4667,7 +4826,7 @@ Shape after removing missing values: (154, 2)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d0bedb967370433aa097203ce0ab8f4310c4f52e16bb6ed0a425bf067784c105.png" src="_images/d0bedb967370433aa097203ce0ab8f4310c4f52e16bb6ed0a425bf067784c105.png" />
+<img alt="_images/305c6f447882e10ac6987c5030ed819d1312f7a48a12d357a276e2550b03b228.png" src="_images/305c6f447882e10ac6987c5030ed819d1312f7a48a12d357a276e2550b03b228.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4682,7 +4841,7 @@ Shape after removing missing values: (154, 2)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2b64ba6cc84f0b55c105e0674531172e1e9879567d257bbcad4e797fe8e79d11.png" src="_images/2b64ba6cc84f0b55c105e0674531172e1e9879567d257bbcad4e797fe8e79d11.png" />
+<img alt="_images/44bca205057c98f5506d72f91fd32cd9e0bdc510f60e5ef3464fda83c2e701c9.png" src="_images/44bca205057c98f5506d72f91fd32cd9e0bdc510f60e5ef3464fda83c2e701c9.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4697,7 +4856,7 @@ Shape after removing missing values: (154, 2)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/dd8396996dd6135ec9207908b6538bff9f2f7e3ee6d753a688eb3734c577ff84.png" src="_images/dd8396996dd6135ec9207908b6538bff9f2f7e3ee6d753a688eb3734c577ff84.png" />
+<img alt="_images/bd0993a068f517cd2e9f990c7f33763311c404d1cbda6400c48d984e1b12527e.png" src="_images/bd0993a068f517cd2e9f990c7f33763311c404d1cbda6400c48d984e1b12527e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4921,7 +5080,7 @@ Shape after removing missing values: (154, 2)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8a3acac8721f87a6e03154369eaa23dac011e8e0b85ecb9254699a2f6b742ab8.png" src="_images/8a3acac8721f87a6e03154369eaa23dac011e8e0b85ecb9254699a2f6b742ab8.png" />
+<img alt="_images/708887d21dd977e0412f6ab937e79ddf750b2432e69948906f825c44da029636.png" src="_images/708887d21dd977e0412f6ab937e79ddf750b2432e69948906f825c44da029636.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -4972,7 +5131,7 @@ Shape after removing missing values: (154, 2)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bc04ccb90fb14764fc90fd27797a1a899d96920561922ed6d185a32e556d33b3.png" src="_images/bc04ccb90fb14764fc90fd27797a1a899d96920561922ed6d185a32e556d33b3.png" />
+<img alt="_images/ced645764981a9ae5e7b9d12dae43e3bc6bbf5d1629b64d97d7a0e8a35cedbd4.png" src="_images/ced645764981a9ae5e7b9d12dae43e3bc6bbf5d1629b64d97d7a0e8a35cedbd4.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -5146,7 +5305,7 @@ Shape after removing missing values: (154, 2)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4e1e46d804006574cff9a4164823d394ff94c079b1546a0b78e73164a9e0b944.png" src="_images/4e1e46d804006574cff9a4164823d394ff94c079b1546a0b78e73164a9e0b944.png" />
+<img alt="_images/4606878d715a60317da43da7ac2b7e7f902a36b8f9b34e9938e5cc354a919998.png" src="_images/4606878d715a60317da43da7ac2b7e7f902a36b8f9b34e9938e5cc354a919998.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -5176,7 +5335,7 @@ Shape after removing missing values: (154, 2)
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p-val of the ADF test on irregular variations in employment data: 0.0065609316346406776
 </pre></div>
 </div>
-<img alt="_images/a42bcf3aab1da753ba781c67442bf87b66470253a0d2a6c3ac81cfa1b7849c0a.png" src="_images/a42bcf3aab1da753ba781c67442bf87b66470253a0d2a6c3ac81cfa1b7849c0a.png" />
+<img alt="_images/5b15feacd7a64714e8428020409a3b5c02641f37e4dd77d95453fd5c9411145f.png" src="_images/5b15feacd7a64714e8428020409a3b5c02641f37e4dd77d95453fd5c9411145f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -5224,10 +5383,12 @@ Shape after removing missing values: (154, 2)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning: Looks like you&#39;re using an outdated `kagglehub` version (installed: 0.3.13), please consider upgrading to the latest version (1.0.0).
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\planeacion\miniconda3\envs\ml_venv\lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Path to dataset files: C:\Users\planeacion\.cache\kagglehub\datasets\imetomi\eur-usd-forex-pair-historical-data-2002-2019\versions\2
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning: Looks like you&#39;re using an outdated `kagglehub` version (installed: 0.3.13), please consider upgrading to the latest version (1.0.0).
+Path to dataset files: C:\Users\planeacion\.cache\kagglehub\datasets\imetomi\eur-usd-forex-pair-historical-data-2002-2019\versions\2
 </pre></div>
 </div>
 </div>
@@ -5719,7 +5880,7 @@ Después del rebote de finales de marzo, los tres paneles se comportan de forma 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-2 {color: black;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">LinearRegression</label><div class="sk-toggleable__content"><pre>LinearRegression()</pre></div></div></div></div></div></div></div>
+<div class="output text_html"><style>#sk-container-id-1 {color: black;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">LinearRegression</label><div class="sk-toggleable__content"><pre>LinearRegression()</pre></div></div></div></div></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -6057,6 +6218,10 @@ Dicho esto, ninguno de los dos se ajusta bien a los datos. La línea roja lineal
 </pre></div>
 </div>
 <img alt="_images/66f004ada2fc39d8a2ab7f6490f8bff708c5898b02b832b52f8930ed3cf265b7.png" src="_images/66f004ada2fc39d8a2ab7f6490f8bff708c5898b02b832b52f8930ed3cf265b7.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 1200x550 with 0 Axes&gt;
+</pre></div>
+</div>
+<img alt="_images/e0b23ff1d9a701ad572fa93151ab00066c4c317d41f99cde3cde9e3bd59b72bc.png" src="_images/e0b23ff1d9a701ad572fa93151ab00066c4c317d41f99cde3cde9e3bd59b72bc.png" />
 </div>
 </div>
 <p>La autocorrelación mide el grado en que una serie se relaciona con sus valores pasados; si es cercana a cero en todos los rezagos, la serie se comporta como ruido blanco, es decir, sin dependencia temporal. En cambio, en un camino aleatorio, los niveles presentan alta autocorrelación, mientras que sus diferencias son las que se comportan como una serie independiente.El hecho de que ya descartáramos esa hipótesis en el análisis anterior hace que esperemos encontrar autocorrelaciones significativas y persistentes, es decir, que el precio de hoy guarde una relación fuerte con el de ayer, el de la semana pasada y el del mes anterior. Tanto en el gráfico diario como en el de 5 minutos, todas las barras de autocorrelación permanecen pegadas a un valor cercano a uno a lo largo de los 30 rezagos evaluados, muy por encima de las bandas de confianza que delimitan la zona donde una autocorrelación sería estadísticamente indistinguible de cero. Eso significa que el precio de cualquier período está altamente correlacionado con los períodos anteriores sin importar cuántos rezagos se retroceda dentro del rango analizado, lo que indica que la serie tiene memoria fuerte y persistente: el pasado reciente no solo importa sino que domina la formación del precio presente.</p>
@@ -7196,6 +7361,7 @@ p-val of the ADF test in EUR/USD monthly mean: 0.4601276855934337
 <p>[2] Figal, A. G. (2021). Pronóstico de la tasa de cambio euro-dólar. Diagnóstico de técnicas predictivas. <em>ECA Sinergia</em>, 12(3), 7-17.</p>
 <p>[3] Montoya Zapata, C., &amp; Corredor Roa, C. A. (2022). Aplicación de modelos de deep learning y machine learning para el pronóstico de la serie de tiempo del par de divisas Euro-Dólar.</p>
 <p>[4] Welle, D. (2020, 29 abril). FED: contracción económica en EE.UU. no tendrá precedentes. <em><a class="reference external" href="http://dw.com">dw.com</a></em>. <a class="reference external" href="https://www.dw.com/es/fed-contracci%C3%B3n-econ%C3%B3mica-en-eeuu-no-tendr%C3%A1-precedentes/a-53286099">https://www.dw.com/es/fed-contracción-económica-en-eeuu-no-tendrá-precedentes/a-53286099</a></p>
+<p>[5 ]Kılıç, R. (2025). Virtue or mirage? Complexity in exchange rate prediction.</p>
 </section>
 </section>
 </section>

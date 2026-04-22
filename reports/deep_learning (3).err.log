@@ -30,8 +30,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['import numpy as np', 'import itertools', 'import tensorflow as tf', 'import pandas as pd', 'import kagglehub']
+['import os', 'os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"', '', 'import tensorflow as tf', '']
 ...
-['', '    plt.legend()', '    plt.title("Predicciones - Mejor Modelo")', '    plt.grid()', '    plt.show()']
+['        for gpu in gpus:', '            tf.config.experimental.set_memory_growth(gpu, True)', '        print("Memory growth activado.")', '    except Exception as e:', '        print("No se pudo activar memory growth:", e)']
 -------------------
 
